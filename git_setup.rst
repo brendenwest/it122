@@ -6,7 +6,7 @@
 4. **Set up your identity** & preferred text editor (optional) according to instructions here - https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup 
 5. **Clone the Github repo** to your dev computer:
 
-  *git clone https://github.com/[YOUR GITHUB NAME]/web150-w16*
+  *git clone https://github.com/[YOUR GITHUB NAME]/itc298-s16*
 
 
 **Commiting changes to Github **

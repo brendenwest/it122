@@ -1,4 +1,4 @@
-Syllabus 
+ITC 298 - Advanced Javascript 
 --------
 
 **Class Details**

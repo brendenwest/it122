@@ -60,7 +60,7 @@ Reference
 
 Reading (optional)
 
-- JavaScript: The Good Parts (Douglass Crockford)
+- `JavaScript: The Good Parts <http://bdcampbell.net/javascript/book/javascript_the_good_parts.pdf/>`_ (Douglass Crockford)
 - http://eloquentjavascript.net/
 
 **Note** - Seattle Public Library card-holders have free access to the following technical reference:

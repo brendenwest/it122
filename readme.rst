@@ -52,6 +52,7 @@ Every Thursday, you'll be given an assignment to test what you've picked up on t
 Reference
 
 - http://www.nodebeginner.org/ 
+- http://expressjs.com/
 - http://www.tutorialspoint.com/nodejs/ 
 - http://nodeschool.io/#workshoppers
 - https://docs.angularjs.org/tutorial 

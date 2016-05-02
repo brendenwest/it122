@@ -9,7 +9,7 @@ This week, you'll apply your knowledge of Express and request/response objects t
 - When submitted, the form should post to a ‘/search’ route in your application. This route should display:
 
     - the user’s entry (e.g. ‘Searching for [BOOK TITLE]’)
-item details, if found in the array,
+    - item details, if found in the array,
     - a not-found message if item is not in the array (e.g. ‘No records found’)
  
 

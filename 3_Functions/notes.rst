@@ -20,29 +20,34 @@ Topics
 Javascript functions
 ####
 Javascript function and object behavior is central to Node.js programming. So it’s important to understand key functional concepts:
-Functions are defined with the ‘function’ keyword
-Functions can be ‘anonymous’ or named
-Functions can take parameters
-function (param1, param2) { return param1 + param2; }
-function myFunction(param1, param2) { return param1 + param2; }
+- Functions are defined with the ‘function’ keyword
+- Functions can be ‘anonymous’ or named
+- Functions can take parameters
+	function (param1, param2) { return param1 + param2; }
+	function myFunction(param1, param2) { return param1 + param2; }
 
+- Functions can return a value to the step that called them
+	var total = myFunction(3, 4); // total = 7
+	
+- Functions are objects that can be referenced and passed to other functions:
+	var myFunction = function (param1, param2) { return param1 + param2; }
+	xar x = anotherFunction(myFunction(param3, param4)); // calls 
 
-Functions can return a value to the step that called them
-var total = myFunction(3, 4); // total = 7
-Functions are objects that can be referenced and passed to other functions:
-var myFunction = function (param1, param2) { return param1 + param2; }
-xar x = anotherFunction(myFunction(param3, param4)); // calls 
-Functions within objects are called ‘methods’
+- Functions within objects are called ‘methods’
+
 Scope & Closure
+####
 Scope controls the visibility and lifecycle of Javascript objects to reduce naming conflicts and provide memory management. Scope in Javascript is a bit different than in other languages, and objects have ‘scope’ in the function where they are defined. Global objects are those defined outside of any funciton or object.
-var counter = 1; // counter is available throughout the app
-function myFunction() {
-var y = 2; // y is local to this function
-counter += y; 
-}
-myFunction(); 	// execute myFunction
-console.log(counter);	// counter = 3
-console.log(y);	// y is undefined here
+	var counter = 1; // counter is available throughout the app
+
+	function myFunction() {
+		var y = 2; // y is local to this function
+		counter += y; 
+	}
+	
+	myFunction(); 	// execute myFunction
+	console.log(counter);	// counter = 3
+	console.log(y);	// y is undefined here
 
 Javascript’s approach to scope allows object methods to access variables local to the function that created them, even after the function has executed. For example:
 var myObject = (function(){
@@ -64,6 +69,7 @@ myObject.getValue(); // returns the current value of ‘counter’
 With this approach, you can control how ‘counter’ is accessed and apply custom logic.
 
 Callbacks
+####
 Node.js is designed around the concept of non-blocking input-output (I/O) and event-driven programming.
 In Node, I/O operations such as reading a file, querying a database or making a web request, are performed asynchronously. This means you can initiate an operation, and specify the code (aka callback) Node should execute when the operation completes. While the operation executes in the background, Node will proceed with executing other code. The Node runtime executes an event loop that periodically checks for callbacks ready for attention.
 Synchronous
@@ -85,6 +91,7 @@ display(response);
 We pass an anonymous function as a parameter (in bold) to the send_request_async function that will be called when the response is available.
 
 Node Modules
+####
 Node applications use Javascript functions and closures to make modules that present and interface but hide their state and implementation. Modules are typically functions that have private variables and functions, and privileged functions accessible to outside code and that mediate access to the private variables/functions.
 
 Node modules have a main javascript file and may have supporting scripts and assets. The main script name should clearly indicate the module purpose and often matches the object defines (e.g. ‘fortune’, ‘book’, etc.)
@@ -115,7 +122,7 @@ var book = require(‘./lib/book.js’);
 Node packages are modules designed for installation by other Node applications, and have a package.json file that describes how to install them.
 
 Object Collections
-
+####
 The basic structure of a Javascript object is:
 
 {
@@ -202,3 +209,21 @@ var progress = students.map( function(student) {
 var total_classes = students.reduce(function(previousValue, currentStudent) {
   return previousValue + currentStudent.classes.length;
 });
+
+Exercises
+####
+- Save a copy of index.js for HW #2,
+- Move data and methods for your data from index.js into a dedicated module,
+- Call your new module into index.js
+- Add module methods, and corresponding server routes, to;
+	- Return all data items
+	- Return all data items with field matching,
+	- Return all data items sorted by a specified field,
+	- Return a count of data items,
+	- Delete a data item that matches specified field value
+- Add form fields corresponding to each field in your data object.
+- Update your form with:
+	- Entry fields corresponding to each property of your data object,
+	- Buttons to add, remove, update
+- Connect your buttons to corresponding server routes, to add, remove, and update data items.
+- Add a date field to your data. Return data items with date mapped to an integer value (e.g. day, month, year)

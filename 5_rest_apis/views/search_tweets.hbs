@@ -1,0 +1,23 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<form method="POST" action="">
+    <input type="text" name="tag" placeholder="tag" value="" required maxlength="100">
+    <button id="search">Search</button>
+</form>
+<div id="tweets"></div>
+
+<script>
+    $(document).ready(function(){
+
+        $('#search').click( function(){
+            event.preventDefault();
+            $.get("/api/search/"+$('input:text[name=tag]').val(), function(data, status){
+                console.log(data);
+                $("#tweets").html(data);
+            });
+        });
+    });
+    
+
+</script>
+</body>

@@ -24,7 +24,7 @@ app.get('/about', function(req,res){
 app.post('/search', function(req,res){
     res.type('text/html');
     var header = 'Searching for: ' + req.body.company + '<br>';
-    var found = lead.getLeads(req.body.company);
+    var found = lead.find(req.body.company);
     if (found) {
         res.send(header + "Found: " + found.length + back_link);
     } else {
@@ -35,7 +35,7 @@ app.post('/search', function(req,res){
 app.post('/add', function(req,res){
     res.type('text/html');
     var newLead = {"company":req.body.company, "amount":req.body.amount}
-    var result = lead.addLead(req.body.company);
+    var result = lead.add(req.body.company);
     if (result.added) {
         res.send("Added: " + req.body.company + "<br>New total = " + result.total + back_link);
     } else {
@@ -45,7 +45,7 @@ app.post('/add', function(req,res){
 
 app.post('/delete', function(req,res){
     res.type('text/html');
-    var result = lead.deleteLead(req.body.company);
+    var result = lead.delete(req.body.company);
     if (result.deleted) {
         res.send("Deleted: " +  req.body.company + '<br>New total = ' + result.total + back_link);
     } else {

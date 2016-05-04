@@ -1,0 +1,52 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+{{#if name}}
+    <h2>Hi {{name}}</h2>
+{{/if}}
+
+<form method="POST" action="/search">
+    <input type="text" name="company" placeholder="company" required maxlength="100">
+    <button>Search</button>
+    <button>New Lead</button>
+</form>
+<hr>
+<table>
+    <tr>
+        <th>company</th>
+        <th>contact</th>
+        <th>amount</th>
+        <th>close</th>
+    </tr>    
+{{#each leads}}
+    <tr onclick="javascript:editLead(this);">
+        <td>{{company}}</td>
+        <td>{{contact}}</td>
+        <td>{{amount}}</ts>
+        <td>{{close}}</td>
+    </tr>
+{{/each}}
+</table>
+
+
+<script>
+    $(document).ready(function(){
+        var buttons = $('button');
+        
+        buttons.on('click', function() {
+            var $this = $(this);
+            var action = $this.text().toLowerCase();
+            if (action == 'new lead') {
+                $("form").attr("action", "#");
+                location.href = "/detail/";
+            } else {
+                $("form").attr("action", action);
+            }
+        });
+    });
+    
+    function editLead(row) {
+        var company = $(row).children().first().text();
+        location.href = "/detail/" + company;
+    }
+    
+</script>
+</body>

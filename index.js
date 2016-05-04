@@ -1,38 +1,64 @@
 var express = require("express");
 var app = express();
+var lead = require("./lib/lead");
+
+var back_link = "<p><a href='/'>Back</a>";
 
 // configure Express app
 app.set('port', process.env.PORT || 3000);
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 app.use(require("body-parser").urlencoded({extended: true}));
+
+// set template engine
+var handlebars = require('express-handlebars').create({defaultLayout: 'main', extname: '.hbs' });
+app.engine('hbs', handlebars.engine);
+app.set('view engine', 'hbs' );
 
 app.get('/', function(req,res){
     res.type('text/html');
-    res.sendfile('./public/home.html');    
+    res.render('home', {leads: lead.getAll()} );    
+});
+
+app.get('/detail/:company', function(req,res){
+    res.type('text/html');
+    res.render('detail', {lead: lead.get(req.params.company)} );    
 });
 
 app.get('/about', function(req,res){
-    res.type('text/plain');
-    res.send('About page');
+    res.type('text/html');
+    res.render('about');
 });
-
-var leads = [
-    {id: 0, name: "ibm", amount: 50000},
-    {id: 1, name: "sap", amount: 10000},
-    {id: 2, name: "msft", amount: 75000},
-    ];
 
 app.post('/search', function(req,res){
     res.type('text/html');
-    var header = 'Searching for: ' + req.body.search_term + '<br>';
-    var found = leads.find(function(item) {
-       return item.name == req.body.search_term;
-    });
-    
+    var header = 'Searching for: ' + req.body.company + '<br>';
+    var found = lead.find(req.body.company);
     if (found) {
-        res.send(header + "Amount: " + found.amount);
+        res.send(header + "Found: " + found.length);
     } else {
         res.send(header + "Not found");
+    }
+});
+
+app.post('/add', function(req,res) {
+    res.type('text/html');
+    // construct new 'lead' object for comparison against existing objects
+    var newLead = {"company":req.body.company, "contact":req.body.contact, "amount":req.body.amount, "close":req.body.close}
+    var result = lead.add(newLead);
+    if (result.added) {
+        res.send("Added: " + req.body.company + "<br>New total = " + result.total + back_link);
+    } else {
+        res.send("Updated: " + req.body.company + back_link);
+    }
+});
+
+app.post('/delete', function(req,res){
+    res.type('text/html');
+    var result = lead.delete(req.body.company);
+    if (result.deleted) {
+        res.send("Deleted: " +  req.body.company + '<br>New total = ' + result.total + back_link);
+    } else {
+        res.send(req.body.company + " not found" + back_link);
     }
 });
 

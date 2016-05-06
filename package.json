@@ -18,6 +18,7 @@
   "homepage": "https://github.com/brendenwest/itc298-s16#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "cheerio": "^0.20.0",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0"
   }

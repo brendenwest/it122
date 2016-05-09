@@ -35,10 +35,10 @@
             var $this = $(this);
             var action = $this.text().toLowerCase();
             if (action == 'new lead') {
-                $("form").attr("action", "#");
-                location.href = "/detail/";
+                event.preventDefault();
+                location.href = "/detail/" + $("input:text[name=company]").val();
             } else {
-                $("form").attr("action", action);
+                $("form").attr("action", "/" + action);
             }
         });
     });

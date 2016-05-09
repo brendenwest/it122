@@ -1,19 +1,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-{{#if lead}}
+{{#if result.action}}
+    <h2>{{result.action}} - {{lead.company}}</h2>
+{{else if lead.company}}
     <h2>Edit - {{lead.company}}</h2>
-{{else}}
-    <h2>not found - {{lead.company}}</h2>
 {{/if}}
 
+{{#if lead.company}}
 <form method="POST" action="/add">
     <input type="text" name="company" placeholder="company" value="{{lead.company}}" required maxlength="100">
     <input type="text" name="contact" placeholder="contact" value="{{lead.contact}}" maxlength="100">
     <input type="text" name="amount" placeholder="amount"  value="{{lead.amount}}"maxlength="100">
     <input type="date" name="close_date" placeholder="close_date"  value="{{lead.close_date}}"maxlength="100">
 
-    <button>{{#if lead}}Update{{else}}Add{{/if}}</button>
+    <button>{{#if lead.id}}Update{{else}}Add{{/if}}</button>
     <button>Delete</button>
 </form>
+{{/if}}
 
 <script>
     $(document).ready(function(){
@@ -22,8 +24,7 @@
             var $this = $(this);
             var action = $this.text().toLowerCase();
             if (action == 'update') { action = 'add'; }
-            console.log(action);
-            $("form").attr("action", action);
+            $("form").attr("action", "/"+action);
         });
     });
 </script>

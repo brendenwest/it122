@@ -5,7 +5,12 @@ var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 
                 replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };       
  
 mongoose.connect(credentials.mongo.development.connectionString, options);
-var conn = mongoose.connection;             
+
+// settings for connecting to db on local machine
+// var ip = process.env.ip || '127.0.0.1';
+// mongoose.connect('mongodb://' +ip+ '/projects');
+
+var conn = mongoose.connection; 
  
 conn.on('error', console.error.bind(console, 'connection error:'));  
 

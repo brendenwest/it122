@@ -20,8 +20,8 @@
     <tr onclick="javascript:editLead(this);">
         <td>{{company}}</td>
         <td>{{contact}}</td>
-        <td>{{amount}}</ts>
-        <td>{{close_date}}</td>
+        <td>{{amount}}</td>
+        <td>{{shortDate close_date}}</td>
     </tr>
 {{/each}}
 </table>
@@ -34,9 +34,14 @@
         buttons.on('click', function() {
             var $this = $(this);
             var action = $this.text().toLowerCase();
+            var entry = $("input:text[name=company]").val();
             if (action == 'new lead') {
                 event.preventDefault();
-                location.href = "/detail/" + $("input:text[name=company]").val();
+                if (entry) {
+                    location.href = "/detail/" + entry;
+                } else {
+                    alert('Please enter a company name');
+                }
             } else {
                 $("form").attr("action", "/" + action);
             }

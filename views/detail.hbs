@@ -10,7 +10,7 @@
     <input type="text" name="company" placeholder="company" value="{{lead.company}}" required maxlength="100">
     <input type="text" name="contact" placeholder="contact" value="{{lead.contact}}" maxlength="100">
     <input type="text" name="amount" placeholder="amount"  value="{{lead.amount}}"maxlength="100">
-    <input type="date" name="close_date" placeholder="close_date"  value="{{lead.close_date}}"maxlength="100">
+    <input type="date" name="close_date" placeholder="close_date"  value="{{shortDate lead.close_date}}"maxlength="100">
 
     <button>{{#if lead.id}}Update{{else}}Add{{/if}}</button>
     <button>Delete</button>

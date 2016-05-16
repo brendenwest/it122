@@ -8,7 +8,15 @@ app.use(require("body-parser").urlencoded({extended: true}));
 app.use('/api', require('cors')());
 
 // set template engine
-var handlebars = require('express-handlebars').create({defaultLayout: 'main', extname: '.hbs' });
+var handlebars = require('express-handlebars').create({defaultLayout: 'main', extname: '.hbs', 
+    helpers: {
+        shortDate: function (date) { 
+            var month = (date.getMonth() < 10) ? '0' + date.getMonth() : date.getMonth();
+            var day = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+            return date.getFullYear() + "-" + month + "-" + day; 
+        },
+    } 
+    });
 app.engine('hbs', handlebars.engine);
 app.set('view engine', 'hbs' );
 

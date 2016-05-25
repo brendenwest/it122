@@ -6,7 +6,6 @@
 <form method="POST" action="/search">
     <input type="text" name="company" placeholder="company" required maxlength="100">
     <button>Search</button>
-    <button>New Lead</button>
 </form>
 <hr>
 <table>
@@ -34,17 +33,7 @@
         buttons.on('click', function() {
             var $this = $(this);
             var action = $this.text().toLowerCase();
-            var entry = $("input:text[name=company]").val();
-            if (action == 'new lead') {
-                event.preventDefault();
-                if (entry) {
-                    location.href = "/detail/" + entry;
-                } else {
-                    alert('Please enter a company name');
-                }
-            } else {
-                $("form").attr("action", "/" + action);
-            }
+            $("form").attr("action", "/" + action);
         });
     });
     

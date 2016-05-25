@@ -10,7 +10,7 @@
     <hr>
     <div class="nav">
     {{! only show home link if on detail page }}
-    {{#if lead}}<a href="/">Home</a> |{{/if}}
+    {{#if leads}}{{else}}<a href="/">Home</a> |{{/if}}
     <a href="/about">About</a></div>
     <footer>&copy; Brisk Software LLC</footer
 </body>

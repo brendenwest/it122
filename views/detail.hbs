@@ -1,8 +1,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-{{#if result.action}}
-    <h2>{{result.action}} - {{lead.company}}</h2>
+{{#if result}}
+    <h2>{{result}} - {{lead.company}}</h2>
 {{else if lead.company}}
-    {{#if lead.id}}
+    {{#if lead._id}}
         <h2>Edit - {{lead.company}}</h2>
     {{else}}
         <h2>Add new - {{lead.company}}</h2>
@@ -15,9 +15,9 @@
     <input type="text" name="contact" placeholder="contact" value="{{lead.contact}}" maxlength="100">
     <input type="text" name="amount" placeholder="amount"  value="{{lead.amount}}"maxlength="100">
     <input type="date" name="close_date" placeholder="close_date"  value="{{shortDate lead.close_date}}"maxlength="100">
-    <input type="hidden" name="id" value="{{lead.id}}">
+    <input type="hidden" name="id" value="{{lead._id}}">
 
-    <button>{{#if lead.id}}Update{{else}}Add{{/if}}</button>
+    <button>{{#if lead._id}}Update{{else}}Add{{/if}}</button>
     <button>Delete</button>
 </form>
 {{/if}}

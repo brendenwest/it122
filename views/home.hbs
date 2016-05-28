@@ -9,12 +9,15 @@
 </form>
 <hr>
 <table>
+    {{#if leads}} 
     <tr>
         <th>company</th>
         <th>contact</th>
         <th>amount</th>
         <th>close</th>
-    </tr>    
+    </tr>
+    {{/if}}
+    
 {{#each leads}}
     <tr onclick="javascript:editLead(this);">
         <td>{{company}}</td>

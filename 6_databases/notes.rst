@@ -5,6 +5,7 @@ Reading
 ####
 - Brown, Ch. 13 - Data Persistence & MongoDb
 - http://www.tutorialspoint.com/mongodb/mongodb_overview.htm
+- http://mongoosejs.com/docs/guide.html 
 - https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications 
 - https://mongodb.github.io/node-mongodb-native/api-articles/nodekoarticle1.html 
 - https://docs.mongodb.com/manual/introduction/ 
@@ -12,11 +13,11 @@ Reading
 Topics
 ####
 
-- Data storage 
-- Schema-less databases
+- Data persistence overview
+- Schema-less -v- relational databases
 - MongoDb setup and connection
 - Basic MongoDb commands
-- ODM & Mongoose
+- Data models with Mongoose
 - Data manipulation - create, find, update, delete
 
 Schema-less (aka no-sql) databases work on concept of collections and documents, instead of tables and columns.
@@ -38,32 +39,53 @@ MongoDb is a popular schema-less database with well-defined frameworks for Node 
 
 You can setup a free MongoDb database at http://mlab.com. 
 
-Commands
+Or, you can set up a MongoDb database on your local pc or Cloud9 workspace. In the latter case, this db will only be active while your workspace is active. 
+
+When using a local database, you need to ensure the MongoDb server is running by entering the following terminal command:
+
+$ mongod --bind_ip=$IP --nojournal
+where the part is bold can be ommitted if running on a local pc.
+
+If the mongo service starts without errors, you can open the mongo shell in a new Terminal window to run db commands:
+
+$ mongo
+
+See  - https://docs.c9.io/docs/setup-a-database and https://community.c9.io/t/setting-up-mongodb/1717 
+
+Mongo Shell
 ####
-You can run mongodb locally in the Mongo shell and execute command-line:
+You can issue commands directly to your database through MongoShell. For a local db, simply type:
+
+> mongo
+
+You can connect the Mongo shell with a remote DB like so:
+
+> mongo <hostname>:<port>/<dbname> -u <dbuser> -p <dbpassword>
+
+Common shell commands are:
 
 > show dbs
 > use DB_NAME
 > show collections
 > db.createCollection(NAME, options)
-> db.COLLECTION_NAME.insert(document)
+> db.COLLECTION_NAME.insert(DOCUMENT)
+> db.COLLECTION_NAME.update(DOCUMENT) - update an existing document
+> db.COLLECTION_NAME.save(DOCUMENT) - insert or update a document
+> db.COLLECTION_NAME.remove(DOCUMENT) - delete documents from the collection
 
->db..COLLECTION_NAME.insert({
-   _id: ObjectId(7df78ad8902c),
-   title: 'MongoDB Overview', 
-   description: 'MongoDB is no sql database',
-   by: 'tutorials point',
-   url: 'http://www.tutorialspoint.com',
-   tags: ['mongodb', 'database', 'NoSQL'],
-   likes: 100
-})
+Where DOCUMENT is a valid JSON object of key:value pairs that should be saved or matched. For example:
 
-Note - If you don’t specify an Objectid, MongoDb will generate one.
+{
+  _id: ObjectId(7df78ad8902c),
+  title: 'MongoDB Overview', 
+  description: 'MongoDB is no sql database',
+  by: 'tutorials point',
+  url: 'http://www.tutorialspoint.com',
+  tags: ['mongodb', 'database', 'NoSQL'],
+  likes: 100
+}
 
-> db.COLLECTION_NAME.update() - update an existing document
-> db.COLLECTION_NAME.save() - insert or update a document
-> db.COLLECTION_NAME.remove() - delete documents from the collection
-
+Note - MongoDb will generate an Objectid if you don't specify one when inserting a new document.
 
 Querying
 ####
@@ -71,6 +93,21 @@ Querying
 > db.COLLECTION_NAME.find({key:value}) - find all docs matching key and value
 
 Full documentation - http://www.tutorialspoint.com/mongodb/mongodb_query_document.htm 
+
+Indexes can speed database queries and are important for large datasets. In MongoDb you can set indexes like so:
+
+>db.COLLECTION_NAME.ensureIndex({KEY:1})
+
+Where ‘KEY’ is the field you want to index on, and the number indicates sort order (1=ascending, -1=descending)
+
+The index can use multiple fields:
+
+>db.COLLECTION_NAME.ensureIndex({"field_1":1,"field_2":-1})
+
+Also, the index can ensure index field values are unique and prevent duplicate entries:
+
+>db.COLLECTION_NAME.ensureIndex({"field_1":1,"unique":true})
+
 
 Mongoose
 ####
@@ -124,9 +161,49 @@ mySchema.find({}, function (err, items) {
     // other code here
 });
 
+MongoDb queries can use regular expressions to perform more nuanced pattern matching (e.g. name like 'brown' or 'Brown').  The regular expression can be hardcoded or defined with a variable as below:
+
+
+var my_pattern = new RegExp(search_term,"i");
+Person.find({<field>: {$regex : my_pattern} }, function(err, results) {
+
+}
+
+// return a single record
+
+Person.findOne({'name':'jones'}, function (err, item) {
+if (err) return next(err);
+
+console.log(item);
+
+// other code here
+});
 The model can execute code before a built-in method with the ‘pre’ method: 
 
 mySchema.pre('save', function(next) {
   // custom code
   next();
 });
+
+Exercises
+####
+
+Use the mongo shell to:
+
+- Create a mongo db for your app (either locally or on mlab.com)
+- Create a collection in the db to hold items for your app
+- Show collections in your db
+- Insert several new items (documents) into the collection for your app
+- Save a document into your collection
+- Find all documents in your collection
+- Find documents in your collection using query expressions for:
+    - Equality
+    - Not equals
+    - AND
+    - OR
+    - Greater than or Less than
+- Sort the results of your Find operation
+- Set an index on your collection
+- Set a unique index on your collection
+- Update an existing document with new values
+- Delete a document from your collection

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script>
+    var listApp = angular.module('listApp',[]);
+    listApp.controller('ListController', ['$scope', function($scope) {
+        $scope.mydata = [ ];
+  
+      // sample method
+      $scope.myMethod = function() { 
+        // code here to update any variables referenced by the view template 
+      };
+    }]);
+</script>
+
+<!--View template. Add necessary Angular directives -->
+<body ng-app="listApp">
+<div ng-controller="ListController">
+ 	<p>Search : <input type="text"></p>
+
+  <b>Total: </b>
+
+</div>
+</body>
+</html>

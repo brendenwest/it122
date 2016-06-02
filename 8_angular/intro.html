@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script>
+var introApp = angular.module('introApp',[]);
+introApp.controller('IntroController', ['$scope', function($scope) {
+  $scope.buttonText = 'Reset';
+  $scope.names = ["dave", "mike", "sue", "fred"];
+  
+  // reset form
+  $scope.resetForm = function() { 
+    $scope.qty=0; 
+    $scope.cost=0;
+  };
+}]);
+
+var leadsApp = angular.module('leadsApp',[]);
+leadsApp.controller('LeadsController', ['$scope', function($scope) {
+  $scope.leads = [
+    {"company":"ibm", "amount":10000, "close_date":"05-26-2016"},
+    {"company":"microsoft", "amount":8000, "close_date":"06-01-2016"},
+    ];
+  
+  // reset form
+  $scope.showDetail = function(item) { 
+    $scope.lead = item;
+  };
+}]);
+  
+</script>
+<body ng-app="introApp" ng-init="qty=1;cost=2;">
+<div ng-controller="IntroController">
+ 	<h1>Hello {{name}}</h1>
+ 	<p>Name : <input type="text" ng-model="name"></p>
+  You said <span ng-bind="name"></span> 
+  <hr>Our students:
+  <li ng-repeat="name in names">{{name}}</li>
+  <p><b>Invoice:</b>
+  <div>
+    Quantity: <input type="number" min="0" ng-model="qty">
+  </div>
+  <div>
+    Costs: <input type="number" min="0" ng-model="cost">
+  </div>
+  <div>
+    <b>Total:</b> {{qty * cost | currency}}
+  </div>
+  <p><button ng-click="resetForm()">{{buttonText}}</button></p>
+</div>
+
+</body>
+</html>

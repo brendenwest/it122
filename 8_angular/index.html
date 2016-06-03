@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script>
+
+    var leadsApp = angular.module('leadsApp',[]);
+    leadsApp.controller('LeadsController', function($scope, $http) {
+      
+    $http.get('/api/leads')
+      .then(function successCallback(response) {
+            $scope.leads = response.data;
+      }, function errorCallback(response) {
+        console.log('Error: ' + response.data);
+      });
+  
+    // control display of detail form
+    $scope.hideform = true;
+
+      // reset form
+      $scope.showDetail = function(item) { 
+        $scope.add = false;
+        $scope.hideform = (item == $scope.lead) ? !$scope.hideform : false; 
+        $scope.lead = item;
+        $scope.close_date = new Date($scope.lead.close_date);
+      };
+      
+      $scope.newLead = function() { 
+        $scope.add = true;
+        $scope.hideform = false; 
+        $scope.lead = {};
+      };
+
+      $scope.saveLead = function() { 
+        $http.post('/api/add', $scope.lead)
+        .then(function successCallback(response) {
+            $scope.post_result = response.data;
+        }, function errorCallback(response) {
+          console.log('Error: ' + response.data);
+        });
+      };
+    });
+</script>
+<body ng-app="leadsApp">
+<div ng-controller="LeadsController">
+ 	<p>Search : <input type="text" ng-model="name"></p>
+ 	<span>Searching for: {{name}}</span>
+ 	<table>
+ 	    <tr>
+ 	        <th>Company</th>
+ 	        <th>Contact</th>
+ 	        <th>Amount</th>
+ 	        <th>Close date</th>
+ 	    </tr>
+  <tr ng-repeat="lead in leads | orderBy : 'company'">
+    <td><a ng-click="showDetail(lead)">{{ lead.company }}</a></td>
+    <td>{{ lead.contact }}</td>
+    <td>{{ lead.amount }}</td>
+    <td>{{ lead.close_date | date : 'yyyy-MM-dd' }}</td>
+  </tr>
+</table>
+  <b>Total: {{leads.length}}</b>
+  <p><button ng-click="newLead()">New</button></p>
+  <hr>
+
+<form ng-hide="hideform">
+  <h3 ng-show="add">Add New Item:</h3>
+  <h3 ng-hide="add">Edit Item:</h3>
+  <h3 ng-bind="post_result"></h3>
+    <input type="text" placeholder="company" ng-model="lead.company" required maxlength="100">
+    <input type="text" placeholder="contact" ng-model="lead.contact" maxlength="100">
+    <input type="text" placeholder="amount" ng-model="lead.amount" maxlength="100">
+    <input type="date" placeholder="close date" ng-model="close_date" maxlength="100">
+    <input type="hidden" name="id">
+    <br><button ng-click="saveLead()">Save</button></p>
+  </span> 
+  </form>
+</div>
+</body>
+</html>

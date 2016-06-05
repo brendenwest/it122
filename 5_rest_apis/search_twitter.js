@@ -2,7 +2,7 @@ var http = require('http'),
 	https = require('https'),
 	express = require('express');
 
-var credentials = require('./credentials.js');
+var credentials = require('../lib/credentials.js');
 
 var app = express();
 app.set('port', process.env.PORT || 3000);

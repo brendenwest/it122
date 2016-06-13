@@ -39,11 +39,25 @@
       $scope.saveLead = function() { 
         $http.post('/api/add', $scope.lead)
         .then(function successCallback(response) {
-            $scope.post_result = response.data;
+            $scope.post_result = response.data.result;
         }, function errorCallback(response) {
           console.log('Error: ' + response.data);
         });
       };
+      
+      $scope.deleteLead = function() { 
+            $http.post('/api/delete', $scope.lead)
+            .then(function successCallback(response) {
+                var newList = $scope.leads.filter(function(lead) {
+                  return lead._id != $scope.lead._id;
+                });
+                $scope.leads = newList;
+                $scope.lead = {};
+            }, function errorCallback(response) {
+              console.log('Error: ' + response.data);
+            });
+           };
+
     });
 </script>
 <body ng-app="leadsApp">
@@ -80,7 +94,6 @@
     <input type="text" placeholder="contact" ng-model="lead.contact" maxlength="100">
     <input type="text" placeholder="amount" ng-model="lead.amount" maxlength="100">
     <input type="date" placeholder="close date" ng-model="close_date" maxlength="100">
-    <input type="hidden" name="id" ng-model="lead._id" >
     <br><button ng-click="saveLead()">Save</button></p>
     <br><button ng-click="deleteLead()">Delete</button></p>
   </span> 

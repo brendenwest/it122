@@ -12,11 +12,11 @@ Update your Node application by:
     - connects to your database (local or remote)
     - defines a schema that matches your application data,
     - exposes (exports) your data model for use by other scripts,
-- create a file called 'test_db.js' in your project root folder. The file should:
+- creating a file called 'test_db.js' in your project root folder. The file should:
     - include your data model definition,
     - insert several new items into your db, with syntax like this:
 
-new <MODEL>(<JSON_DATA>).save();
+        new <MODEL>(<JSON_DATA>).save();
 
     - perform a 'find' to display all db items (output to console). 
     

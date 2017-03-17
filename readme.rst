@@ -1,27 +1,29 @@
-ITC 298 - Advanced Javascript 
+ITC 230 - Advanced Javascript 
 --------
 
 **Class Details**
 
 - Location: BE 3156
 - Time: M,W 5:00 - 7:05 pm
-- Dates: April 3 - June 16, 2016
+- Dates: April 3 - June 16, 2017
 - Instructor: Brenden West
 - Email: brenden.west@seattlecolleges.edu
 - Credits: 5
 
 Summary
-  Modern JavaScript has rapidly become a major force for full-stack web development, with NodeJS allowing development in the same language on the server & browser. Client-side frameworks like Angular and D3 are enabling new and exciting applications in the browser. 
+  Modern JavaScript has rapidly become a major force for full-stack web development, with Node.js allowing development in the same language on the server & browser. Client-side frameworks like Angular and D3 are enabling new and exciting applications in the browser. 
   
-  This course will cover JavaScript technologies that power a modern full-stack development workflow, including server-side scripting, single-page web applications with MVC structure, package management, and JSON data storage. Students will finish the quarter having built a fully-functional prototype application they can reference for job applications or future JS-based projects.
+  This course will cover JavaScript technologies that power a modern full-stack development workflow, including server-side scripting, single-page web applications with MVC structure, package management, and JSON data storage. Students will finish the quarter having built a fully-functional client-server application they can reference for job applications or future projects.
 
-Requirements
-  Students entering this class should understand the core concepts of JavaScript programming, either via WEB 150 or comparable experience. They should be comfortable with:
+**Requirements**
+
+  Students entering this class should understand HTML, CSS, and the core concepts of JavaScript programming either via WEB 150 or comparable experience. They should be comfortable with:
   
-- JavaScript variables and operators,
-- Array methods and loops,
-- JavaScript functions and objects,
-- JQuery selectors, methods and AJAX,
+- variables and operators
+- conditional logic
+- arrays and loops
+- functions, objects, and JSON
+- jQuery selectors, methods, and AJAX
 
 Students will perform extensive hands-on development throughout the course and will require;
 

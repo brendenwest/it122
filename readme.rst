@@ -32,7 +32,7 @@ Students will perform extensive hands-on development throughout the course and w
 - A syntax-highlighting editor like Brackets or Sublime Text,
 - A github.com account
 
-**Note** - Services such as Cloud9 (https://c9.io/) provide free, online development environments that students can access from any computer.
+**Note** - `Cloud9 <https://c9.io>`_ provides free online development tools you can access from any computer via web browser.
 
 This course will use `Web Development with Node & Express
 <https://www.google.com/search?q=web+development+with+node+and+express>`_ as a textbook and also supplementary online materials as needed.
@@ -57,9 +57,10 @@ Each Wednesday, you'll be given an assignment to test what you've picked up on t
 Reference
 
 - https://docs.npmjs.com/
+- https://www.tutorialspoint.com/javascript/
+- http://www.tutorialspoint.com/nodejs/ 
 - http://www.nodebeginner.org/ 
 - http://expressjs.com/
-- http://www.tutorialspoint.com/nodejs/ 
 - http://nodeschool.io/#workshoppers
 - https://angular.io/docs/ts/latest/  
 - http://www.w3schools.com/js 

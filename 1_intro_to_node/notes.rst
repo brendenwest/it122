@@ -11,20 +11,20 @@ Topics
 - Class overview
 - Out-of-scope
 - Client/server architecture
-- What is Node.js?
-- Installing Node.js
-- Node Package Manager (npm)
+- Node.js intro
 - Basic Node.js server 
 - Routes 
 - Serving files
+- Node Package Manager (npm)
 
-Out-of-scope
-####
-- Stuff you should know - JavaScript, HTML, JQuery, CSS
+Class Overview
+----
+This class covers client-server (full-stack) web development with JavaScript technologies, focused on Node.js. It assumes prior knowledge of basic web development (JS, HTML, CSS, DOM, HTTP, etc.)
+
+Because the JavaScript ecosystem is huge, we won't have time to cover some interesting topics:
 - Build tools - Grunt, Gulp, Bower, LESS/SASS, Webpack
-- Other MVC frameworks - React, Ember, Ionic
+- Other common JS frameworks - Ember, Ionic, D3
 - JS variants - TypeScript, CoffeeScript
-- High-performance Node.js applications
 
 Client-server architecture
 ####
@@ -47,10 +47,13 @@ Key Node.js modules
 - Filesystem
 - HTTP / HTTPS
 
-You can run Node.js interactively to execute JavaScript commands (REPL) at the command line. For example:
+You can run Node.js **interactively** to execute JavaScript commands at the command line (aka REPL). For example:
 
 	$ node
 	> var x = 1;
+	> console.log(x)
+
+This is less useful for multi-line commands. So you can also run javascript files from the OS with Node like so:
 
 You can run JavaScript files with Node at the command line. Files can contain any valid JavaScript commands and can include core Node.js modules.
 
@@ -67,9 +70,13 @@ For example, a basic web server:
 - Uses whatever port is assigned by the operating system or ‘3000’ if none provided
 - when the application receives a request, it sends a response with a ‘success’ status header and basic test
 
+When you run this script at the command prompt, Node.js will start a server process and wait for requests. You can make requests to the server via a web browser at http://localhost:3000 or http://127.0.0.1:3000
+
 Basic Routes
 ####
-Your application can send different responses according to details of the request. A common practice is to send different responses for different requested urls (routes). (Brown, p.15)
+Your web server can send different responses for different types of requests. Requests usually differ by url (aka route). (Brown, p.15)
+
+For example, this script uses the url property of the request object to send different responses:
 
     var http = require("http"); 
     http.createServer(function(req,res) {
@@ -94,13 +101,13 @@ Serving files
 ####
 Your Node.js application can read files from the filesystem and send file contents in the http response (see Brown p. 16). Note - be sure your file references match the actual file locations.
 
-NPM
+Node Package Manager (NPM)
 ####
 Node.js applications can include npm modules for additional functionality.
 
-- You can find Node modules at - https://www.npmjs.com/ 
+- You can find Node modules at -  https://www.npmjs.com/browse/star 
 - Docs at https://docs.npmjs.com/ 
-- Some useful npm modules - https://www.npmjs.com/browse/star 
+- Some key npm modules: 
     - express - framework to handle web requests
     - cheerio - server side JQuery for parsing html files
     - async - for organizing asynchronous tasks

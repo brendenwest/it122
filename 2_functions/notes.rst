@@ -239,6 +239,76 @@ Where the higher-order function executes the callback function for each item in 
 	  return previousValue + currentStudent.classes.length;
 	});
 
+ES6
+####
+
+ES6 (ECMAScript2015) is a significant update to JavaScript that introduces a number of features found in other modern languages. It's not required that you use these features, but you should be familiar with several that can be useful.
+
+**Default values** for function parameters. Instead of:
+
+	function makeLink(protocol, domain) {
+	  var protocol = protocol || 'http'; 
+	  ...
+	}
+
+You can use:
+
+	function makeLink(protocol = 'http', domain) {
+	  ...
+	}
+
+**Block-scoped variables** (let & const)
+
+In previous versions of JavaScript, variables are 'scoped' to the nearest enclosing function:
+
+	function func() {
+	    if (true) {
+	        var tmp = 123;
+	    }
+	    console.log(tmp); // prints 123
+	}
+
+This can sometimes cause problems, so ES6 introduced let and const which create variables that are block-scoped – they only exist within the innermost block that surrounds them:
+
+	function func() {
+	    if (true) {
+	        const tmp = 123;
+	    }
+	    console.log(tmp); // ReferenceError: tmp is not defined
+	}
+
+Note - Use const for variables whose value won't change.
+
+**Arrow functions** - enable shorter function syntax:
+
+	// ES5
+	var arr = [1, 2, 3];
+	var squares = arr.map(function (x) { return x * x });
+	
+	// ES6 
+	var arr = [1, 2, 3]; var squares = arr.map((x) => { return x * x });
+
+and also enable simpler handling of 'this' context to avoid conflict w/ the global 'this' variable:
+
+	// ES5 syntax
+	function Person() {
+	  var that = this; // assign this to local variable to avoid later conflict w/ global 'this'
+	  that.age = 0;
+	
+	  setInterval(function growUp() {
+	    // The callback refers to 'that' variable whose value is the Person object.
+	    that.age++;
+	  }, 1000);
+	}
+	
+	// ES6 syntax
+	function Person(){
+	  this.age = 0;
+	  setInterval(() => {
+	    this.age++; // 'this' now refers to the Person object
+	  }, 1000);
+	}
+
 Exercises
 ####
 - Save a copy of index.js for HW #1,
@@ -250,9 +320,3 @@ Exercises
 	- Return all data items sorted by a specified field,
 	- Return a count of data items,
 	- Delete a data item that matches specified field value
-- Add form fields corresponding to each field in your data object.
-- Update your form with:
-	- Entry fields corresponding to each property of your data object,
-	- Buttons to add, remove, update
-- Connect your buttons to corresponding server routes, to add, remove, and update data items.
-- Add a date field to your data. Return data items with date mapped to an integer value (e.g. day, month, year)

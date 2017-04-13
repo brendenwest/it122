@@ -1,4 +1,4 @@
-Week 3 - JavaScript Functions, Arrays & Modules
+JavaScript Functions, Arrays & Modules
 ####
 
 Reading

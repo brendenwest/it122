@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    </head>
+<body>
+<h2>Home</h2>
+<form method="POST" action="/search">
+    <input type="text" name="company" placeholder="company" required maxlength="100">
+    <input type="text" name="contact" placeholder="contact" maxlength="100">
+    <input type="date" name="close" placeholder="close" maxlength="100">
+    <button>Search</button>
+    <button>Add</button>
+    <button>Delete</button>
+</form>
+</body>
+
+<script>
+    $(document).ready(function(){
+        var buttons = $('button');
+        
+        buttons.on('click', function() {
+            var $this = $(this);
+            $("form").attr("action", $this.text().toLowerCase());
+        });
+    });
+</script>

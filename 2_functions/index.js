@@ -1,7 +1,7 @@
 'use strict'
 
 var http = require("http"), fs = require('fs'), qs = require("querystring");
-let book = require("../2_functions/book.js");
+let book = require("../lib/book.js");
 
 function serveStatic(res, path, contentType, responseCode){
   if(!responseCode) responseCode = 200;
@@ -33,7 +33,8 @@ http.createServer((req,res) => {
     case '/get':
       let found = book.get(params.title); // get book object
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.end('Results for ' + params.title + "\n" + JSON.stringify(found));
+      let results = (found) ? JSON.stringify(found) : "Not found";
+      res.end('Results for ' + params.title + "\n" + results);
       break;
     case '/delete':
       res.writeHead(200, {'Content-Type': 'text/plain'});

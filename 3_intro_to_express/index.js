@@ -1,45 +1,39 @@
-var express = require("express");
-var app = express();
+'use strict'
 
-// configure Express app
+let book = require("../lib/book.js");
+
+const express = require("express");
+const app = express();
+
 app.set('port', process.env.PORT || 3000);
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public')); // allows direct navigation to static files
 app.use(require("body-parser").urlencoded({extended: true}));
 
-var leads = [
-    {id: 0, company: "ibm", amount: 50000},
-    {id: 1, company: "sap", amount: 10000},
-    {id: 2, company: "msft", amount: 75000},
-    ];
-
+// send static file as response
 app.get('/', function(req,res){
     res.type('text/html');
-    // tell Express to use 'public' sub-folder in the week 2 directory
-    var options = { root: __dirname + '/public/' }
-    res.sendFile('home.html', options);    
+    res.sendFile(__dirname + '/public/home.html'); 
 });
 
+// send plain text response
 app.get('/about', function(req,res){
     res.type('text/plain');
     res.send('About page');
 });
 
-
+// handle form post
 app.post('/search', function(req,res){
     res.type('text/html');
-    var header = 'Searching for: ' + req.body.search_term + '<br>';
-    var found = leads.find(function(item) {
-       return item.name == req.body.search_term;
-    });
-    
+    var header = 'Searching for: ' + req.body.title + '<br>';
+    var found = book.get(req.body.title);
     if (found) {
-        res.send(header + "Amount: " + found.amount);
+        res.send(header + "" + JSON.stringify(found));
     } else {
         res.send(header + "Not found");
     }
 });
 
-
+// define 404 handler
 app.use(function(req,res) {
     res.type('text/plain'); 
     res.status(404);

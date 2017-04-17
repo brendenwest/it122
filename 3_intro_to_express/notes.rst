@@ -1,21 +1,19 @@
-Week 2 - Intro to Express
+Intro to Express
 ****
 
 Reading
 ####
-- Brown, Ch. 3 - Express ( templating section optional )
+- Brown, Ch. 3 - Express
+- Brown, Ch. 4 - npm & modules 
 - Brown, Ch. 6 - Request & Response objects
-- Brown, Ch. 10 - Middleware
- 
 
-Express overview
+Summary
 ####
-- Installing Express
-- module syntax
-- configuring app (port, static folder)
-- routes - get, post, use
-- routes - ordering and wildcards
- 
+- Installing Express & dependencies
+- Configuring Express app (port, static folder)
+- Working with routes
+- Basic templating
+- Processing forms
 
 Requests & Responses
 ####

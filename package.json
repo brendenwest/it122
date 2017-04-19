@@ -1,5 +1,5 @@
 {
-  "name": "itc298",
+  "name": "itc230",
   "version": "1.0.0",
   "description": "Sample project for Advanced Javascript",
   "main": "index.js",
@@ -8,19 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brendenwest/itc298-s16.git"
+    "url": "git+https://github.com/brendenwest/itc230.git"
   },
   "author": "Brenden West",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/brendenwest/itc298-s16/issues"
+    "url": "https://github.com/brendenwest/itc230/issues"
   },
-  "homepage": "https://github.com/brendenwest/itc298-s16#readme",
+  "homepage": "https://github.com/brendenwest/itc230#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
     "cheerio": "^0.20.0",
     "cors": "^2.7.1",
-    "express": "^4.13.4",
+    "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
     "mongoose": "^4.4.15"
   }

@@ -9,6 +9,10 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public')); // allows direct navigation to static files
 app.use(require("body-parser").urlencoded({extended: true}));
 
+let handlebars =  require("express-handlebars");
+app.engine(".html", handlebars({extname: '.html'}));
+app.set("view engine", ".html");
+
 // send static file as response
 app.get('/', function(req,res){
     res.type('text/html');
@@ -21,16 +25,18 @@ app.get('/about', function(req,res){
     res.send('About page');
 });
 
-// handle form post
-app.post('/search', function(req,res){
-    res.type('text/html');
+// handle GET 
+app.get('/delete', function(req,res){
+    let result = book.delete(req.query.title); // delete book object
+    res.render('delete', {title: req.query.title, result: result});
+});
+
+// handle POST
+app.post('/get', function(req,res){
+    console.log(req.body)
     var header = 'Searching for: ' + req.body.title + '<br>';
     var found = book.get(req.body.title);
-    if (found) {
-        res.send(header + "" + JSON.stringify(found));
-    } else {
-        res.send(header + "Not found");
-    }
+    res.render("details", {title: req.body.title, result: found});
 });
 
 // define 404 handler

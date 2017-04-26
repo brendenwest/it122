@@ -1,13 +1,14 @@
 **Setup Git**
 
-1. If you haven't done so already, **press the "fork" button** in the upper-right corner of this page to make a unique copy under your own account.
-2. **Install Git** on your development computer (if not already done), using the instructions at https://git-scm.com/book/en/v2/Getting-Started-Installing-Git.
-3. Navigate to the terminal on your dev computer.
-4. **Set up your identity** & preferred text editor (optional) according to instructions here - https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup 
-5. **Clone the Github repo** to your dev computer:
+1. **Install Git** on your development computer (if not already done), using the instructions at https://git-scm.com/book/en/v2/Getting-Started-Installing-Git.
+2. Open a terminal on your dev computer and **Set up your identity** & preferred text editor (optional) according to instructions here - https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup 
+3. Navigate to your project folder and initialize a local repo:
 
-  *git clone https://github.com/[YOUR GITHUB NAME]/itc298-s16*
+    $ git init 
 
+4. Connect to a remote Github.com repo to your local repo:
+
+    $ git remote add <alias> <remote_url>
 
 **Commiting changes to Github **
 
@@ -22,10 +23,13 @@ Git has a great variety of options, but the most basic steps for committing your
 3. Commit your changes to the local repo:
     git commit -m "COMMIT MESSAGE"
 
-4. Push your local changes to the remote repo:
+4. Pull changes from the remote repo:
+    git pull origin master
+
+5. Push local changes to the remote repo:
     git push origin master
 
-(by default, remote repo is called 'origin' and local repo is 'master')
+(by default, remote repo is called 'origin' and local repo branch is 'master')
 
 Other Useful Git commands:
 

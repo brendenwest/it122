@@ -4,7 +4,8 @@
   "description": "Sample project for Advanced Javascript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint **/*.js",
+    "test": "mocha test/*.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,10 @@
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
     "mongoose": "^4.4.15"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.2.0"
   }
 }

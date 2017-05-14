@@ -14,8 +14,8 @@ let handlebars =  require("express-handlebars");
 app.engine(".html", handlebars({extname: '.html', defaultLayout: 'main' }));
 app.set("view engine", ".html");
 
-app.get('/', function(req,res){
-    res.render('home' );    
+app.get('/', function(req,res) {
+    res.render('home', {books: book.getAll() });    
 });
 
 app.get('/about', function(req,res){
@@ -23,17 +23,22 @@ app.get('/about', function(req,res){
     res.render('about');
 });
 
+app.get('/get', function(req,res){
+    res.type('text/html');
+    var found = book.get(req.query.title);
+    res.render('details', {result: found} );    
+});
+
 app.post('/get', function(req,res){
     res.type('text/html');
-    console.log(req.body.title)
     var found = book.get(req.body.title);
     res.render('details', {result: found} );    
 });
 
 app.get('/delete', function(req,res){
     res.type('text/html');
-    var result = book.delete(req.body.title);
-    res.render('delete', {result: result} );    
+    var result = book.delete(req.query.title);
+    res.render('delete', {title: req.query.title, result: result} );    
 });
 
 app.use(function(req,res) {

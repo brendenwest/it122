@@ -1,17 +1,20 @@
-var Lead = require("../models/lead");
+var Book = require("../models/book");
 
-// insert several new docs into the database
-new Lead({company:"Ibm", contact:"fred", amount: 10000, close_date: "05-21-2016"}).save();
-new Lead({company:"google", contact:"sue", amount: 70000, close_date: "05-28-2016"}).save();
+// insert a new document into the database
+new Book({title:"dune", author:"frank herbert", amount: 10, pubdate: "05-21-1969"}).save();
+
+Book.count((err, result)=>{
+    console.log(result)
+});
 
 // find all documents 
-Lead.find(function(err, leads) {
+Book.find(function(err, result) {
     // output error if one occurred
     if (err) {
         console.log(err);
     } else {
         // otherwise output the array of documents
-        console.log(leads);
+        console.log(result);
     }
 });
 

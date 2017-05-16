@@ -1,0 +1,12 @@
+{{#if result}}
+    <h2>{{title}} details</h2>
+    <li>Title: {{result.title}}</li>
+    <li>Author: {{result.author}}</li>
+    <li>Pubdate: {{result.pubdate}}</li>
+    <li>Amount: {{result.amount}}</li>
+    <p>
+    <a href="/delete?title={{result.title}}">Delete</a>
+    </p>
+{{else}}
+        <h2>{{title}} not found</h2>
+{{/if}}

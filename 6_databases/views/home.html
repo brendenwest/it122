@@ -1,0 +1,12 @@
+<h2>Books Home</h2>
+<form method="POST" action="/get">
+    <input type="text" name="title" placeholder="title" required maxlength="100">
+    <button>Search</button>
+</form>
+{{#if books}}
+<h3>Inventory</h3>
+{{/if}}
+{{#each books}}
+    <li><a href="/get?title={{title}}">{{title}}</a></li>
+{{/each}}
+</body>

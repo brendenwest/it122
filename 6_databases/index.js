@@ -8,6 +8,9 @@ var Book = require("../models/book"); // use database model
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/../public'));
 app.use(require("body-parser").urlencoded({extended: true}));
+app.use((err, req, res, next) => {
+  console.log(err)
+})
 
 // set template engine
 let handlebars =  require("express-handlebars");
@@ -26,7 +29,7 @@ app.get('/about', (req,res) => {
     res.render('about');
 });
 
-app.get('/get', (req,res) => {
+app.get('/get', (req,res,next) => {
     Book.findOne({ title:req.query.title }, (err, book) => {
         if (err) return next(err);
         res.type('text/html');
@@ -34,7 +37,7 @@ app.get('/get', (req,res) => {
     });
 });
 
-app.post('/get', (req,res) => {
+app.post('/get', (req,res, next) => {
     Book.findOne({ title:req.body.title }, (err, book) => {
         if (err) return next(err);
         res.type('text/html');
@@ -50,6 +53,34 @@ app.get('/delete', (req,res) => {
             res.type('text/html');
             res.render('delete', {title: req.query.title, deleted: result.result.n !== 0, total: total } );    
         });
+    });
+});
+
+// api's
+app.get('/api/v1/book/:title', (req, res, next) => {
+    let title = req.params.title;
+    console.log(title);
+    Book.findOne({title: title}, (err, result) => {
+        if (err || !result) return next(err);
+        res.json( result );    
+    });
+});
+
+app.get('/api/v1/books', (req,res, next) => {
+    Book.find((err,results) => {
+        if (err || !results) return next(err);
+        res.json(results);
+    });
+});
+
+app.get('/api/v1/delete/:title', (req,res) => {
+    Book.remove({"title":req.params.title }, (err, result) => {
+        if (err) {
+            res.json({"result":err});
+        } else {
+            // return # of items deleted
+            res.json({"deleted": result.result.n});
+        }
     });
 });
 

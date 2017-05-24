@@ -84,6 +84,17 @@ app.get('/api/v1/delete/:title', (req,res) => {
     });
 });
 
+app.get('/api/v1/add/:title/:author/:pubdate', (req,res) => {
+    new Book({title:req.params.title, author:req.params.author, amount: 10, pubdate: req.params.pubdate }).save((err) =>{
+      if (err) {
+    	console.log(err);
+      }
+      else {
+          res.json({added: true})
+    }
+});
+});
+
 app.use((req,res) => {
     res.type('text/plain'); 
     res.status(404);

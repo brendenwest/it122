@@ -73,26 +73,22 @@ app.get('/api/v1/books', (req,res, next) => {
     });
 });
 
-app.get('/api/v1/delete/:title', (req,res) => {
+app.get('/api/v1/delete/:title', (req,res, next) => {
     Book.remove({"title":req.params.title }, (err, result) => {
-        if (err) {
-            res.json({"result":err});
-        } else {
-            // return # of items deleted
-            res.json({"deleted": result.result.n});
-        }
+        if (err) return next(err);
+        // return # of items deleted
+        res.json({"deleted": result.result.n});
     });
 });
 
-app.get('/api/v1/add/:title/:author/:pubdate', (req,res) => {
-    new Book({title:req.params.title, author:req.params.author, amount: 10, pubdate: req.params.pubdate }).save((err) =>{
-      if (err) {
-    	console.log(err);
-      }
-      else {
-          res.json({added: true})
-    }
-});
+app.get('/api/v1/add/:title/:author/:pubdate', (req,res, next) => {
+    // find & update existing item, or add new 
+    let title = req.params.title;
+    Book.update({ title: title}, {title:title, author: req.params.author, pubdate: req.params.pubdate }, {upsert: true }, (err, result) => {
+        if (err) return next(err);
+        // nModified = 0 for new item, = 1+ for updated item 
+        res.json({updated: result.nModified});
+    });
 });
 
 app.use((req,res) => {

@@ -1,16 +1,20 @@
 'use strict'
 
-var express = require("express");
-var app = express();
-var Book = require("../models/book"); // use database model
+let express = require("express");
+let bodyParser = require("body-parser");
+let Book = require("../models/book"); // use database model
+
+let app = express();
 
 // configure Express app
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/../public'));
-app.use(require("body-parser").urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use('/api', require("cors")());
 app.use((err, req, res, next) => {
-  console.log(err)
-})
+  console.log(err);
+});
 
 // set template engine
 let handlebars =  require("express-handlebars");
@@ -51,6 +55,21 @@ app.get('/api/v1/delete/:title', (req,res, next) => {
         if (err) return next(err);
         // return # of items deleted
         res.json({"deleted": result.result.n});
+    });
+});
+
+app.post('/api/v1/add/', (req,res, next) => {
+    // find & update existing item, or add new 
+    let id = req.body._id;
+    console.log(req.body)
+    Book.updateOne({ _id: id}, {title:req.body.title, author: req.body.author, pubdate: req.body.pubdate }, {upsert: true }, (err, result) => {
+        if (err) return next(err);
+        // nModified = 0 for new item, = 1+ for updated item 
+        console.log(result)
+        if (result.upserted) {
+            id = result.upserted._id;
+        }
+        res.json({updated: result.nModified, _id: id});
     });
 });
 

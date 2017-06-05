@@ -46,36 +46,45 @@
       // show item details
       showDetails(event){
         // event.target is list item clicked
-        // 
         let editItem = this.state.data.find((item) => {
           return item._id == event.target.id;
         });
         this.setState({curItem: editItem});
       }
 
-      // Handle item delete
-      onSave(newItem){
-        let newData;
-        if (!newItem._id) {
-          newData = this.state.data;
-          newItem._id = newData.length;
-          newData.push(newItem);
-        } else {
-          newData = this.state.data.map((item) => {
-            if (item._id === newItem._id) {
-              item = newItem; 
-            }
-            return item;
-          });          
-        }
+      // Handle item save
+      onSave(newItem) {
+        
+        fetch("/api/v1/add/", {
+          method: "POST",
+        	headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newItem)
+        }).then(res => res.json())
+        	.then((json) => {
 
-        // Update state with new array
-        this.setState({data: newData});
+          let newData;
+          if (!newItem._id) { // add new item to array
+            newData = this.state.data;
+            newItem._id = json._id;
+            newData.push(newItem);
+          } else { // update existing item 
+            newData = this.state.data.map((item) => {
+              if (item._id === newItem._id) {
+                item = newItem; 
+              }
+              return item;
+            });          
+          }
+  
+          // Update state with new array
+          this.setState({data: newData});
+        });
       }
       
       // Handle item delete
       onDelete(id){
         // Filter all items except the one to be removed
+        title = title.toLowerCase();
         const remainder = this.state.data.filter((item) => {
           return item._id !== id;
         });
@@ -101,7 +110,6 @@
     }
     
     // UI elements
-
     const Title = () => {
         return (
         <div>
@@ -158,13 +166,16 @@
         this.handleChange = this.handleChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleReset = this.handleReset.bind(this);
       }
 
       componentWillReceiveProps(nextProps) {
-        this.setState({_id: nextProps.item._id || ""})
-        this.setState({title: nextProps.item.title || ""})
-        this.setState({author: nextProps.item.author || ""})
-        this.setState({pubdate: nextProps.item.pubdate || ""})
+        this.setState({
+          _id: nextProps.item._id || "",
+          title: nextProps.item.title || "",
+          author: nextProps.item.author || "",
+          pubdate: nextProps.item.pubdate || ""
+        });
       }
 
       handleChange (event) {
@@ -173,11 +184,17 @@
 
       handleSave(event) {
         // pass local state to app-level for saving to data array
-        this.props.save({_id: this.state._id, title: this.state.title, author: this.state.author, pubdate: this.state.pubdate});
+        if (this.state.title) { // entries must have at least a title
+          this.props.save({_id: this.state._id, title: this.state.title, author: this.state.author, pubdate: this.state.pubdate});
+        }
       };
 
       handleDelete (event) {
-        this.props.delete(this.state._id);
+        this.props.delete(this.state.title);
+      };
+
+      handleReset (event) {
+        this.setState({_id:"", author:"", title:"", pubdate:""});
       };
 
       render() {
@@ -189,7 +206,7 @@
               <input type="text" name="author" placeholder="author" value={this.state.author} onChange={this.handleChange} />
               <input type="text" name="pubdate" placeholder="pub. date" value={this.state.pubdate} onChange={this.handleChange} />
               <p/>
-              <button onClick={this.handleSave}>Save</button>  <button>Reset</button> <button onClick={this.handleDelete} >Delete</button>
+              <button onClick={this.handleSave}>Save</button>  <button onClick={this.handleReset}>Reset</button> <button onClick={this.handleDelete} >Delete</button>
           </div>
           );
 

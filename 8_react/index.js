@@ -60,17 +60,22 @@ app.get('/api/v1/delete/:title', (req,res, next) => {
 
 app.post('/api/v1/add/', (req,res, next) => {
     // find & update existing item, or add new 
-    let id = req.body._id;
-    console.log(req.body)
-    Book.updateOne({ _id: id}, {title:req.body.title, author: req.body.author, pubdate: req.body.pubdate }, {upsert: true }, (err, result) => {
-        if (err) return next(err);
-        // nModified = 0 for new item, = 1+ for updated item 
-        console.log(result)
-        if (result.upserted) {
-            id = result.upserted._id;
-        }
-        res.json({updated: result.nModified, _id: id});
-    });
+    if (!req.body._id) { // insert new document
+        let book = new Book({title:req.body.title,author:req.body.author,pubdate:req.body.pubdate});
+        book.save((err,newBook) => {
+            if (err) return next(err);
+            console.log(newBook)
+            res.json({updated: 0, _id: newBook._id});
+        });
+    } else { // update existing document
+        Book.updateOne({ _id: req.body._id}, {title:req.body.title, author: req.body.author, pubdate: req.body.pubdate }, {upsert: true }, (err, result) => {
+            if (err) return next(err);
+            if (result.upserted) {
+                id = result.upserted._id;
+            }
+            res.json({updated: result.nModified, _id: id});
+        });
+    }
 });
 
 app.get('/api/v1/add/:title/:author/:pubdate', (req,res, next) => {

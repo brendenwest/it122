@@ -68,12 +68,9 @@ app.post('/api/v1/add/', (req,res, next) => {
             res.json({updated: 0, _id: newBook._id});
         });
     } else { // update existing document
-        Book.updateOne({ _id: req.body._id}, {title:req.body.title, author: req.body.author, pubdate: req.body.pubdate }, {upsert: true }, (err, result) => {
+        Book.updateOne({ _id: req.body._id}, {title:req.body.title, author: req.body.author, pubdate: req.body.pubdate }, (err, result) => {
             if (err) return next(err);
-            if (result.upserted) {
-                id = result.upserted._id;
-            }
-            res.json({updated: result.nModified, _id: id});
+            res.json({updated: result.nModified, _id: req.body._id});
         });
     }
 });

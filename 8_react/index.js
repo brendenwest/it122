@@ -50,8 +50,8 @@ app.get('/api/v1/books', (req,res, next) => {
     });
 });
 
-app.get('/api/v1/delete/:title', (req,res, next) => {
-    Book.remove({"title":req.params.title }, (err, result) => {
+app.get('/api/v1/delete/:id', (req,res, next) => {
+    Book.remove({"_id":req.params.id }, (err, result) => {
         if (err) return next(err);
         // return # of items deleted
         res.json({"deleted": result.result.n});

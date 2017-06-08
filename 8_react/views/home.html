@@ -83,14 +83,18 @@
       
       // Handle item delete
       onDelete(id){
-        // Filter all items except the one to be removed
-        title = title.toLowerCase();
-        const remainder = this.state.data.filter((item) => {
-          return item._id !== id;
+        fetch("/api/v1/delete/" + id).then((response) => {
+          return response.json();
+        }).then((results) => {
+          console.log(results)  
+          // Filter all items except the one to be removed
+          const remainder = this.state.data.filter((item) => {
+            return item._id !== id;
+          });
+          // Update state with new array
+          this.setState({data: remainder});
+          this.setState({curItem: {}});
         });
-        // Update state with new array
-        this.setState({data: remainder});
-        this.setState({curItem: {}});
       }
     
       render() {
@@ -190,7 +194,7 @@
       };
 
       handleDelete (event) {
-        this.props.delete(this.state.title);
+        this.props.delete(this.state._id);
       };
 
       handleReset (event) {

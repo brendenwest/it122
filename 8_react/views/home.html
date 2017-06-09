@@ -32,8 +32,10 @@
 
         // bind App context to functions for reference in sub components
         this.onSearchChange = this.onSearchChange.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        this.onClear = this.onClear.bind(this);
 
       }
 
@@ -52,9 +54,24 @@
         this.setState({curItem: editItem});
       }
 
+      onClear() {
+        this.setState({curItem: {}});
+      }
+
+      // handle detail changes
+      onChange(event) {
+        var newItem = this.state.curItem;
+        newItem[event.target.name] = event.target.value
+        this.setState({curItem: newItem});
+      }
+
       // Handle item save
-      onSave(newItem) {
-        
+      onSave() {
+        let newItem = this.state.curItem;
+        if (!newItem.title) {
+          return;
+        }
+
         fetch("/api/v1/add/", {
           method: "POST",
         	headers: { 'Content-Type': 'application/json' },
@@ -82,11 +99,12 @@
       }
       
       // Handle item delete
-      onDelete(id){
+      onDelete(){
+        let id = this.state.curItem._id;
+        
         fetch("/api/v1/delete/" + id).then((response) => {
           return response.json();
         }).then((results) => {
-          console.log(results)  
           // Filter all items except the one to be removed
           const remainder = this.state.data.filter((item) => {
             return item._id !== id;
@@ -102,13 +120,13 @@
         return <div>
           <Title/>
           <SearchForm entry={this.state.entry} onEntryChange={this.onSearchChange} />
-          <span>
             <ItemList
               items={this.state.data} 
               filter={this.state.filter}
               show={this.showDetails.bind(this)}
             />
-          </span><span><ItemDetails item={this.state.curItem} save={this.onSave} delete={this.onDelete} /></span>
+          <ItemDetails item={this.state.curItem} change={this.onChange} />
+          <button onClick={this.onSave}>Save</button>  <button onClick={this.onClear}>Reset</button> <button onClick={this.onDelete}>Delete</button>
           </div>;
       }
     }
@@ -158,6 +176,23 @@
     }
 
     class ItemDetails extends React.Component {
+      
+      render() {
+        return (
+          <div>
+            <h3>Details:</h3>
+            <form onChange={this.props.change}>
+              <input type="text" name="title" placeholder="title" value={this.props.item.title || ""} />
+              <input type="text" name="author" placeholder="author" value={this.props.item.author || ""} />
+              <input type="text" name="pubdate" placeholder="pub. date" value={this.props.item.pubdate || ""} />
+              <p/>
+            </form>
+          </div>
+        );
+      }      
+    }
+  
+    class ItemDetails_ extends React.Component {
       constructor(props) {
         super(props);
         // state values must not be 'undefined', to avoid 'uncontrolled' form warning

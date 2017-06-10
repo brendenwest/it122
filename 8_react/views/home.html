@@ -17,7 +17,14 @@
 
 <!-- NOTE: script type declaration to support JSX -->
 <script type="text/babel">
-
+  
+  function getISOstring(dateString) {
+       let date = new Date(dateString);
+       let month = (date.getMonth() >=9) ? date.getMonth()+1 : "0" + (date.getMonth()+1);
+       let day = (date.getDay() >=10) ? date.getDay() : "0" + date.getDay();
+       return date.getFullYear() + "-" + month + "-" + day;    
+  }
+  
     // define app container Component
     class BookApp extends React.Component{
       constructor(props){
@@ -174,9 +181,9 @@
       });
       return <ul>{itemNodes}</ul>;
     }
-
+    
     class ItemDetails extends React.Component {
-      
+    
       render() {
         return (
           <div>
@@ -184,7 +191,7 @@
             <form onChange={this.props.change}>
               <input type="text" name="title" placeholder="title" value={this.props.item.title || ""} />
               <input type="text" name="author" placeholder="author" value={this.props.item.author || ""} />
-              <input type="text" name="pubdate" placeholder="pub. date" value={this.props.item.pubdate || ""} />
+              <input type="date" name="pubdate" placeholder="pub. date" value={getISOstring(this.props.item.pubdate) || ""} />
               <p/>
             </form>
           </div>
@@ -192,66 +199,6 @@
       }      
     }
   
-    class ItemDetails_ extends React.Component {
-      constructor(props) {
-        super(props);
-        // state values must not be 'undefined', to avoid 'uncontrolled' form warning
-        this.state = { 
-          _id: this.props.item._id || "",
-          title: this.props.item.title || "",
-          author: this.props.item.author || "",
-          pubdate: this.props.item.pubdate || ""
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleReset = this.handleReset.bind(this);
-      }
-
-      componentWillReceiveProps(nextProps) {
-        this.setState({
-          _id: nextProps.item._id || "",
-          title: nextProps.item.title || "",
-          author: nextProps.item.author || "",
-          pubdate: nextProps.item.pubdate || ""
-        });
-      }
-
-      handleChange (event) {
-        this.setState({[event.target.name]: event.target.value});
-      };
-
-      handleSave(event) {
-        // pass local state to app-level for saving to data array
-        if (this.state.title) { // entries must have at least a title
-          this.props.save({_id: this.state._id, title: this.state.title, author: this.state.author, pubdate: this.state.pubdate});
-        }
-      };
-
-      handleDelete (event) {
-        this.props.delete(this.state._id);
-      };
-
-      handleReset (event) {
-        this.setState({_id:"", author:"", title:"", pubdate:""});
-      };
-
-      render() {
-          return (
-          <div>
-            <h3>Details:</h3>
-              <input type="hidden" name="_id" value={this.state._id} onChange={this.handleChange} readOnly/>
-              <input type="text" name="title" placeholder="title" value={this.state.title} onChange={this.handleChange} />
-              <input type="text" name="author" placeholder="author" value={this.state.author} onChange={this.handleChange} />
-              <input type="text" name="pubdate" placeholder="pub. date" value={this.state.pubdate} onChange={this.handleChange} />
-              <p/>
-              <button onClick={this.handleSave}>Save</button>  <button onClick={this.handleReset}>Reset</button> <button onClick={this.handleDelete} >Delete</button>
-          </div>
-          );
-
-      }
-    }
-
     ReactDOM.render(<BookApp />, document.getElementById('root'));
 
 </script>

@@ -19,10 +19,11 @@
 <script type="text/babel">
   
   function getISOstring(dateString) {
-       let date = new Date(dateString);
-       let month = (date.getMonth() >=9) ? date.getMonth()+1 : "0" + (date.getMonth()+1);
-       let day = (date.getDay() >=10) ? date.getDay() : "0" + date.getDay();
-       return date.getFullYear() + "-" + month + "-" + day;    
+    let date = (dateString) ? new Date(dateString) : new Date();
+    console.log(date)
+    let month = (date.getMonth() >=9) ? date.getMonth()+1 : "0" + (date.getMonth()+1);
+    let day = (date.getDate() >=10) ? date.getDate() : "0" + date.getDate();
+    return date.getFullYear() + "-" + month + "-" + day;    
   }
   
     // define app container Component
@@ -47,9 +48,10 @@
       }
 
       // search handler
-      onSearchChange(entry) {
+      onSearchChange(event) {
+        console.log(event)
         // set search term. react will handle component updates 
-        this.setState({filter: entry.toLowerCase() });
+        this.setState({filter: event.target.value.toLowerCase() });
       }
 
       // show item details
@@ -61,6 +63,7 @@
         this.setState({curItem: editItem});
       }
 
+      // clear details form
       onClear() {
         this.setState({curItem: {}});
       }
@@ -125,13 +128,13 @@
       render() {
         // Render JSX
         return <div>
-          <Title/>
-          <SearchForm entry={this.state.entry} onEntryChange={this.onSearchChange} />
-            <ItemList
+          <Title title="Book Store" />
+          <SearchForm filter={this.state.filter} change={this.onSearchChange} />
+          <ItemList
               items={this.state.data} 
               filter={this.state.filter}
               show={this.showDetails.bind(this)}
-            />
+          />
           <ItemDetails item={this.state.curItem} change={this.onChange} />
           <button onClick={this.onSave}>Save</button>  <button onClick={this.onClear}>Reset</button> <button onClick={this.onDelete}>Delete</button>
           </div>;
@@ -139,38 +142,25 @@
     }
     
     // UI elements
-    const Title = () => {
+    const Title = ({title}) => {
         return (
-        <div>
-           <div>
-              <h1>Book Store</h1>
-           </div>
-        </div>
+           <div><h2>{title}</h2></div>
         );
     }
 
     class SearchForm extends React.Component {
-      constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-      }
-
-      handleChange (event) {
-        this.props.onEntryChange(event.target.value);
-      };
-
       render() {
         return (
           <div>
             <input
-              type="text" placeholder="enter a search term"
-              value={this.props.entry}
-              onChange={this.handleChange}
+              type="text" placeholder="Enter a search term"
+              value={this.props.filter}
+              onChange={this.props.change}
             />
           </div>
         );
       }
-    };
+    }
 
     const ItemList = ({items, filter, show}) => {
       // return items that match search entry field, or all items if no entry
@@ -183,7 +173,6 @@
     }
     
     class ItemDetails extends React.Component {
-    
       render() {
         return (
           <div>
@@ -191,7 +180,7 @@
             <form onChange={this.props.change}>
               <input type="text" name="title" placeholder="title" value={this.props.item.title || ""} />
               <input type="text" name="author" placeholder="author" value={this.props.item.author || ""} />
-              <input type="date" name="pubdate" placeholder="pub. date" value={getISOstring(this.props.item.pubdate) || ""} />
+              <input type="date" name="pubdate" placeholder="pub. date" value={getISOstring(this.props.item.pubdate)} />
               <p/>
             </form>
           </div>

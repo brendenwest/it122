@@ -11,13 +11,16 @@ Reading
 
 Topics
 ####
+
+This week, we'll recap core Javascript functionality that's central to Node.js programming - functions & objects. We'll use this knowledge to encapsulate and extend features you implemented the previous week.
+
 - Javascript Functions
 - Scope & closure
 - Chaining
 - Callbacks & Asynch operations
 - Promises
 - Node modules
-- Javascript Object Collections
+- Javascript Objects
 - ES6 syntax
 
 Javascript functions
@@ -25,22 +28,26 @@ Javascript functions
 Javascript function and object behavior is central to Node.js programming. So it’s important to understand key functional concepts:
 - Functions are defined with the ‘function’ keyword
 - Functions can be ‘anonymous’ or named
-- Functions can take parameters
+- Functions can take parameters:
+
 	function (param1, param2) { return param1 + param2; }
 	function myFunction(param1, param2) { return param1 + param2; }
 
-- Functions can return a value to the step that called them
+- Functions can return a value to the step that called them:
+
 	var total = myFunction(3, 4); // total = 7
 	
 - Functions are objects that can be referenced and passed to other functions:
+
 	var myFunction = function (param1, param2) { return param1 + param2; }
 	xar x = anotherFunction(myFunction(param3, param4)); // calls 
 
-- Functions within objects are called ‘methods’
+- Functions within objects are called **methods**
 
 Scope & Closure
 ####
 Scope controls the visibility and lifecycle of Javascript objects to reduce naming conflicts and provide memory management. Scope in Javascript is a bit different than in other languages, and objects have ‘scope’ in the function where they are defined. Global objects are those defined outside of any funciton or object.
+
 	var counter = 1; // counter is available throughout the app
 
 	function myFunction() {
@@ -52,7 +59,7 @@ Scope controls the visibility and lifecycle of Javascript objects to reduce nami
 	console.log(counter);	// counter = 3
 	console.log(y);	// y is undefined here
 
-Javascript’s approach to scope allows object methods to access variables local to the function that created them, even after the function has executed. For example:
+Javascript methods can access variables local to the function that created them, even after the function has executed. For example:
 
 	var myObject = (function(){
 		var counter = 0;
@@ -67,14 +74,14 @@ Javascript’s approach to scope allows object methods to access variables local
 	});
 
 Creates an object with 2 methods - 
-myObject.increment(n); // increments the local variable ‘counter,
-myObject.getValue(); // returns the current value of ‘counter’
+- myObject.increment(n); // increments the local variable ‘counter,
+- myObject.getValue(); // returns the current value of ‘counter’
 
 With this approach, you can control how ‘counter’ is accessed and apply custom logic.
 
 Chaining
 ####
-Method chaining is a way to return an object from a method call for use in a sequence of operations. 
+Method chaining is a way to return an object from a method call for use in a subsequent operation. 
 
 For example, you might have a sequence of operations like these:
 
@@ -316,7 +323,7 @@ Exercises
 - Call your new module into index.js
 - Add module methods, and corresponding server routes, to;
 	- Return all data items
-	- Return all data items with field matching,
+	- Return all data items that match a field value
 	- Return all data items sorted by a specified field,
 	- Return a count of data items,
 	- Delete a data item that matches specified field value

@@ -23,7 +23,7 @@ First be sure to install current version of Express & update your package.json f
 
     npm install --save express
 
-Also make sure to exclude any node modules from your git repository, by adding this to your .gitignore file:
+Also make sure to exclude any node modules from your git repository, by adding this to your **.gitignore** file:
 
     #ignore files installed by npm
     node_modules
@@ -90,7 +90,7 @@ Express can use a 'view' to render dynamic information that differs with each re
 - Views can be composed of one or more 'layouts'.
 - Express expects the views in a /views folder, and layouts in /views/layouts
 
-If using handlebars, views and layouts are expected to have a .handlebars file extension but you can override that,
+If using handlebars, views and layouts are expected to have a **.handlebars** file extension but you can override that,
 
 Views must be in the location and format required by the view engine you specify for the app. 
 
@@ -101,14 +101,14 @@ Views must be in the location and format required by the view engine you specify
 The Express render method sends a view in the client response:
 
     // send content of 'home' view
-    app.get('/', function(req,res){
+    app.get('/', (req,res) => {
      res.render('home');
     });
 
 Express can render the view with dynamic content passed as a JSON object: 
 
     // send content of 'home' view
-    app.get('/get', function(req,res){
+    app.get('/get', (req,res) => {
      let result = book.get(req.query.title);
      res.render('details', {title: "Dune", result: result });
     });

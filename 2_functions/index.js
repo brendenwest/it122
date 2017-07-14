@@ -18,8 +18,8 @@ function serveStatic(res, path, contentType, responseCode){
 }
 
 http.createServer((req,res) => {
-  let url = req.url.split("?");  // seperate route from query string
-  let params = qs.parse(url[1]); // convert query string to object
+  let url = req.url.split("?");  // separate route from query string
+  let query = qs.parse(url[1]); // convert query string to object
   let path = url[0].toLowerCase();
 
   switch(path) {
@@ -31,10 +31,10 @@ http.createServer((req,res) => {
       res.end('About');
       break;
     case '/get':
-      let found = book.get(params.title); // get book object
+      let found = book.get(query.title); // get book object
       res.writeHead(200, {'Content-Type': 'text/plain'});
       let results = (found) ? JSON.stringify(found) : "Not found";
-      res.end('Results for ' + params.title + "\n" + results);
+      res.end('Results for ' + query.title + "\n" + results);
       break;
     case '/delete':
       res.writeHead(200, {'Content-Type': 'text/plain'});

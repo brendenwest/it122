@@ -18,14 +18,15 @@ app.use((err, req, res, next) => {
 
 // set template engine
 let handlebars =  require("express-handlebars");
-app.engine(".html", handlebars({extname: '.html', defaultLayout: 'main' }));
+app.engine(".html", handlebars({extname: '.html'}));
 app.set("view engine", ".html");
 
-app.get('/', (req,res) => {
+app.get('/', (req,res, next) => {
     Book.find((err,books) => {
+        console.log(books)
         if (err) return next(err);
         res.render('home', {books: JSON.stringify(books)});    
-    })
+    });
 });
 
 app.get('/about', (req,res) => {

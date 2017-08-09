@@ -7,20 +7,37 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+ 
+ <style type="text/css">
+  .flex-container {
+      display: -webkit-flex;
+      display: flex;
+      width: 600px;
+      background-color: lightgrey;
+  }
 
+  #item-list {
+      background-color: cornflowerblue;
+      width: 30%;
+      padding: 0px 10px 0px 0px;
+  }
+  #item-details {
+      background-color: yellow;
+      width: 75%;
+      padding: 10px;
+  }
+</style>
 </head>
 <body>
 
-    <div class="container">
-      <div id="root">  </div>
-    </div>  
+  <div id="root">  </div>
 
 <!-- NOTE: script type declaration to support JSX -->
 <script type="text/babel">
   
+  // convert date value to yyyy-mm-dd expected by HTML5 date field
   function getISOstring(dateString) {
     let date = (dateString) ? new Date(dateString) : new Date();
-    console.log(date)
     let month = (date.getMonth() >=9) ? date.getMonth()+1 : "0" + (date.getMonth()+1);
     let day = (date.getDate() >=10) ? date.getDate() : "0" + date.getDate();
     return date.getFullYear() + "-" + month + "-" + day;    
@@ -49,7 +66,6 @@
 
       // search handler
       onSearchChange(event) {
-        console.log(event)
         // set search term. react will handle component updates 
         this.setState({filter: event.target.value.toLowerCase() });
       }
@@ -126,18 +142,21 @@
       }
     
       render() {
-        // Render JSX
-        return <div>
+        // render app elements
+        return (
+          <div>
           <Title title="Book Store" />
           <SearchForm filter={this.state.filter} change={this.onSearchChange} />
-          <ItemList
-              items={this.state.data} 
-              filter={this.state.filter}
-              show={this.showDetails.bind(this)}
-          />
-          <ItemDetails item={this.state.curItem} change={this.onChange} />
-          <button onClick={this.onSave}>Save</button>  <button onClick={this.onClear}>Reset</button> <button onClick={this.onDelete}>Delete</button>
-          </div>;
+          <div className="flex-container">
+            <ItemList
+                items={this.state.data} 
+                filter={this.state.filter}
+                show={this.showDetails.bind(this)}
+            />
+            <ItemDetails item={this.state.curItem} change={this.onChange} save={this.onSave} reset={this.onClear} delete={this.onDelete} />
+            </div>
+          </div>
+          );
       }
     }
     
@@ -148,18 +167,16 @@
         );
     }
 
-    class SearchForm extends React.Component {
-      render() {
+    const SearchForm = (props) => {
         return (
           <div>
             <input
               type="text" placeholder="Enter a search term"
-              value={this.props.filter}
-              onChange={this.props.change}
-            />
+              value={props.filter}
+              onChange={props.change}
+            /><p/>
           </div>
         );
-      }
     }
 
     const ItemList = ({items, filter, show}) => {
@@ -169,23 +186,22 @@
           return <li id={item._id} key={item._id} onClick={show}>{item.title}</li>
         }
       });
-      return <ul>{itemNodes}</ul>;
+      return <span id="item-list"><ul>{itemNodes}</ul></span>;
     }
     
-    class ItemDetails extends React.Component {
-      render() {
+    const ItemDetails = (props) => {
         return (
-          <div>
+          <span id="item-details">
             <h3>Details:</h3>
-            <form onChange={this.props.change}>
-              <input type="text" name="title" placeholder="title" value={this.props.item.title || ""} />
-              <input type="text" name="author" placeholder="author" value={this.props.item.author || ""} />
-              <input type="date" name="pubdate" placeholder="pub. date" value={getISOstring(this.props.item.pubdate)} />
+            <form onChange={props.change}>
+              <input type="text" name="title" placeholder="title" value={props.item.title || ""} /><p/>
+              <input type="text" name="author" placeholder="author" value={props.item.author || ""} /><p/>
+              <input type="date" name="pubdate" placeholder="pub. date" value={getISOstring(props.item.pubdate)} />
               <p/>
             </form>
-          </div>
+            <button onClick={props.save}>Save</button>  <button onClick={props.reset}>Reset</button> <button onClick={props.delete}>Delete</button>
+          </span>
         );
-      }      
     }
   
     ReactDOM.render(<BookApp />, document.getElementById('root'));

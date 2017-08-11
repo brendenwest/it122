@@ -2,11 +2,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Book Store</title>
+  <title>React App Demo</title>
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.0/react.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.0/react-dom.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
  
  <style type="text/css">
   .flex-container {
@@ -30,32 +30,23 @@
 </head>
 <body>
 
-  <div id="root">  </div>
+  <div id="root"></div>
 
-<!-- NOTE: script type declaration to support JSX -->
+<!-- NOTE: text/babel type required to support JSX -->
 <script type="text/babel">
   
-  // convert date value to yyyy-mm-dd expected by HTML5 date field
-  function getISOstring(dateString) {
-    let date = (dateString) ? new Date(dateString) : new Date();
-    let month = (date.getMonth() >=9) ? date.getMonth()+1 : "0" + (date.getMonth()+1);
-    let day = (date.getDate() >=10) ? date.getDate() : "0" + date.getDate();
-    return date.getFullYear() + "-" + month + "-" + day;    
-  }
-  
-    // define app container Component
+    // define overal app component
     class BookApp extends React.Component{
       constructor(props){
-        // Pass props to parent class
-        super(props);
-        // Set initial state w/ hard-coded data
+        super(props); // be sure to first instantiate parent class
+        // Set initial state using data from server application
         this.state = {
-          data: {{{books}}},
+          items: {{{books}}},
           filter: "", // search term 
           curItem: {} // current selected item 
         };
 
-        // bind App context to functions for reference in sub components
+        // bind App context to functions used by child components
         this.onSearchChange = this.onSearchChange.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onSave = this.onSave.bind(this);
@@ -64,16 +55,16 @@
 
       }
 
-      // search handler
+      // handle changes to search form
       onSearchChange(event) {
         // set search term. react will handle component updates 
         this.setState({filter: event.target.value.toLowerCase() });
       }
 
-      // show item details
+      // show item details when list item clicked
       showDetails(event){
-        // event.target is list item clicked
-        let editItem = this.state.data.find((item) => {
+        // event.target is item clicked. Assumes each item has an id attribute
+        let editItem = this.state.items.find((item) => {
           return item._id == event.target.id;
         });
         this.setState({curItem: editItem});
@@ -107,11 +98,11 @@
 
           let newData;
           if (!newItem._id) { // add new item to array
-            newData = this.state.data;
+            newData = this.state.items;
             newItem._id = json._id;
             newData.push(newItem);
           } else { // update existing item 
-            newData = this.state.data.map((item) => {
+            newData = this.state.items.map((item) => {
               if (item._id === newItem._id) {
                 item = newItem; 
               }
@@ -120,7 +111,7 @@
           }
   
           // Update state with new array
-          this.setState({data: newData});
+          this.setState({items: newData});
         });
       }
       
@@ -132,12 +123,11 @@
           return response.json();
         }).then((results) => {
           // Filter all items except the one to be removed
-          const remainder = this.state.data.filter((item) => {
+          const remainder = this.state.items.filter((item) => {
             return item._id !== id;
           });
           // Update state with new array
-          this.setState({data: remainder});
-          this.setState({curItem: {}});
+          this.setState({items: remainder, curItem: {}});
         });
       }
     
@@ -149,7 +139,7 @@
           <SearchForm filter={this.state.filter} change={this.onSearchChange} />
           <div className="flex-container">
             <ItemList
-                items={this.state.data} 
+                items={this.state.items} 
                 filter={this.state.filter}
                 show={this.showDetails.bind(this)}
             />
@@ -206,6 +196,14 @@
   
     ReactDOM.render(<BookApp />, document.getElementById('root'));
 
+  // convert date value to yyyy-mm-dd expected by HTML5 date field
+  function getISOstring(dateString) {
+    let date = (dateString) ? new Date(dateString) : new Date();
+    let month = (date.getMonth() >=9) ? date.getMonth()+1 : "0" + (date.getMonth()+1);
+    let day = (date.getDate() >=10) ? date.getDate() : "0" + date.getDate();
+    return date.getFullYear() + "-" + month + "-" + day;    
+  }
+  
 </script>
 </body>
 </html>

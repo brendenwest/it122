@@ -1,0 +1,61 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>React App Starter Page</title>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.2/react.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/15.6.1/react-dom.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+
+</head>
+<body>
+
+  <div id="root"></div>
+
+<!-- NOTE: script type declaration to support JSX -->
+<script type="text/babel">
+
+    // UI elements
+    
+    const Title = ({title}) => {
+      // simple component w/ single property
+      return <div><h2>{title}</h2></div>;
+    }
+    
+    const ItemList = ({items, filter, show}) => {
+      // generate array of item nodes
+      const itemNodes = items.map((item) => {
+          return <li id={item._id} key={item._id} onClick={show}>{item.title}</li>
+      });
+      return <ul>{itemNodes}</ul>;
+    }
+    
+    class MyApp extends React.Component {
+      constructor(props){
+        super(props);
+
+        // data from server 
+        this.state = {
+          items: [{"_id":"5920774cf36d283b70a7c9f9","title":"Harry Potter","author":"jk rowling","amount":5,"pubdate":"1993-02-12T00:00:00.000Z"},{"_id":"592077c7f36d283b70a7ca03","title":"Animal Farm","author":"Georgia orwell","amount":16,"pubdate":"2017-05-14T00:00:00.000Z"},{"_id":"593a55c4ab37190900c47a47","title":"1984","author":"George Orwell","pubdate":"1970-01-01T00:00:01.956Z","__v":0},{"_id":"598a58f3bb94a6138d5b7c0b","title":"Lord of the Flies","author":"William Golding","pubdate":"2017-01-03T00:00:00.000Z","__v":0}]
+        };
+      }
+      
+      render() {
+        return (
+          <div>
+          <Title title="My Stuff" />
+          <ItemList items={this.state.items}/>
+          </div>
+        );
+      }
+          
+    }
+
+    
+    ReactDOM.render(<MyApp />, document.getElementById('root'));
+
+</script>  
+
+</body>
+</html>

@@ -23,7 +23,6 @@ app.set("view engine", ".html");
 
 app.get('/', (req,res, next) => {
     Book.find((err,books) => {
-        console.log(books)
         if (err) return next(err);
         res.render('home', {books: JSON.stringify(books)});    
     });
@@ -37,7 +36,6 @@ app.get('/about', (req,res) => {
 // api's
 app.get('/api/v1/book/:title', (req, res, next) => {
     let title = req.params.title;
-    console.log(title);
     Book.findOne({title: title}, (err, result) => {
         if (err || !result) return next(err);
         res.json( result );    
@@ -65,7 +63,6 @@ app.post('/api/v1/add/', (req,res, next) => {
         let book = new Book({title:req.body.title,author:req.body.author,pubdate:req.body.pubdate});
         book.save((err,newBook) => {
             if (err) return next(err);
-            console.log(newBook)
             res.json({updated: 0, _id: newBook._id});
         });
     } else { // update existing document

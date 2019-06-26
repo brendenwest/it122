@@ -16,6 +16,7 @@ function serveStatic(res, path, contentType, responseCode){
 }
 
 http.createServer(function(req,res){
+  console.log('createServer got request')
   var path = req.url.toLowerCase();
   switch(path) {
     case '/': 
@@ -31,3 +32,4 @@ http.createServer(function(req,res){
   }
   
 }).listen(process.env.PORT || 3000);
+console.log('after createServer')

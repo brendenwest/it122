@@ -1,0 +1,23 @@
+{
+  "name": "itc230",
+  "version": "1.0.0",
+  "description": "class repo",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brendenwest/itc230.git"
+  },
+  "author": "brenden west",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brendenwest/itc230/issues"
+  },
+  "homepage": "https://github.com/brendenwest/itc230#readme"
+}

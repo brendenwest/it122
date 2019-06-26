@@ -21,7 +21,7 @@
     "body-parser": "^1.15.0",
     "cheerio": "^0.20.0",
     "cors": "^2.7.1",
-    "express": "^4.15.2",
+    "express": "^4.17.1",
     "express-handlebars": "^3.0.0",
     "mongoose": "^4.4.15"
   },

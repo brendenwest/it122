@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 mongoose.connect(credentials.connectionString, { dbName: 'sccprojects', useNewUrlParser: true }); 
 
 // local db settings 
-// var ip = process.env.ip || '127.0.0.1';
+// var ip = process.env.IP || '127.0.0.1';
 // mongoose.connect('mongodb://' +ip+ '/itc230');
 
 mongoose.connection.on('open', () => {

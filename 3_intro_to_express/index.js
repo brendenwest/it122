@@ -1,11 +1,11 @@
-'use strict'
+"use strict"
 
 let book = require("../lib/book.js");
 
 const express = require("express");
 const app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set("port", process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public')); // allows direct navigation to static files
 app.use(require("body-parser").urlencoded({extended: true}));
 
@@ -13,10 +13,8 @@ let handlebars =  require("express-handlebars");
 app.engine(".html", handlebars({extname: '.html'}));
 app.set("view engine", ".html");
 
-// send static file as response
-app.get('/', function(req,res){
-    res.type('text/html');
-    res.sendFile(__dirname + '/public/home.html'); 
+app.get('/', (req,res) => {
+    res.render('home', {books: book.getAll()}); 
 });
 
 // send plain text response
@@ -31,12 +29,21 @@ app.get('/delete', function(req,res){
     res.render('delete', {title: req.query.title, result: result});
 });
 
+app.get('/detail', function(req,res){
+    console.log(req.query)
+    var found = book.get(req.query.title);
+    res.render("details", {
+        title: req.query.title, 
+        result: found
+        }
+    );
+});
+
 // handle POST
-app.post('/get', function(req,res){
+app.post('/detail', function(req,res){
     console.log(req.body)
-    var header = 'Searching for: ' + req.body.title + '<br>';
     var found = book.get(req.body.title);
-    res.render("details", {title: req.body.title, result: found});
+    res.render("details", {title: req.body.title, result: found, books: book.getAll()});
 });
 
 // define 404 handler

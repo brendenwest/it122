@@ -1,13 +1,21 @@
 'use strict'
+var Book = require("../models/book");
 
-let books = [
-    {title: "Dune", author:"frank herbert", pubdate:1969},
-    {title: "it", author:"steven king", pubdate:1975},
-    {title: "moby dick", author:"herman melville", pubdate:1869},
-];
-
+// export MongoDb methods as promise functions
 exports.getAll = () => {
-    return books;
+    // find all documents 
+    console.log('getall')
+    return Book.find({}, (err, result) => {
+        console.log(err)
+        console.log(result)
+        // output error if one occurred
+        if (err) {
+            console.log(err);
+        } else {
+            // otherwise output the array of documents
+            return result;
+        }
+    });
 };
 
 exports.get = (title) => {

@@ -4,10 +4,13 @@ var express = require("express");
 var app = express();
 var Book = require("../models/book"); // use database model
 
+var book = require("./book");
+
 // configure Express app
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/../public'));
 app.use(require("body-parser").urlencoded({extended: true}));
+app.use('/api', require("cors")());
 app.use((err, req, res, next) => {
   console.log(err)
 })
@@ -18,10 +21,11 @@ app.engine(".html", handlebars({extname: '.html', defaultLayout: 'main' }));
 app.set("view engine", ".html");
 
 app.get('/', (req,res) => {
-    Book.find((err,books) => {
-        if (err) return next(err);
+    book.getAll().then((books) => {
         res.render('home', {books: books });    
-    })
+    }).catch((err) =>{
+        return next(err);
+    });
 });
 
 app.get('/about', (req,res) => {

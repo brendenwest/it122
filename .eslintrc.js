@@ -3,13 +3,27 @@ module.exports = {
         "es6": true,
         "node": true
     },
-     "parserOptions": {
-        "ecmaVersion": 6,
+    "extends": "eslint:recommended",
+    "parserOptions": {
         "sourceType": "module"
     },
-    "extends": "eslint:recommended",
     "rules": {
-        "prefer-arrow-callback": "warn",
-        "no-var": "warn"
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "warn",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-console": "off"
     }
 };

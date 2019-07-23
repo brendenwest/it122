@@ -4,9 +4,10 @@
   <meta name="viewport" content="width=device-width">
   <title>React App Demo</title>
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.0/react.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.0/react-dom.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
  
  <style type="text/css">
   .flex-container {
@@ -47,7 +48,8 @@
         };
 
         // bind App context to functions used by child components
-        this.onSearchChange = this.onSearchChange.bind(this);
+        this.onSearch = this.onSearch.bind(this);
+        this.showDetails = this.showDetails.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
@@ -56,13 +58,13 @@
       }
 
       // handle changes to search form
-      onSearchChange(event) {
+      onSearch(event) {
         // set search term. react will handle component updates 
         this.setState({filter: event.target.value.toLowerCase() });
       }
 
       // show item details when list item clicked
-      showDetails(event){
+      showDetails(event) {
         // event.target is item clicked. Assumes each item has an id attribute
         let editItem = this.state.items.find((item) => {
           return item._id == event.target.id;
@@ -116,7 +118,7 @@
       }
       
       // Handle item delete
-      onDelete(){
+      onDelete() {
         let id = this.state.curItem._id;
         
         fetch("/api/v1/delete/" + id).then((response) => {
@@ -126,22 +128,22 @@
           const remainder = this.state.items.filter((item) => {
             return item._id !== id;
           });
-          // Update state with new array
+          // Update state with new array & clear current item
           this.setState({items: remainder, curItem: {}});
         });
       }
     
       render() {
-        // render app elements
+        // render app UI elements
         return (
           <div>
           <Title title="Book Store" />
-          <SearchForm filter={this.state.filter} change={this.onSearchChange} />
+          <SearchForm filter={this.state.filter} change={this.onSearch} />
           <div className="flex-container">
             <ItemList
                 items={this.state.items} 
                 filter={this.state.filter}
-                show={this.showDetails.bind(this)}
+                show={this.showDetails}
             />
             <ItemDetails item={this.state.curItem} change={this.onChange} save={this.onSave} reset={this.onClear} delete={this.onDelete} />
             </div>
@@ -183,10 +185,10 @@
         return (
           <span id="item-details">
             <h3>Details:</h3>
-            <form onChange={props.change}>
-              <input type="text" name="title" placeholder="title" value={props.item.title || ""} /><p/>
-              <input type="text" name="author" placeholder="author" value={props.item.author || ""} /><p/>
-              <input type="date" name="pubdate" placeholder="pub. date" value={getISOstring(props.item.pubdate)} />
+            <form>
+              <input type="text" name="title" placeholder="title" onChange={props.change} value={props.item.title || ""} /><p/>
+              <input type="text" name="author" placeholder="author"  onChange={props.change} value={props.item.author || ""} /><p/>
+              <input type="date" name="pubdate" placeholder="pub. date" onChange={props.change} value={getISOstring(props.item.pubdate)} />
               <p/>
             </form>
             <button onClick={props.save}>Save</button>  <button onClick={props.reset}>Reset</button> <button onClick={props.delete}>Delete</button>

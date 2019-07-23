@@ -1,18 +1,18 @@
-var credentials = require("../lib/credentials");
-var mongoose = require("mongoose");
+const credentials = require("../lib/credentials");
+const mongoose = require("mongoose");
 
 // remote db settings 
-  var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 }  } };
-  mongoose.connect(credentials.mongo.development.connectionString, options);
+mongoose.connect(credentials.connectionString, { dbName: 'sccprojects', useNewUrlParser: true }); 
 
 // local db settings 
 // var ip = process.env.ip || '127.0.0.1';
 // mongoose.connect('mongodb://' +ip+ '/itc230');
 
-var conn = mongoose.connection; 
-conn.on('error', console.error.bind(console, 'connection error:'));  
+mongoose.connection.on('open', () => {
+    console.log('Mongoose connected.');
+});
 
-var bookSchema = mongoose.Schema({
+const bookSchema = new mongoose.Schema({
     title: String,
     author: String,
     amount: Number,

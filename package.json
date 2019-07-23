@@ -18,16 +18,15 @@
   },
   "homepage": "https://github.com/brendenwest/itc230#readme",
   "dependencies": {
-    "body-parser": "^1.15.0",
-    "cheerio": "^0.20.0",
+    "body-parser": "^1.18.3",
     "cors": "^2.7.1",
-    "express": "^4.15.2",
+    "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
-    "mongoose": "^4.4.15"
+    "mongoose": "^5.5.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^3.19.0",
-    "mocha": "^3.2.0"
+    "mocha": "^3.5.3"
   }
 }

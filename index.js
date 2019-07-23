@@ -1,36 +1,101 @@
-var express = require("express");
-var app = express();
+'use strict'
+
+let express = require("express");
+let bodyParser = require("body-parser");
+let Book = require("./models/book"); // use database model
+
+let app = express();
+
+// i-0349bfcb0128eedb5
+// 54.187.164.240
 
 // configure Express app
-app.set('port', process.env.PORT || 3000);
-app.use(express.static('public'));
-app.use(require("body-parser").json()); 
-app.use(require("body-parser").urlencoded({extended: true}));
-app.use('/api', require('cors')());
+app.set('port', process.env.PORT || 8080);
+
+app.use(express.static(__dirname + '/../public'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use('/api', require("cors")());
+app.use((err, req, res, next) => {
+  console.log(err);
+});
 
 // set template engine
-var handlebars = require('express-handlebars').create({defaultLayout: 'main', extname: '.hbs', 
-    helpers: {
-        shortDate: function (date) { 
-            if (typeof date == "string") { date = new Date(date); }
-            if (!date) { date = new Date(); }
-            var month = (date.getMonth() < 10) ? '0' + date.getMonth() : date.getMonth();
-            var day = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
-            return date.getFullYear() + "-" + month + "-" + day; 
-        },
-    } 
+let handlebars =  require("express-handlebars");
+app.engine(".html", handlebars({extname: '.html'}));
+app.set("view engine", ".html");
+
+app.get('/', (req,res, next) => {
+    Book.find((err,books) => {
+        console.log(books)
+        if (err) return next(err);
+        res.render('home', {books: JSON.stringify(books)});    
     });
-app.engine('hbs', handlebars.engine);
-app.set('view engine', 'hbs' );
+});
 
-var routes = require("./lib/routes")(app);
+app.get('/about', (req,res) => {
+    res.type('text/html');
+    res.render('about');
+});
 
-app.use(function(req,res) {
+// api's
+app.get('/api/v1/book/:title', (req, res, next) => {
+    let title = req.params.title;
+    console.log(title);
+    Book.findOne({title: title}, (err, result) => {
+        if (err || !result) return next(err);
+        res.json( result );    
+    });
+});
+
+app.get('/api/v1/books', (req,res, next) => {
+    Book.find((err,results) => {
+        if (err || !results) return next(err);
+        res.json(results);
+    });
+});
+
+app.get('/api/v1/delete/:id', (req,res, next) => {
+    Book.remove({"_id":req.params.id }, (err, result) => {
+        if (err) return next(err);
+        // return # of items deleted
+        res.json({"deleted": result.result.n});
+    });
+});
+
+app.post('/api/v1/add/', (req,res, next) => {
+    // find & update existing item, or add new 
+    if (!req.body._id) { // insert new document
+        let book = new Book({title:req.body.title,author:req.body.author,pubdate:req.body.pubdate});
+        book.save((err,newBook) => {
+            if (err) return next(err);
+            console.log(newBook)
+            res.json({updated: 0, _id: newBook._id});
+        });
+    } else { // update existing document
+        Book.updateOne({ _id: req.body._id}, {title:req.body.title, author: req.body.author, pubdate: req.body.pubdate }, (err, result) => {
+            if (err) return next(err);
+            res.json({updated: result.nModified, _id: req.body._id});
+        });
+    }
+});
+
+app.get('/api/v1/add/:title/:author/:pubdate', (req,res, next) => {
+    // find & update existing item, or add new 
+    let title = req.params.title;
+    Book.update({ title: title}, {title:title, author: req.params.author, pubdate: req.params.pubdate }, {upsert: true }, (err, result) => {
+        if (err) return next(err);
+        // nModified = 0 for new item, = 1+ for updated item 
+        res.json({updated: result.nModified});
+    });
+});
+
+app.use((req,res) => {
     res.type('text/plain'); 
     res.status(404);
     res.send('404 - Not found');
 });
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
     console.log('Express started');    
 });

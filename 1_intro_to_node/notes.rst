@@ -1,10 +1,20 @@
 Week 1 - Introduction to Node.js
 ****
+
 Reading
 ####
-- Brown, Ch. 1 - Skip sections on Express
-- Brown, Ch. 2 - Getting Started with Node
-- Brown, Ch. 4 - NPM packages section
+- https://www.tutorialspoint.com/nodejs/index.htm (Links to an external site.) (read Intro thru Callbacks)
+- D'Mello - 
+    - Introduction to Node.js
+    - The basics of Node.js
+
+Watch
+####
+- https://www.linkedin.com/learning/node-js-essential-training/how-node-js-works?u=2359778 (Links to an external site.)
+
+Practice
+####
+- https://learn.freecodecamp.org/apis-and-microservices/managing-packages-with-npm
 
 Topics
 ####
@@ -15,14 +25,15 @@ Topics
 - Handling routes 
 - Serving static files
 - Node Package Manager (npm)
+- Source control with git & github.com
 
 Class Overview
 ----
 This class covers client-server (full-stack) web development with JavaScript technologies, focused on Node.js. It assumes prior knowledge of basic web development (JS, HTML, CSS, DOM, HTTP, etc.)
 
-Because the JavaScript ecosystem is huge, we won't have time to cover some interesting topics:
+Because the JavaScript ecosystem is huge, we won't have time to cover some important topics:
 - Build tools - Grunt, Gulp, Bower, LESS/SASS, Webpack
-- Other common JS frameworks - Angular, Ember, Ionic, VueJS, D3
+- Popular JS UI frameworks - Angular, Ember, Ionic, VueJS, D3
 - JS variants - TypeScript, CoffeeScript
 
 Client-server architecture
@@ -38,24 +49,27 @@ What is Node.js?
 ####
 Node.js is a run-time engine that executes JavaScript code outside the browser. Originally intended as a web server, but also commonly used for web development tools and automation. 
 
-- Installation https://nodejs.org/en/ (v8.x)
-- Documentation - https://nodejs.org/dist/latest-v8.x/docs/api/
+- Installation https://nodejs.org/en/ (v12.x)
+- Documentation - https://nodejs.org/dist/latest-v12.x/docs/api/
 
 You can run Node.js **interactively** to execute JavaScript commands at the command line (aka REPL). For example:
+::
 
 	$ node
 	> var x = 1;
 	> console.log(x)
 
 This is less useful for multi-line commands. So you can also run javascript files from the OS with Node like so:
+::
 
     $ node index.js
 
-Where the .js file is plain text, can contain any valid JavaScript commands, and can include Node.js modules.
+Where index.js is a plain text file that contains any valid JavaScript commands, and can include Node.js modules.
 
 For example, a basic web server:
+::
 
-    var http = require("http"); 
+    const http = require("http"); 
     http.createServer((req,res) => {
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.end('Aloha world');
@@ -73,8 +87,9 @@ Basic Routes
 Your web server can send different responses for different types of requests. Requests usually differ by url (aka route). (Brown, p.15)
 
 For example, this script sends different responses based on the url property of the request object:
+::
 
-    var http = require("http"); 
+    const http = require("http"); 
     http.createServer((req,res) => {
         var path = req.url.toLowerCase();    
         switch(path) {
@@ -95,7 +110,16 @@ For example, this script sends different responses based on the url property of 
 
 Serving files
 ####
-Your Node.js application can read files from the filesystem and send file contents in the http response (see Brown p. 16). Note - be sure your file references match the actual file locations.
+Your Node.js application can read files from the filesystem and send file contents in the http response. 
+::
+
+    case '/':      const fs = require("fs");
+        fs.readFile("home.html", (err, data) => {
+         if (err) return console.error(err);     res.writeHead(200, {'Content-Type': 'text/html'});
+         res.end(data.toString());
+    });
+
+Note - be sure your file references match the actual file locations.
 
 Node Package Manager (NPM)
 ####
@@ -115,10 +139,12 @@ npm packages
 All npm modules have a package.json file that describes the module. 
 - Rules for package.json at https://docs.npmjs.com/files/package.json
 - node modules are installed with:
+::
 
     $ npm install <MODULE_NAME>
 
 - modules can be installed and package.json updated at the same time:
+::
 
     $ npm install --save <MODULE_NAME>
 

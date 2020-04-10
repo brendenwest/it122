@@ -119,11 +119,12 @@ Your Node.js application can read files from the filesystem and send file conten
          res.end(data.toString());
     });
 
-Note - be sure your file references match the actual file locations.
+**Note** - be sure your file references match the actual file locations.
 
 Node Package Manager (NPM)
 ####
-Node.js applications can include npm modules for additional functionality.
+
+Node.js applications can include javascript modules from the npm repository for additional functionality.
 
 - You can find Node modules at -  https://www.npmjs.com/browse/star 
 - Docs at https://docs.npmjs.com/ 
@@ -131,24 +132,29 @@ Node.js applications can include npm modules for additional functionality.
     - express - framework to handle web requests
     - express-handlebars - template handler
     - cheerio - server side JQuery for parsing html files
-    - async - for organizing asynchronous tasks
     - lodash - functional javascript utilities
 
 npm packages
 ####
-All npm modules have a package.json file that describes the module. 
+
+All npm modules have a **package.json** file that describes the module. 
+
 - Rules for package.json at https://docs.npmjs.com/files/package.json
-- node modules are installed with:
+- node modules are installed locally (in a node_modules sub-directory of the current folder) with:
 ::
 
     $ npm install <MODULE_NAME>
 
-- modules can be installed and package.json updated at the same time:
+- modules can be installed locally and package.json updated at the same time:
 ::
 
     $ npm install --save <MODULE_NAME>
 
-- modules can be installed locally (in a node_modules sub-directory of the current folder) or globally. The latter are accessible for all node applications on the computer.
+- modules can be installed globally for all node applications on the computer.
+::
+
+    $ npm install -g <MODULE_NAME>
+
 - Be sure to update the **.gitignore** file to exclude node-modules directories
 
 Useful npm commands:

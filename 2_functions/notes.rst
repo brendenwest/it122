@@ -45,10 +45,10 @@ This example highlights several key ES6 features:
 	  return \`${title} ${first} ${last}\`}
 	}
 	
-	- **const** variable definition (more on this below)
-	- **arrow functions** - enable shorter function syntax
-	- **default values** for function parameters
-	- **string template literals** - note the **backtick** character
+- **const** variable definition (more on this below)
+- **arrow functions** - enable shorter function syntax
+- **default values** for function parameters
+- **string template literals** - note the **backtick** character
 
 **Block-scoped variables** (let & const)
 
@@ -107,7 +107,8 @@ JavaScript **closures** allow functions to access variables in scope when the fu
 		};
 	});
 
-Creates an object with 2 methods - 
+Creates an object with 2 methods:
+
 - myCounter.increment(n); // increments the local variable ‘counter,
 - myCounter.getValue(); // returns the current value of ‘counter’
 
@@ -157,6 +158,7 @@ These JQuery operations can be chained like so:
 	$('#my-div').css('background', 'blue').height(100).fadeIn(200);
 
 The chained code can be broken to multiple lines for readability:
+::
 
 	$('#my-div')
 	  .css('background', 'blue')
@@ -177,24 +179,33 @@ Node modules have a main javascript file and may have supporting scripts and ass
 
 Modules internal to a Node application are usually stored in the /lib folder for consistency.
 
-Node modules use the global ‘exports’ variable to expose objects or functions to code outside the module. For example, we might have a books.js module, with a method to list books by price:
+Node modules use the global ‘exports’ variable to expose objects or functions to code outside the module. For example:
+::
 
-	var books = [
+	let books = [
 		{ title:'Moby Dick', price:20 },
 		{ title:'Tom Sawyer', price:12 },
 		{ title:'War & Peace', price:25 }
 	];
 
-	exports.byPriceAsc = function() {
+	exports.getBook = (title) => {
+		// return a book by title
+		return this.books.find((book) => {
+		  return book.title === title;
+		});
+	}
+
+	exports.byPriceAsc = () => {
 		// return a sorted list of books
-		return this.books.sort(function(a, b) {
+		return this.books.sort((a, b) => {
 		  return a.price - b.price;
 		});
 	}
 
 Our Node application can encapsulate book-related behavior into this module to reduce complexity of the main script, and call in the module like so:
+::
 
-	var book = require('./lib/book.js');
+	const book = require('./lib/book.js');
 
 Node packages are modules designed for installation by other Node applications, and have a package.json file that describes how to install them.
 

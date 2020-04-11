@@ -3,94 +3,156 @@ JavaScript Functions, Arrays & Modules
 
 Reading
 ####
-- Javascript, the Good Parts, Ch. 4 - Functions
-- http://book.mixu.net/node/ch5.html (Arrays, Objects, JSON)
-- http://www.w3schools.com/js/js_objects.asp 
-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array [See the Array interation methods]
-- Brown, Ch. 4 [Node Modules section]
+- D'Mello - A JavaScript primer
+- https://www.w3schools.com/js/js_- functions, closures, modules 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array  [Array iteration methods]
+
+Practice
+####
+- https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/es6 
+- https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/functional-programming 
+ 
 
 Topics
 ####
 
 This week, we'll recap core Javascript functionality that's central to Node.js programming - functions & objects. We'll use this knowledge to encapsulate and extend features you implemented the previous week.
 
-- Javascript Functions
+- ES6 syntax
 - Scope & closure
 - Chaining
-- Callbacks & Asynch operations
-- Promises
+- Callbacks & asynch operations
+- Javascript objects
+- Collections & higher-order functions
 - Node modules
-- Javascript Objects
-- ES6 syntax
 
-Javascript functions
+ES6
 ####
-Javascript function and object behavior is central to Node.js programming. So it’s important to understand key functional concepts:
-- Functions are defined with the ‘function’ keyword
-- Functions can be ‘anonymous’ or named
-- Functions can take parameters:
 
-	function (param1, param2) { return param1 + param2; }
-	function myFunction(param1, param2) { return param1 + param2; }
+ES6 (ECMAScript2015) is a significant update to JavaScript that introduces a number of features found in other modern languages. It's not required that you use these features, but you should be familiar with several that can be useful.
 
-- Functions can return a value to the step that called them:
+This example highlights several key ES6 features:
+::
 
-	var total = myFunction(3, 4); // total = 7
-	
-- Functions are objects that can be referenced and passed to other functions:
-
-	var myFunction = function (param1, param2) { return param1 + param2; }
-	xar x = anotherFunction(myFunction(param3, param4)); // calls 
-
-- Functions within objects are called **methods**
-
-Scope & Closure
-####
-Scope controls the visibility and lifecycle of Javascript objects to reduce naming conflicts and provide memory management. Scope in Javascript is a bit different than in other languages, and objects have ‘scope’ in the function where they are defined. Global objects are those defined outside of any funciton or object.
-
-	var counter = 1; // counter is available throughout the app
-
-	function myFunction() {
-		var y = 2; // y is local to this function
-		counter += y; 
+	// ES5 syntax
+	function fullName(title, first, last) {  
+		if (!title) { title = 'Honorable')  
+		return title + " " + first + " " + last;
 	}
 	
-	myFunction(); 	// execute myFunction
-	console.log(counter);	// counter = 3
-	console.log(y);	// y is undefined here
+	// ES6 syntax
+	const fullName = (title='Honorable, first, last) => {
+	  return \`${title} ${first} ${last}\`}
+	}
+	
+	- **const** variable definition (more on this below)
+	- **arrow functions** - enable shorter function syntax
+	- **default values** for function parameters
+	- **string template literals** - note the **backtick** character
 
-Javascript methods can access variables local to the function that created them, even after the function has executed. For example:
+**Block-scoped variables** (let & const)
 
-	var myObject = (function(){
-		var counter = 0;
+Classic JavaScript allows variables to be defined with either of these approaches:
+::
+
+	var age = 27; 
+	age = 27;
+	
+ES6 introduces two new commands:
+::
+
+	let age = 27; // value of 'age' may change later in the program
+	const pi = 3.14; // value of 'pi' won't change 
+
+This new approach limits chances of over-writing variables and speeds program execution. 
+
+It also changes how variables are scoped. In classic JavaScript, variables are 'scoped' to the nearest enclosing function:
+::
+
+	function func() {
+	    if (true) {
+	        var tmp = 123;
+	    }
+	    console.log(tmp); // prints 123
+	}
+
+This can sometimes cause problems, so ES6 introduced **let** and **const** which create variables that are block-scoped – they only exist within the innermost block that surrounds them:
+::
+
+	const func = () => {
+	    if (true) {
+	        const tmp = 123;
+	    }
+	    console.log(tmp); // ReferenceError: tmp is not defined
+	}
+
+Note - Use const for variables whose value won't change.
+
+
+Closure
+####
+
+JavaScript **closures** allow functions to access variables in scope when the function was defined. For example:
+::
+
+	const myCounter = (() => {
+		let counter = 0;
 		return {
-			increment: function(inc) {
+			increment: (inc) => {
 				counter += inc;
 			},
-			getValue: function() {
+			getValue: () => {
 				return counter;
 			}
 		};
 	});
 
 Creates an object with 2 methods - 
-- myObject.increment(n); // increments the local variable ‘counter,
-- myObject.getValue(); // returns the current value of ‘counter’
+- myCounter.increment(n); // increments the local variable ‘counter,
+- myCounter.getValue(); // returns the current value of ‘counter’
 
-With this approach, you can control how ‘counter’ is accessed and apply custom logic.
+With this approach, you can control how ‘counter’ is accessed and apply custom logic. Learn more at - https://community.risingstack.com/explaining-javascript-closure-scope-chain-examples/ 
+
+
+Callbacks
+####
+Node.js is designed around the concept of non-blocking input-output (I/O) and event-driven programming.
+
+In Node, I/O operations such as reading a file, querying a database or making a web request, are performed asynchronously. This means you can initiate an operation, and specify the code (aka callback) Node should execute when the operation completes. While the operation executes in the background, Node will proceed with executing other code. The Node runtime executes an event loop that periodically checks for callbacks ready for attention.
+
+**Synchronous**
+::
+
+	const request = prepare_the_request( ); 
+	response = send_request_synchronously(request); // subsequent commands blocked until this completes
+	display(response); 
+
+**Asynchronous**
+
+An asynchronous function returns immediately, so the client isn’t blocked: 
+::
+
+	const request = prepare_the_request( );
+	send_request_async(request, function (response) {
+	  display(response); 
+	}); 
+
+We pass an anonymous function as a parameter to the send_request_async function, which will be called when the response is available.
 
 Chaining
 ####
 Method chaining is a way to return an object from a method call for use in a subsequent operation. 
 
 For example, you might have a sequence of operations like these:
+::
 
-	var $div = $('#my-div'); // assign to var 
+	let $div = $('#my-div'); // assign to variable 
 	$div.css('background', 'blue'); // set BG 
 	$div.height(100); // set height 
 	$div.fadeIn(200); // show element
 
 These JQuery operations can be chained like so:
+::
 
 	$('#my-div').css('background', 'blue').height(100).fadeIn(200);
 
@@ -102,31 +164,10 @@ The chained code can be broken to multiple lines for readability:
 	  .fadeIn(200);
 
 In order for chaining to work, each method in the chain must return an object. For example, custom method for use in the above chain, would need to return an object like so:
+::
 
 	$('div').prototype.setCategory = function(category) { this.category = category; return this; };
 
-Callbacks
-####
-Node.js is designed around the concept of non-blocking input-output (I/O) and event-driven programming.
-
-In Node, I/O operations such as reading a file, querying a database or making a web request, are performed asynchronously. This means you can initiate an operation, and specify the code (aka callback) Node should execute when the operation completes. While the operation executes in the background, Node will proceed with executing other code. The Node runtime executes an event loop that periodically checks for callbacks ready for attention.
-
-**Synchronous**
-
-	var request = prepare_the_request( ); 
-	response = send_request_synchronously(request); // subsequent commands blocked until this completes
-	display(response); 
-
-**Asynchronous**
-
-An asynchronous function returns immediately, so the client isn’t blocked: 
-
-	request = prepare_the_request( );
-	send_request_async(request, function (response) {
-	display(response); 
-	}); 
-
-We pass an anonymous function as a parameter to the send_request_async function, which will be called when the response is available.
 
 Node Modules
 ####
@@ -157,9 +198,10 @@ Our Node application can encapsulate book-related behavior into this module to r
 
 Node packages are modules designed for installation by other Node applications, and have a package.json file that describes how to install them.
 
-Object Collections
+Objects, Collections & Higher-order Functions
 ####
-The basic structure of a Javascript object is:
+The basic structure of a JavaScript object is:
+::
 
 	{
 	key :  value,
@@ -171,6 +213,7 @@ The basic structure of a Javascript object is:
 - String values are enclosed in double quotes,
 - Whitespace is ignored,
 - key-value pairs are separated by commas
+::
 
 	{
 	name : "jim",
@@ -180,8 +223,9 @@ The basic structure of a Javascript object is:
 
 
 JavaScript objects can be stored in arrays for data-centric operations:
+::
 
-	var students = [
+	let students = [
 	{ name : "jim", age : 34, classes : ["itc 298", "web150", "cs110"] },
 	{ name : "mary", age : 32, classes : ["web150", "cs110", "web120"] },
 	{ name : "sue", age : 28, classes : ["web150", "web120"] }
@@ -194,136 +238,79 @@ JavaScript provides a variety of native Array methods for adding, removing and m
 - .pop() -  removes the last element from an array and returns that element
 - .shift() - removes the first element from an array and returns that element
 - .splice() - removes existing array elements and/or adds new elements. Returns the removed items.
+::
 
 	array.splice(start, deleteCount[, item1[, item2[, ...]]]
 	students.splice(1, 1); // removes 2nd item in the students array
 	students.splice(1, 1, { name : "jeff", age : 21, classes : ["web120"] } ); // replaces 2nd item in the students array
 
-Some array methods are higher-order functions, which can take a function as a parameter. These allow greater control over the function behavior and are widely used in Node.js programming. Typical structure is:
+Some array methods are **higher-order functions**, which take afunctions as parameters. The calling function executes the callback function for each item in the collection. Higher-order functions can use a named callback::
+::
 
 	array.method(callback);
 
-Where the higher-order function executes the callback function for each item in the array. Different functions may pass other arguments to the callback, in addition to the array item.
+or an anonymous callback:
+::
 
-.forEach() - executes a provided function once per array element.
+	array.method((item) => { 
+	  // code to execute for each array item
+	});
 
-	functions showDetails(student) {
-		console.log("Student: " + student.name +"<br>Age: " + student.age + "<br>Courses: " + student.classes.length);
+
+**.forEach()** - executes a provided function once per array element.
+::
+
+	students.forEach((student) => {  console.log('Student: ' + student.name + '<br>Age: ' + student.age + '<br>Courses: ' + student.classes.length);});
+
+**.find()** - returns the first array item that results in a ‘true’ value from the callback function.
+::
+
+	let found = students.find((student) => {  
+		return student.name === 'mary';
+	});
+	console.log(found);
+
+**.findIndex()** - returns index position of the first item that results in a ‘true’ value from the callback function.
+::
+
+	let foundIndex = students.findIndex((student) => {
+		return student.name === 'mary';
+	});
+	console.log(foundIndex);
+
+**.filter()** - returns all array items that result in a ‘true’ value from the callback function.
+::
+
+	// with anonymous function
+	let olderStudents = students.filter((student) => {
+	  return student.age > 30;
+	});
+	
+	// with a named function
+	const findOlder = (student) => { 
+	  return student.age > 30;
 	}
-	students.forEach(showDetails);
+	let olderStudents = students.filter(findOlder);
 
-.find() - returns the first array item that results in a ‘true’ value from the callback function.
+**.sort()** - sorts array items in place, according to the logic specified in the callback (comparison) function. .sort() provides two array items at a time to the comparison function as parameters.
+::
 
-	functions findMillenial(student) {
-		return student.age < 30;
-	}
-	console.log(students.find(findMillenial)); 
-
-.filter() - returns all array items that result in a ‘true’ value from the callback function.
-
-	functions findOlder(student) {
-		return student.age > 30;
-	}
-	var olderStudents = students.filter(findOlder); 
-
-.sort() - sorts array items in place, according to the logic specified in the callback (comparison) function. .sort() provides two array items at a time to the comparison function as parameters.
-
-	var byAgeAsc = function(student1, student2) {
+	const byAgeAsc = (student1, student2) => {
 	  // sorts students by age in ascending order
 	  return student1.age - student2.age;
 	}
 	console.log(students.sort(byAgeAsc));
 
-.map() - creates a new array with the results of executing the callback function on every element in the original array.
+**.map()** - creates a new array with the results of executing the callback function on every element in the original array.
+::
 
-	var progress = students.map( function(student) {
+	const progress = students.map((student) => {
 		return { name : student.name, courses: student.classes.length }
 	}); 
 
-.reduce() - executes a callback function with an accumulated value and each value of the array (from left-to-right) to reduce it to a single value.
+**.reduce()** - executes a callback function with an accumulated value and each value of the array (from left-to-right) to reduce it to a single value.
+::
 
-	var total_classes = students.reduce(function(previousValue, currentStudent) {
+	const total_classes = students.reduce((previousValue, currentStudent) => {
 	  return previousValue + currentStudent.classes.length;
 	});
-
-ES6
-####
-
-ES6 (ECMAScript2015) is a significant update to JavaScript that introduces a number of features found in other modern languages. It's not required that you use these features, but you should be familiar with several that can be useful.
-
-**Default values** for function parameters. Instead of:
-
-	function makeLink(protocol, domain) {
-	  var protocol = protocol || 'http'; 
-	  ...
-	}
-
-You can use:
-
-	function makeLink(protocol = 'http', domain) {
-	  ...
-	}
-
-**Block-scoped variables** (let & const)
-
-In previous versions of JavaScript, variables are 'scoped' to the nearest enclosing function:
-
-	function func() {
-	    if (true) {
-	        var tmp = 123;
-	    }
-	    console.log(tmp); // prints 123
-	}
-
-This can sometimes cause problems, so ES6 introduced let and const which create variables that are block-scoped – they only exist within the innermost block that surrounds them:
-
-	function func() {
-	    if (true) {
-	        const tmp = 123;
-	    }
-	    console.log(tmp); // ReferenceError: tmp is not defined
-	}
-
-Note - Use const for variables whose value won't change.
-
-**Arrow functions** - enable shorter function syntax:
-
-	// ES5
-	var arr = [1, 2, 3];
-	var squares = arr.map(function (x) { return x * x });
-	
-	// ES6 
-	var arr = [1, 2, 3]; var squares = arr.map((x) => { return x * x });
-
-and also enable simpler handling of 'this' context to avoid conflict w/ the global 'this' variable:
-
-	// ES5 syntax
-	function Person() {
-	  var that = this; // assign this to local variable to avoid later conflict w/ global 'this'
-	  that.age = 0;
-	
-	  setInterval(function growUp() {
-	    // The callback refers to 'that' variable whose value is the Person object.
-	    that.age++;
-	  }, 1000);
-	}
-	
-	// ES6 syntax
-	function Person(){
-	  this.age = 0;
-	  setInterval(() => {
-	    this.age++; // 'this' now refers to the Person object
-	  }, 1000);
-	}
-
-Exercises
-####
-- Save a copy of index.js for HW #1,
-- Create data and methods for your list data in a dedicated module,
-- Call your new module into index.js
-- Add module methods, and corresponding server routes, to;
-	- Return all data items
-	- Return all data items that match a field value
-	- Return all data items sorted by a specified field,
-	- Return a count of data items,
-	- Delete a data item that matches specified field value

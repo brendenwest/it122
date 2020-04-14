@@ -1,6 +1,6 @@
 {
   "name": "itc230",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "itc230 demo application",
   "main": "index.js",
   "directories": {

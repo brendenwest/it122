@@ -12,11 +12,11 @@
     "cors": "^2.8.3",
     "express": "^4.15.3",
     "express-handlebars": "^3.0.0",
-    "mongoose": "^4.9.3",
+    "mongoose": "^5.9.12"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^4.19.1",
+    "eslint": "^6.8.0",
     "mocha": "^5.1.1"
   },
   "scripts": {
@@ -31,6 +31,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/brendenwest/itc230/issues"
-  },
-
+  }
 }

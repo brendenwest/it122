@@ -1,8 +1,7 @@
 const credentials = require("../lib/credentials");
 const mongoose = require("mongoose");
 
-// remote db settings 
-mongoose.connect(credentials.connectionString, { dbName: 'sccprojects', useNewUrlParser: true }); 
+mongoose.connect(credentials.connectionString, { dbName: 'sccprojects', useNewUrlParser: true});
 
 // local db settings 
 // var ip = process.env.IP || '127.0.0.1';

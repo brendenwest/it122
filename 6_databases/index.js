@@ -20,12 +20,13 @@ let handlebars =  require("express-handlebars");
 app.engine(".html", handlebars({extname: '.html', defaultLayout: 'main' }));
 app.set("view engine", ".html");
 
+
 app.get('/', (req,res) => {
-    book.getAll().then((books) => {
-        res.render('home', {books: books });    
-    }).catch((err) =>{
-        return next(err);
-    });
+    Book.find({}).lean()
+        .then((books) => {
+            res.render('home', { books });
+        })
+        .catch(err => next(err));
 });
 
 app.get('/about', (req,res) => {
@@ -33,20 +34,20 @@ app.get('/about', (req,res) => {
     res.render('about');
 });
 
-app.get('/get', (req,res,next) => {
-    Book.findOne({ title:req.query.title }, (err, book) => {
-        if (err) return next(err);
-        res.type('text/html');
-        res.render('details', {result: book} ); 
-    });
+app.get('/detail', (req,res,next) => {
+    Book.findOne({ title:req.query.title }).lean()
+        .then((book) => {
+            res.render('details', {result: book} );
+        })
+        .catch(err => next(err));
 });
 
 app.post('/get', (req,res, next) => {
-    Book.findOne({ title:req.body.title }, (err, book) => {
-        if (err) return next(err);
-        res.type('text/html');
-        res.render('details', {result: book} ); 
-    });
+    Book.findOne({ title:req.body.title }).lean()
+        .then((book) => {
+            res.render('details', {result: book} );
+        })
+        .catch(err => next(err));
 });
 
 app.get('/delete', (req,res) => {

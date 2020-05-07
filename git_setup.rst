@@ -12,23 +12,23 @@
 
 **Commiting changes to Github **
 
-Git has a great variety of options, but the most basic steps for committing your changes to Github are: 
+Git has a great variety of options, but the most basic steps for committing your changes to Github are;
 
 1. Check local repo status
 ::
     git status
     
-2. Add all your changes to the local repo
+2. Pull any changes from the remote repo;
+::
+    git pull origin master
+
+3. Add all your changes to the local repo
 ::
     git add .
 
-3. Commit your changes to the local repo
+4. Commit your changes to the local repo
 ::
     git commit -m "COMMIT MESSAGE"
-
-4. Pull changes from the remote repo
-::
-    git pull origin master
 
 5. Push local changes to the remote repo
 ::

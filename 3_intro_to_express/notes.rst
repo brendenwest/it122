@@ -96,6 +96,83 @@ Once defined, the web server can be started like so:
      console.log('Express started'); 
     });
 
+
+Routes overview
+####
+
+Routes are ‘virtual’ handlers for URLs that might receive a user’s request. Routes don’t necessary correspond to a physical page on the web site.
+
+Routes can be exclusive, or can use the ‘next’ method to pass control to the next applicable route in sequence. For example:
+::
+
+    app.get('/foo', function(req,res,next){
+           if(Math.random() < 0.5) return next();
+           res.send('sometimes this');
+    });
+    app.get('/foo', function(req,res){
+           res.send('and sometimes that');
+    });
+
+
+Or
+::
+    app.get('/foo',
+           function(req,res, next){
+                   if(Math.random() < 0.5) return next();
+                   res.send('red');
+           },
+           function(req,res, next){
+                   if(Math.random() < 0.5) return next();
+                   res.send('green');
+           },
+    )
+
+
+Route paths can contain regular expressions, to match variations. For example, the below route would match /user or /username:
+::
+    app.get('/user(name)?', function(req,res){
+           res.render('user');
+    });
+
+Express route paths support a subset of regular expression metacharacters: +, ?, *, (, and )
+
+Routes can include parameters that are automatically added to the request.parameters collection:
+::
+
+    app.get('/user/:name', function(req, res) {
+
+           var info = users.find(function(user){
+
+               return user.name = req.params.name;
+
+           })
+
+           if(!info) return next();        // will eventually fall through to 404
+
+           res.send(info);
+
+    })
+
+As your application grows, the number of routes can grow to the point where your main application file is un-readable. You can improve readability by organizing routes into a separate module:
+
+In the main Express application file:
+::
+    const routes = require('./routes.js')(app); // passes ‘app’ instance to the routes module
+
+
+In your routes.js file:
+::
+    module.exports = function(app){
+
+           app.get('/', function(req,res){
+                   app.render('home');
+           }))
+
+           //… other routes
+
+    };
+
+
 Query & Forms handling
 ####
 

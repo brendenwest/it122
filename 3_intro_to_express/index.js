@@ -9,9 +9,9 @@ app.set("port", process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public')); // allows direct navigation to static files
 app.use(require("body-parser").urlencoded({extended: true}));
 
-let handlebars =  require("express-handlebars");
-app.engine(".html", handlebars({extname: '.html'}));
-app.set("view engine", ".html");
+const exphbs =  require("express-handlebars");
+app.engine('hbs', exphbs({defaultLayout: false}));
+app.set("view engine", "hbs");
 
 app.get('/', (req,res) => {
     res.render('home', {books: book.getAll()}); 

@@ -6,11 +6,8 @@ let Book = require("./models/book"); // use database model
 
 let app = express();
 
-// i-0349bfcb0128eedb5
-// 54.187.164.240
-
 // configure Express app
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/../public'));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -21,15 +18,15 @@ app.use((err, req, res, next) => {
 });
 
 // set template engine
-let handlebars =  require("express-handlebars");
-app.engine(".html", handlebars({extname: '.html'}));
-app.set("view engine", ".html");
+const exphbs =  require("express-handlebars");
+app.engine('hbs', exphbs({defaultLayout: false}));
+app.set("view engine", "hbs");
 
 app.get('/', (req,res, next) => {
     Book.find((err,books) => {
         console.log(books)
         if (err) return next(err);
-        res.render('home', {books: JSON.stringify(books)});    
+        res.render('home', {books: JSON.stringify(books)});
     });
 });
 
@@ -56,16 +53,19 @@ app.get('/api/v1/books', (req,res, next) => {
 });
 
 app.get('/api/v1/delete/:id', (req,res, next) => {
-    Book.remove({"_id":req.params.id }, (err, result) => {
+    Book.deleteOne({"_id":req.params.id }, (err, result) => {
         if (err) return next(err);
         // return # of items deleted
-        res.json({"deleted": result.result.n});
+        console.log(result)
+        res.json({"deleted": result});
     });
 });
 
 app.post('/api/v1/add/', (req,res, next) => {
-    // find & update existing item, or add new 
+    // find & update existing item, or add new
+    console.log(req.body)
     if (!req.body._id) { // insert new document
+
         let book = new Book({title:req.body.title,author:req.body.author,pubdate:req.body.pubdate});
         book.save((err,newBook) => {
             if (err) return next(err);

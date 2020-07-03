@@ -18,13 +18,13 @@ app.use((err, req, res, next) => {
 
 // set template engine
 let handlebars =  require("express-handlebars");
-app.engine(".html", handlebars({extname: '.html'}));
+app.engine(".html", handlebars({extname: '.html', defaultLayout: false}));
 app.set("view engine", ".html");
 
 app.get('/', (req,res, next) => {
     Book.find((err,books) => {
         if (err) return next(err);
-        res.render('home', {books: JSON.stringify(books)});    
+        res.render('home', {books: JSON.stringify(books)});
     });
 });
 
@@ -50,17 +50,17 @@ app.get('/api/v1/books', (req,res, next) => {
 });
 
 app.get('/api/v1/delete/:id', (req,res, next) => {
-    Book.remove({"_id":req.params.id }, (err, result) => {
+    Book.deleteOne({"_id":req.params.id }, (err, result) => {
         if (err) return next(err);
         // return # of items deleted
-        res.json({"deleted": result.result.n});
+        res.json({"deleted": result});
     });
 });
 
 app.post('/api/v1/add/', (req,res, next) => {
     // find & update existing item, or add new 
     if (!req.body._id) { // insert new document
-        let book = new Book({title:req.body.title,author:req.body.author,pubdate:req.body.pubdate});
+        let book = new Book(req.body);
         book.save((err,newBook) => {
             if (err) return next(err);
             res.json({updated: 0, _id: newBook._id});

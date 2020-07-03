@@ -1,8 +1,9 @@
-###Dev Environment Setup
+Dev Environment Setup
+____
 
 Students will need a development environment properly configured for full-stack JavaScript development.
 
-*Key setup steps:*
+**Key setup steps:**
 
 - Install a code-highlighting text editor such as Visual Studio, IntelliJ, Brackets or SublimeText. It's also fine to use an online IDE.
 - Install git (https://git-scm.com/downloads) if not already installed

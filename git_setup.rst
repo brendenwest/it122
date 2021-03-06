@@ -10,7 +10,7 @@
 ::
     $ git remote add <alias> <remote_url>
 
-**Commiting changes to Github **
+**Commiting changes to Github**
 
 Git has a great variety of options, but the most basic steps for committing your changes to Github are;
 

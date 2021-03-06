@@ -1,11 +1,11 @@
-ITC 230 - Advanced Javascript 
+IT 122 - Advanced Javascript
 --------
 
 **Class Details**
 
-- Location: Hybrid
-- Time: M,W 5:00 - 7:05 pm
-- Dates: April 13 - June 19, 2020
+- Location: Virtual
+- Time: M 5:30 - 7:00 pm
+- Dates: June 29 - Aug 21, 2020
 - Instructor: Brenden West
 - Email: brenden.west@seattlecolleges.edu
 - Credits: 5
@@ -46,11 +46,13 @@ Students can access this textbook free online through  https://libguides.seattle
 
 Class Structure and Topics
 ####
-Course instruction will be fully online with Zoom conference for scheduled class times.
+Course instruction will be fully online with Zoom conference o Monday to review new material, answer questions, and resolve any issues with completing the homework.
 
-Each week, we'll cover a new topic, building on the previous week's work. In general we will cover new material in Monday lectures and exercise what we learned in Wednesday lab. We will cover the following topics, although the order and precise list is subject to revision:
+Throughout the week, students can reach out to me directly in the SCC tutoring Slack team with questions.
 
-- Node.js overview & installation, core modules, NPM
+Each week, we'll cover a new topic, building on the previous week's work. We will cover the following topics, although the order and precise list is subject to revision:
+
+- Node.js overview - core modules, http requests, callbacks, package management
 - Express application structures - routes, views, and static files
 - Advanced JS concepts - ES6, higher-order functions, asynchronous operations
 - Unit testing 
@@ -60,13 +62,13 @@ Each week, we'll cover a new topic, building on the previous week's work. In gen
 - Single-page-application (SPA) design with React
 - Deploying to a public web server
 
-Each Monday, you'll be given an assignment to test what you've picked up on that week's topic. Assignments are due by the start of class on the following Monday. These assignments allow me to evaluate your progress and build on each other toward a completed final project.
+Each Monday, you'll be given an assignment to test what you've picked up on that week's topic. Assignments are due by the end-of-day Sunday of that week. These assignments allow me to evaluate your progress and build on each other toward a completed final project.
 
 As such, most of your grade will come from turning in assignments on time and showing that you tried to solve it using your own original work. Your homework should be completely your own: plagiarism and late submissions may incur a grade penalty.
 
 Homework assignments should be submitted in Canvas as links to your  github.com repository. You should use a single repository and branch throughout the course, with clear a 'commit' message for each assignment completion.
 
-90% of your grade will come from homework and  10% from quizzes.
+90% of your grade will come from homework and 10% from quizzes.
 
 **Reference**
 

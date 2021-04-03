@@ -4,8 +4,8 @@ IT 122 - Advanced Javascript
 **Class Details**
 
 - Location: Virtual
-- Time: M 5:30 - 7:00 pm
-- Dates: June 29 - Aug 21, 2020
+- Time: M 5:00 - 7:00 pm
+- Dates: April 5 - June 18, 2021
 - Instructor: Brenden West
 - Email: brenden.west@seattlecolleges.edu
 - Credits: 5
@@ -19,10 +19,10 @@ This course will cover modern JavaScript technologies, including server-side scr
 
 **Requirements**
 
-Students should have experience with basic web development skills, via WEB 150 or comparable experience, including:
+Students should have experience with basic web development skills, via IT 121 or comparable experience, including:
 
 - HTML and CSS
-- Core JavaScript language syntax
+- JavaScript language syntax
 - HTTP request/response methods
 - JQuery selectors & methods
 
@@ -30,11 +30,11 @@ Students will perform extensive hands-on development throughout the course and w
 
 - A computer onto which they can install software,
 - A working internet connection
-- A syntax-highlighting editor like Brackets or Sublime Text,
+- A syntax-highlighting text editor
 - A `github.com <https://github.com>`_ account
 - A heroku.com account (free tier)
 
-**Note** - ` AWS Cloud9 <https://aws.amazon.com/cloud9/>`_ provides free online development tools you can access from any computer via web browser.
+**Note** - `AWS Cloud9 <https://aws.amazon.com/cloud9/>`_ and https://replit.com/ provide free browser-based development environments.
 
 This course will use **Web Development with MongoDB and Node, 3rd Ed.** as a textbook, and also supplementary online materials as needed. 
 
@@ -46,7 +46,7 @@ Students can access this textbook free online through  https://libguides.seattle
 
 Class Structure and Topics
 ####
-Course instruction will be fully online with Zoom conference o Monday to review new material, answer questions, and resolve any issues with completing the homework.
+Course instruction will be fully online with Zoom conference at scheduled class times to review new material, answer questions, and resolve any issues with completing the homework.
 
 Throughout the week, students can reach out to me directly in the SCC tutoring Slack team with questions.
 
@@ -62,13 +62,13 @@ Each week, we'll cover a new topic, building on the previous week's work. We wil
 - Single-page-application (SPA) design with React
 - Deploying to a public web server
 
-Each Monday, you'll be given an assignment to test what you've picked up on that week's topic. Assignments are due by the end-of-day Sunday of that week. These assignments allow me to evaluate your progress and build on each other toward a completed final project.
+Each Monday, you'll be given an assignment to test what you've picked up on that week's topic. Assignments are due by the end-of-day Sunday of that week. Assignments will build on each other toward a completed final project.
 
-As such, most of your grade will come from turning in assignments on time and showing that you tried to solve it using your own original work. Your homework should be completely your own: plagiarism and late submissions may incur a grade penalty.
+Most of your grade will come from turning in assignments on time and showing that you tried to solve it using your own original work. Your homework should be completely your own: plagiarism and late submissions may incur a grade penalty.
 
 Homework assignments should be submitted in Canvas as links to your  github.com repository. You should use a single repository and branch throughout the course, with clear a 'commit' message for each assignment completion.
 
-90% of your grade will come from homework and 10% from quizzes.
+85% of your grade will come from homework and 15% from quizzes.
 
 **Reference**
 

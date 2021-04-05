@@ -47,7 +47,7 @@ Client-server architecture terminology
 - Server may run applications in a variety of programming languages (e.g. Node.js, Java, C#, PHP, Python)
 - Server may connect to other specialized back-end computers (e.g. database, file storage, image server, message queue, etc.)
 
-.. image:: images/client_server.png
+.. image:: ../images/client_server.png
   :width: 490
 
 What is Node.js?

@@ -7,6 +7,10 @@ Reading
 - https://www.w3schools.com/js/js_- functions, closures, modules 
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array  [Array iteration methods]
 
+Watch
+####
+- JS Event Loop - https://www.youtube.com/watch?v=8aGhZQkoFbQ&t=69
+
 Practice
 ####
 - https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/es6 
@@ -20,16 +24,16 @@ This week, we'll recap core Javascript functionality that's central to Node.js p
 
 - ES6 syntax
 - Scope & closure
-- Chaining
 - Callbacks & asynch operations
-- Javascript objects
+- JavaScript objects
 - Collections & higher-order functions
 - Node modules
+- Chaining
 
 ES6
 ####
 
-ES6 (ECMAScript2015) is a significant update to JavaScript that introduces a number of features found in other modern languages. It's not required that you use these features, but you should be familiar with several that can be useful.
+ES6 (ECMAScript 2015) is a significant update to JavaScript that introduces a number of features found in other modern languages. It's not required that you use these features, but you should be familiar with several that can be useful.
 
 This example highlights several key ES6 features:
 ::
@@ -76,7 +80,7 @@ It also changes how variables are scoped. In classic JavaScript, variables are '
 	    console.log(tmp); // prints 123
 	}
 
-This can sometimes cause problems, so ES6 introduced **let** and **const** which create variables that are block-scoped – they only exist within the innermost block that surrounds them:
+This can sometimes cause problems, so in ES6 **let** and **const** are block-scoped – they only exist within the innermost block that surrounds them:
 ::
 
 	const func = () => {
@@ -86,10 +90,8 @@ This can sometimes cause problems, so ES6 introduced **let** and **const** which
 	    console.log(tmp); // ReferenceError: tmp is not defined
 	}
 
-Note - Use const for variables whose value won't change.
 
-
-Closure
+Closures
 ####
 
 JavaScript **closures** allow functions to access variables in scope when the function was defined. For example:
@@ -107,25 +109,24 @@ JavaScript **closures** allow functions to access variables in scope when the fu
 		};
 	});
 
-Creates an object with 2 methods:
+Invoking **myCounter** returns an object with 2 methods that can access the local variable **counter** after the myCounter method has executed.
 
 - myCounter.increment(n); // increments the local variable ‘counter,
 - myCounter.getValue(); // returns the current value of ‘counter’
 
-With this approach, you can control how ‘counter’ is accessed and apply custom logic. Learn more at - https://community.risingstack.com/explaining-javascript-closure-scope-chain-examples/ 
+Closures allow for JavaScript objects with **private** variables and methods. Learn more at - https://community.risingstack.com/explaining-javascript-closure-scope-chain-examples/ 
 
 
 Callbacks
 ####
-Node.js is designed around the concept of non-blocking input-output (I/O) and event-driven programming.
+Node.js is designed around the concept of **non-blocking input-output (I/O)** and event-driven programming.
 
-In Node, I/O operations such as reading a file, querying a database or making a web request, are performed asynchronously. This means you can initiate an operation, and specify the code (aka callback) Node should execute when the operation completes. While the operation executes in the background, Node will proceed with executing other code. The Node runtime executes an event loop that periodically checks for callbacks ready for attention.
+Node.js mostly performs I/O operations - such as reading a file, querying a database or making a web request - asynchronously. This means you can initiate an operation and specify the code (aka callback) Node should execute when the operation completes. While the operation executes in the background, Node will proceed with executing other code. The Node runtime executes an event loop that periodically checks for callbacks ready for attention.
 
 **Synchronous**
 ::
 
-	const request = prepare_the_request( ); 
-	response = send_request_synchronously(request); // subsequent commands blocked until this completes
+	const response = send_api_request_sync(request); // other operations blocked until request completes
 	display(response); 
 
 **Asynchronous**
@@ -133,81 +134,13 @@ In Node, I/O operations such as reading a file, querying a database or making a 
 An asynchronous function returns immediately, so the client isn’t blocked: 
 ::
 
-	const request = prepare_the_request( );
-	send_request_async(request, function (response) {
+	const send_api_request_async = (request, (response) => {
+	  // commands to execute when request completes
 	  display(response); 
 	}); 
 
-We pass an anonymous function as a parameter to the send_request_async function, which will be called when the response is available.
+This example passes an anonymous function as a parameter to the *send_request_async* function, to be called when the response is available.
 
-Chaining
-####
-Method chaining is a way to return an object from a method call for use in a subsequent operation. 
-
-For example, you might have a sequence of operations like these:
-::
-
-	let $div = $('#my-div'); // assign to variable 
-	$div.css('background', 'blue'); // set BG 
-	$div.height(100); // set height 
-	$div.fadeIn(200); // show element
-
-These JQuery operations can be chained like so:
-::
-
-	$('#my-div').css('background', 'blue').height(100).fadeIn(200);
-
-The chained code can be broken to multiple lines for readability:
-::
-
-	$('#my-div')
-	  .css('background', 'blue')
-	  .height(100) 
-	  .fadeIn(200);
-
-In order for chaining to work, each method in the chain must return an object. For example, custom method for use in the above chain, would need to return an object like so:
-::
-
-	$('div').prototype.setCategory = function(category) { this.category = category; return this; };
-
-
-Node Modules
-####
-Node applications use Javascript functions and closures to make modules that present and interface but hide their state and implementation. Modules are typically functions that have private variables and functions, and privileged functions accessible to outside code and that mediate access to the private variables/functions.
-
-Node modules have a main javascript file and may have supporting scripts and assets. The main script name should clearly indicate the module purpose and often matches the object defines (e.g. ‘fortune’, ‘book’, etc.)
-
-Modules internal to a Node application are usually stored in the /lib folder for consistency.
-
-Node modules use the global ‘exports’ variable to expose objects or functions to code outside the module. For example:
-::
-
-	let books = [
-		{ title:'Moby Dick', price:20 },
-		{ title:'Tom Sawyer', price:12 },
-		{ title:'War & Peace', price:25 }
-	];
-
-	exports.getBook = (title) => {
-		// return a book by title
-		return this.books.find((book) => {
-		  return book.title === title;
-		});
-	}
-
-	exports.byPriceAsc = () => {
-		// return a sorted list of books
-		return this.books.sort((a, b) => {
-		  return a.price - b.price;
-		});
-	}
-
-Our Node application can encapsulate book-related behavior into this module to reduce complexity of the main script, and call in the module like so:
-::
-
-	const book = require('./lib/book.js');
-
-Node packages are modules designed for installation by other Node applications, and have a package.json file that describes how to install them.
 
 Objects, Collections & Higher-order Functions
 ####
@@ -255,7 +188,7 @@ JavaScript provides a variety of native Array methods for adding, removing and m
 	students.splice(1, 1); // removes 2nd item in the students array
 	students.splice(1, 1, { name : "jeff", age : 21, classes : ["web120"] } ); // replaces 2nd item in the students array
 
-Some array methods are **higher-order functions**, which take afunctions as parameters. The calling function executes the callback function for each item in the collection. Higher-order functions can use a named callback::
+Some array methods are **higher-order functions**, which take a function as parameter. The calling function executes the callback function for each item in the collection. Higher-order functions can use a named callback::
 ::
 
 	array.method(callback);
@@ -268,10 +201,15 @@ or an anonymous callback:
 	});
 
 
+Array Methods
+++++
+
 **.forEach()** - executes a provided function once per array element.
 ::
 
-	students.forEach((student) => {  console.log('Student: ' + student.name + '<br>Age: ' + student.age + '<br>Courses: ' + student.classes.length);});
+	students.forEach((student) => {  
+	    console.log('Student: ' + student.name + '<br>Age: ' + student.age + '<br>Courses: ' + student.classes.length);
+	});
 
 **.find()** - returns the first array item that results in a ‘true’ value from the callback function.
 ::
@@ -325,3 +263,72 @@ or an anonymous callback:
 	const total_classes = students.reduce((previousValue, currentStudent) => {
 	  return previousValue + currentStudent.classes.length;
 	});
+
+Node Modules
+####
+Node applications use Javascript functions and closures to make modules that present and interface but hide their state and implementation. Modules are typically functions that have private variables and functions, and privileged functions accessible to outside code and that mediate access to the private variables/functions.
+
+Node modules have a main javascript file and may have supporting scripts and assets. The main script name should clearly indicate the module purpose and often matches the object defines (e.g. ‘fortune’, ‘book’, etc.)
+
+Modules internal to a Node application are usually stored in the /lib folder for consistency.
+
+Node modules use the global ‘exports’ variable to expose objects or functions to code outside the module. For example:
+::
+
+	let books = [
+		{ title:'Moby Dick', price:20 },
+		{ title:'Tom Sawyer', price:12 },
+		{ title:'War & Peace', price:25 }
+	];
+
+	exports.getBook = (title) => {
+		// return a book by title
+		return this.books.find((book) => {
+		  return book.title === title;
+		});
+	}
+
+	exports.byPriceAsc = () => {
+		// return a sorted list of books
+		return this.books.sort((a, b) => {
+		  return a.price - b.price;
+		});
+	}
+
+Our Node application can encapsulate book-related behavior into this module to reduce complexity of the main script, and call in the module like so:
+::
+
+	const book = require('./lib/book.js');
+
+Node packages are modules designed for installation by other Node applications, and have a package.json file that describes how to install them.
+
+
+Chaining
+####
+Method chaining is a way to return an object from a method call for use in a subsequent operation. 
+
+For example, you might have a sequence of operations like these:
+::
+
+	let $div = $('#my-div'); // assign to variable 
+	$div.css('background', 'blue'); // set BG 
+	$div.height(100); // set height 
+	$div.fadeIn(200); // show element
+
+These JQuery operations can be chained like so:
+::
+
+	$('#my-div').css('background', 'blue').height(100).fadeIn(200);
+
+The chained code can be broken to multiple lines for readability:
+::
+
+	$('#my-div')
+	  .css('background', 'blue')
+	  .height(100) 
+	  .fadeIn(200);
+
+In order for chaining to work, each method in the chain must return an object. For example, custom method for use in the above chain, would need to return an object like so:
+::
+
+	$('div').prototype.setCategory = function(category) { this.category = category; return this; };

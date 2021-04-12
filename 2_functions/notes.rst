@@ -6,6 +6,8 @@ Reading
 - D'Mello - A JavaScript primer
 - https://www.w3schools.com/js/js_- functions, closures, modules 
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array  [Array iteration methods]
+- https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
 
 Watch
 ####
@@ -264,44 +266,60 @@ Array Methods
 	  return previousValue + currentStudent.classes.length;
 	});
 
-Node Modules
+JavaScript Modules
 ####
-Node applications use Javascript functions and closures to make modules that present and interface but hide their state and implementation. Modules are typically functions that have private variables and functions, and privileged functions accessible to outside code and that mediate access to the private variables/functions.
 
-Node modules have a main javascript file and may have supporting scripts and assets. The main script name should clearly indicate the module purpose and often matches the object defines (e.g. ‘fortune’, ‘book’, etc.)
+JS applications can use **modules** to present a public **interface** for external users, but maintain a private state and implementation.
 
-Modules internal to a Node application are usually stored in the /lib folder for consistency.
+Exports
+++++
+Modules can make methods and variables public, either as **named** exports (Zero or more exports per module):
 
-Node modules use the global ‘exports’ variable to expose objects or functions to code outside the module. For example:
 ::
 
-	let books = [
-		{ title:'Moby Dick', price:20 },
-		{ title:'Tom Sawyer', price:12 },
-		{ title:'War & Peace', price:25 }
-	];
+    // export named function or variable
+    export { myFunction, myVariable };
 
-	exports.getBook = (title) => {
-		// return a book by title
-		return this.books.find((book) => {
+    // export individual features
+    export let myVariable = Math.sqrt(2);
+	export const myFunction = (title) => {
+	    // search the books array
+		return books.find((book) => {
 		  return book.title === title;
 		});
 	}
 
-	exports.byPriceAsc = () => {
-		// return a sorted list of books
-		return this.books.sort((a, b) => {
-		  return a.price - b.price;
-		});
-	}
+Or as **default** exports (one per module):
 
-Our Node application can encapsulate book-related behavior into this module to reduce complexity of the main script, and call in the module like so:
 ::
 
-	const book = require('./lib/book.js');
+    // Default exports
+    export default myFunction;
 
-Node packages are modules designed for installation by other Node applications, and have a package.json file that describes how to install them.
+Imports
+++++
 
+JavaScript modules can import other modules to quickly extend their functionality.
+
+Prior to Node.js 12, modules could be imported with **commonJS** syntax, as in this example:
+
+::
+
+    const http = require("data"); // no need to specify .js file extension
+
+Unfortunately, that syntax differs from syntax used in client applications. Current versions of Node.js support **ES6 modules** that can be imported like so:
+
+::
+
+    import * from 'data'; // import all exports from data into current scope
+    import * as 'data' from 'data'; // use 'data' as namespace
+    import {myFunction, myVariable} from 'data'; // import only certain exports from data
+
+Note - import names need to match the names exported by a given module.
+
+Modules in a Node.js application typically have a main JS file, named according to its purpose or the data it defines - e.g. ‘movie’, 'person', 'login', etc.
+
+Modules internal to a Node application are usually stored in the **/lib** folder for consistency.
 
 Chaining
 ####

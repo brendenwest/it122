@@ -1,4 +1,5 @@
-var http = require("http"), fs = require('fs');
+import http from 'http';
+import fs from 'fs';
 
 function serveStatic(res, path, contentType, responseCode){
   if(!responseCode) responseCode = 200;

@@ -1,12 +1,15 @@
 'use strict'
 
-var http = require("http"), fs = require('fs'), qs = require("querystring");
-let book = require("../lib/book.js");
+import http from 'http';
+import { readFile } from 'fs';
+import { parse } from "querystring";
+import * as book from "../lib/book.js";
 
 function serveStatic(res, path, contentType, responseCode){
   if(!responseCode) responseCode = 200;
-  fs.readFile(__dirname + path, function(err, data){
-      if(err){
+  readFile(path, (err, data) => {
+      if (err) {
+        console.log(err)
         res.writeHead(500, {'Content-Type': 'text/plain'});
         res.end('Internal Server Error');
       }
@@ -19,19 +22,19 @@ function serveStatic(res, path, contentType, responseCode){
 
 http.createServer((req,res) => {
   let url = req.url.split("?");  // separate route from query string
-  let query = qs.parse(url[1]); // convert query string to object
+  let query = parse(url[1]); // convert query string to object
   let path = url[0].toLowerCase();
 
   switch(path) {
     case '/': 
-      serveStatic(res, '/../public/home.html', 'text/html');
+      serveStatic(res, '../public/home.html', 'text/html');
       break;
     case '/about':
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.end('About');
+      res.end('About me: Call me Ishmael');
       break;
     case '/get':
-      let found = book.get(query.title); // get book object
+      let found = book.getItem(query.title); // get book object
       res.writeHead(200, {'Content-Type': 'text/plain'});
       let results = (found) ? JSON.stringify(found) : "Not found";
       res.end('Results for ' + query.title + "\n" + results);

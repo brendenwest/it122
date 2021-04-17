@@ -1,16 +1,17 @@
 "use strict"
 
-let book = require("../lib/book.js");
+import * as book from "../lib/book.js";
+import express from 'express';
+import handlebars from "express-handlebars"
 
-const express = require("express");
 const app = express();
 
 app.set("port", process.env.PORT || 3000);
-app.use(express.static(__dirname + '/public')); // allows direct navigation to static files
-app.use(require("body-parser").urlencoded({extended: true}));
+app.use(express.static('./public')); // allows direct navigation to static files
+app.use(express.urlencoded()); //Parse URL-encoded bodies
+app.use(express.json()); //Used to parse JSON bodies
 
-const exphbs =  require("express-handlebars");
-app.engine('hbs', exphbs({defaultLayout: false}));
+app.engine('hbs', handlebars({defaultLayout: false}));
 app.set("view engine", "hbs");
 
 app.get('/', (req,res) => {
@@ -18,20 +19,20 @@ app.get('/', (req,res) => {
 });
 
 // send plain text response
-app.get('/about', function(req,res){
+app.get('/about', (req,res) => {
     res.type('text/plain');
     res.send('About page');
 });
 
 // handle GET 
-app.get('/delete', function(req,res){
-    let result = book.delete(req.query.title); // delete book object
+app.get('/delete', (req,res) => {
+    let result = book.deleteItem(req.query.title); // delete book object
     res.render('delete', {title: req.query.title, result: result});
 });
 
-app.get('/detail', function(req,res){
+app.get('/detail', (req,res) => {
     console.log(req.query)
-    var found = book.get(req.query.title);
+    let found = book.getItem(req.query.title);
     res.render("details", {
         title: req.query.title, 
         result: found
@@ -40,19 +41,19 @@ app.get('/detail', function(req,res){
 });
 
 // handle POST
-app.post('/detail', function(req,res){
+app.post('/detail', (req,res) => {
     console.log(req.body)
-    var found = book.get(req.body.title);
+    let found = book.getItem(req.body.title);
     res.render("details", {title: req.body.title, result: found, books: book.getAll()});
 });
 
 // define 404 handler
-app.use(function(req,res) {
+app.use((req,res) => {
     res.type('text/plain'); 
     res.status(404);
     res.send('404 - Not found');
 });
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
     console.log('Express started');    
 });

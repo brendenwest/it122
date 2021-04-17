@@ -58,12 +58,12 @@ Now, your main application can be defined as an Express instance with configurat
 ::
 
     'use strict'
-    const express = require("express");
-    const bodyParser = require("body-parser")
-    
+    import express from 'express';
+
     const app = express();
     app.set('port', process.env.PORT || 3000);
-    app.use(express.static(__dirname + '/public')); // set location for static files
+    app.use(express.static('./public')); // set location for static files
+    app.use(express.urlencoded()); //Parse URL-encoded bodies
 
 Route handlers are specified with app.get() or app.post(), & error handlers w/ app.use():
 ::
@@ -71,7 +71,7 @@ Route handlers are specified with app.get() or app.post(), & error handlers w/ a
     // send static file as response
     app.get('/', (req,res) => {
      res.type('text/html');
-     res.sendFile(__dirname + '/public/home.html'); 
+     res.sendFile('./public/home.html');
     });
     
     // send plain text response
@@ -105,11 +105,11 @@ Routes are ‘virtual’ handlers for URLs that might receive a user’s request
 Routes can be exclusive, or can use the ‘next’ method to pass control to the next applicable route in sequence. For example:
 ::
 
-    app.get('/foo', function(req,res,next){
+    app.get('/foo', (req,res,next) => {
            if(Math.random() < 0.5) return next();
            res.send('sometimes this');
     });
-    app.get('/foo', function(req,res){
+    app.get('/foo', (req,res) => {
            res.send('and sometimes that');
     });
 
@@ -117,11 +117,11 @@ Routes can be exclusive, or can use the ‘next’ method to pass control to the
 Or
 ::
     app.get('/foo',
-           function(req,res, next){
+           (req,res, next) => {
                    if(Math.random() < 0.5) return next();
                    res.send('red');
            },
-           function(req,res, next){
+           (req,res, next) => {
                    if(Math.random() < 0.5) return next();
                    res.send('green');
            },
@@ -130,7 +130,7 @@ Or
 
 Route paths can contain regular expressions, to match variations. For example, the below route would match /user or /username:
 ::
-    app.get('/user(name)?', function(req,res){
+    app.get('/user(name)?', (req,res) => {
            res.render('user');
     });
 
@@ -139,9 +139,9 @@ Express route paths support a subset of regular expression metacharacters: +, ?,
 Routes can include parameters that are automatically added to the request.parameters collection:
 ::
 
-    app.get('/user/:name', function(req, res) {
+    app.get('/user/:name', (req, res) => {
 
-           var info = users.find(function(user){
+           let info = users.find((user) => {
 
                return user.name = req.params.name;
 
@@ -157,19 +157,18 @@ As your application grows, the number of routes can grow to the point where your
 
 In the main Express application file:
 ::
-    const routes = require('./routes.js')(app); // passes ‘app’ instance to the routes module
+
+    import routes from './routes.js';
+    const app_routes = routes(app); // passes ‘app’ instance to the routes module
 
 
 In your routes.js file:
 ::
-    module.exports = function(app){
-
-           app.get('/', function(req,res){
+    export default = (app) => {
+           app.get('/', (req,res) => {
                    app.render('home');
            }))
-
            //… other routes
-
     };
 
 
@@ -185,7 +184,7 @@ You can access querystring values with the req.query object like so:
       console.log(req.query); // display parsed querystring object
     });
 
-The **body-parser** plugin allows you to access form submissions with the req.body object like so:
+The **express.urlencoded** method allows you to access form submissions with the req.body object like so:
 ::
 
     app.post('/get', (req,res) => {
@@ -203,7 +202,7 @@ Express can use a 'view' to render dynamic information that differs with each re
 - Views must be in the location and format required by the view engine you specify for the app. 
 ::
 
-    let exphbs =  require("express-handlebars");
+    import exphbs from "express-handlebars"
     app.engine("handlebars", exphbs({defaultLayout: false}));
     app.set("view engine", "handlebars");
 
@@ -220,7 +219,7 @@ Express can render the view with dynamic content passed as a JSON object:
 
     // send content of 'home' view
     app.get('/get', (req,res) => {
-     let result = book.get(req.query.title);
+     let result = book.getItem(req.query.title);
      res.render('details', {title: req.query.title, result: result });
     });
 
@@ -264,7 +263,7 @@ Passing JavaScript Code
 
 Sometimes it's useful to pass JavaScript data to a Handlebars template, so it can be used by scripts in the HTML. For example, the server might render data like so:
 ::
-    var names = ['david','sue','aisha'];
+    let names = ['david','sue','aisha'];
     app.get('/', (req,res) => {
       res.type('text/html');
       res.locals.names = JSON.stringify(names);

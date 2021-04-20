@@ -1,7 +1,3 @@
-<html>
-<link rel="stylesheet" href="/css/main.css">
-
-<body>
 <h2>Home</h2>
 <form method="POST" action="/detail">
     <input type="text" name="title" placeholder="title" required maxlength="100">
@@ -12,4 +8,3 @@
 {{#each books}}
     <li><a href="/detail?title={{title}}">{{title}}</a></li>
 {{/each}}
-</body>

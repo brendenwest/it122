@@ -11,11 +11,11 @@ app.use(express.static('./public')); // allows direct navigation to static files
 app.use(express.urlencoded()); //Parse URL-encoded bodies
 app.use(express.json()); //Used to parse JSON bodies
 
-app.engine('hbs', handlebars({defaultLayout: false}));
+app.engine('hbs', handlebars({defaultLayout: "main.hbs"}));
 app.set("view engine", "hbs");
 
 app.get('/', (req,res) => {
-    res.render('home', {books: book.getAll()}); 
+    res.render('home', {books: book.getAll()});
 });
 
 // send plain text response
@@ -32,10 +32,10 @@ app.get('/delete', (req,res) => {
 
 app.get('/detail', (req,res) => {
     console.log(req.query)
-    let found = book.getItem(req.query.title);
+    let result = book.getItem(req.query.title);
     res.render("details", {
         title: req.query.title, 
-        result: found
+        result
         }
     );
 });

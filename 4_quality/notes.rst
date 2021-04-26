@@ -18,37 +18,38 @@ Practice
 Learning Outcomes
 ====
 
-- Understand JavaScript Linting
-- Understand basic unit testing
+- Understand static analysis & JavaScript linting
+- Understand basic unit testing in JavaScript
+
+Overview
+====
 
 Professional developers are increasingly responsible for preliminary testing of their work and ensuring minimal quality levels.
 
 
-
-Linting
+Static Analysis (Linting)
 ====
 
-Linters are tools that find problematic code patterns or code that doesn’t adhere to certain style guidelines.
+Linters find problematic code patterns or code that doesn’t adhere to certain styl guidelines.
 
 - Linters can catch potential application errors automatically, before deployment.
 - Enforcing style standards can simplify code handoff between developers on the same team,
-- Common Linters include JSHint, JSLint, ESLint
- 
+- Common JavaScript Linters include JSHint, JSLint, ESLint
 
-For this class, we'll use `ESLint<http://eslint.org/>`_, which you can install globally: 
+For this class, we'll use `ESLint<http://eslint.org/>`_, which you can install globally for use in all projects on your computer:
 ::
 
- $ npm install -g eslint
+    $ npm install -g eslint
 
-Or as part of your application (for dev installations only):
+Or as part of your development environment for your current project:
 ::
 
- $ npm i eslint --save-dev
+    $ npm i eslint --save-dev
 
 ESLint behavior is controlled by a configuration file in the root folder of your application. The file can be in various formats, but for this class we'll use the .js format (e.g. .eslintrc.js). You can create a configuration file in any text editor, or via command line:
 ::
 
- $ eslint --init 
+    $ eslint --init
 
 The init process can use common configurations from major companies, or settings based on answers to questions about your coding style. A full description of configuration options are at http://eslint.org/docs/user-guide/configuring and rules are explained at http://eslint.org/docs/rules/. But for this class, let's use this example:
 ::
@@ -75,14 +76,14 @@ You can run ESLint against JS files like so:
  $ eslint somefile.js
  $ eslint lib/**
 
-You can also run ESLint against your application files by updating the package.json like so:
+You can also run ESLint with NPM to check all your project files by updating the package.json like so:
 ::
 
  "scripts": {
      "lint": "eslint **/*.js" 
  } 
 
-And then run lint checks like so:
+And then run ESlint checks like so:
 ::
 
  $ npm run lint
@@ -93,7 +94,7 @@ Testing
 Web software testing encompasses a broad range of tasks, but developers typically need to at least know basics of the following:
 
 - unit tests - verify that single components (functions) work properly
-- integration tests - verify that multiple system components (modules, services, databases, etc.) work properly together 
+- integration tests - verify that multiple system components (modules, services, databases, etc.) work properly together
 
 `Mocha <https://mocha.org>`_ is a JavaScript testing library commonly used for unit and integration testing.
 
@@ -108,8 +109,9 @@ Node application test scripts are typically stored as .js files in a /test direc
 A test script 'requires' any supporting libraries as well as modules being tested. The script then describes one or more test cases, where each case corresponds to a module being tested. The case can have one more tests of expected unit behavior. Tests should account for both success & failure conditions:
 ::
 
- const expect = require("chai").expect;
- const book = require("../lib/book");
+ import { expect } from 'chai';
+ import * as book from "../lib/book.js";
+
  describe("Book module", () => {
   it("returns requested book", function() {
     var result = book.get("dune");

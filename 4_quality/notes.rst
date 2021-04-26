@@ -8,7 +8,6 @@ Reading
 - https://eslint.org/docs/user-guide/getting-started 
 - https://blog.risingstack.com/node-hero-node-js-unit-testing-tutorial/
 - https://semaphoreci.com/community/tutorials/getting-started-with-node-js-and-mocha
-- https://www.digitalocean.com/community/tutorials/how-to-use-joi-for-node-api-schema-validation
 
 Practice
 ====

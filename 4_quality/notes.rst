@@ -7,19 +7,25 @@ Reading
 - D'Mello - Testing Your Code
 - https://eslint.org/docs/user-guide/getting-started 
 - https://blog.risingstack.com/node-hero-node-js-unit-testing-tutorial/
-- https://codeutopia.net/docs/eslint/  
-- https://semaphoreci.com/community/tutorials/getting-started-with-node-js-and-mocha 
+- https://semaphoreci.com/community/tutorials/getting-started-with-node-js-and-mocha
+- https://www.digitalocean.com/community/tutorials/how-to-use-joi-for-node-api-schema-validation
 
 Practice
 ====
 
-- https://learn.freecodecamp.org/information-security-and-quality-assurance/quality-assurance-and-testing-with-chai
+- https://www.freecodecamp.org/learn/quality-assurance/
+
+Reference
+====
+- https://codeutopia.net/docs/eslint/
+- https://joi.dev/
 
 Learning Outcomes
 ====
 
 - Understand static analysis & JavaScript linting
 - Understand basic unit testing in JavaScript
+- Understand schema validation
 
 Overview
 ====
@@ -143,3 +149,46 @@ and executing with npm:
 ::
 
  $ npm run test
+
+
+Data Validation
+====
+
+Data validation ensures information provided to your application satisfies necessary requirements. For example, your application may require that certain data values are strings or numbers.
+
+`Joi` is JavaScript library that lets you define a `schema` with rules describing valid data. For example:
+::
+
+    import Joi from 'joi';
+
+    const schema = Joi.object().keys({
+        email: Joi.string().email().required(),
+        phone: Joi.string().regex(/^\d{3}-\d{3}-\d{4}$/).required(),
+        birthday: Joi.date().max('1-1-2004').iso()
+    });
+
+Email value is required and must be a valid `email` string.
+
+Phone value is requried and must be a string with digits in the format of XXX-XXX-XXXX
+
+Birthday is optional and must be a valid date in ISO 8601 format (e.g. "2006-01-01")
+
+Joi can validate data against the schema before your application tries to use. Validation provides details for the first error encountered, and a formatted `value` object.
+
+::
+
+    // validate some data
+    const data = {email: "", birthday: "2006-01-01"}
+
+    // validate data
+    const { error, value } = schema.validate(data);
+    console.log(error);
+    console.log(value);
+
+    // alternatively
+    try {
+        const value = await schema.validateAsync(bad_data);
+    }
+    catch (err) {
+        console.log(err)
+    }

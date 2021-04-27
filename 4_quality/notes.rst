@@ -41,31 +41,31 @@ Linters find problematic code patterns or code that doesn’t adhere to certain 
 - Enforcing style standards can simplify code handoff between developers on the same team,
 - Common JavaScript Linters include JSHint, JSLint, ESLint
 
-For this class, we'll use `ESLint<http://eslint.org/>`_, which you can install globally for use in all projects on your computer:
-::
-
-    $ npm install -g eslint
-
-Or as part of your development environment for your current project:
+For this class, we'll use `ESLint <http://eslint.org/>`_, which you can install as part of your development environment for your current project:
 ::
 
     $ npm i eslint --save-dev
 
+or globally for use in all projects on your computer:
+::
+
+    $ npm install -g eslint
+
 ESLint behavior is controlled by a configuration file in the root folder of your application. The file can be in various formats, but for this class we'll use the .js format (e.g. .eslintrc.js). You can create a configuration file in any text editor, or via command line:
 ::
 
-    $ eslint --init
+    $ npx eslint --init
 
 The init process can use common configurations from major companies, or settings based on answers to questions about your coding style. A full description of configuration options are at http://eslint.org/docs/user-guide/configuring and rules are explained at http://eslint.org/docs/rules/. But for this class, let's use this example:
 ::
 
  module.exports = {
   "env": {
-    "es6": true,
+    "es2021": true,
     "node": true
   },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 12,
     "sourceType": "module"
   },
   "extends": "eslint:recommended",

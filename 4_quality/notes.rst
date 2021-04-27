@@ -51,15 +51,24 @@ or globally for use in all projects on your computer:
 
     $ npm install -g eslint
 
-ESLint behavior is controlled by a configuration file in the root folder of your application. The file can be in various formats, but for this class we'll use the .js format (e.g. .eslintrc.js). You can create a configuration file in any text editor, or via command line:
+ESLint behavior is controlled by a configuration file in the root folder of your application. The file can be in various formats (e.g. JSON or JavaScript). If you are using esm modules use **.eslintrc.cjs** instead of **.eslintrc.js**
+
+You can create a configuration file in any text editor, or via command line:
 ::
 
     $ npx eslint --init
 
-The init process can use common configurations from major companies, or settings based on answers to questions about your coding style. A full description of configuration options are at http://eslint.org/docs/user-guide/configuring and rules are explained at http://eslint.org/docs/rules/. But for this class, let's use this example:
+    ✔ How would you like to use ESLint? · problems
+    ✔ What type of modules does your project use? · esm
+    ✔ Which framework does your project use? · none
+    ✔ Does your project use TypeScript? · **No** / Yes
+    ✔ Where does your code run? · node
+    ✔ What format do you want your config file to be in? · JSON
+
+The above settings should result in an .eslintrc.json file like this:
 ::
 
- module.exports = {
+ {
   "env": {
     "es2021": true,
     "node": true
@@ -70,28 +79,29 @@ The init process can use common configurations from major companies, or settings
   },
   "extends": "eslint:recommended",
     "rules": {
-    "prefer-arrow-callback": "warn",
-    "no-var": "warn"
   }
  };
 
-You can run ESLint against JS files like so:
+The default configuration uses **eslint:recommended** linting rules. A full description of configuration options are at http://eslint.org/docs/user-guide/configuring and rules are explained at http://eslint.org/docs/rules/. 
+
+Once configured, you can run ESLint against JS files like so:
 ::
 
- $ eslint somefile.js
- $ eslint lib/**
+ $ npx eslint somefile.js
+ $ npx eslint lib/**
 
-You can also run ESLint with NPM to check all your project files by updating the package.json like so:
+You can also define an npm script in your package.json like so:
 ::
 
  "scripts": {
      "lint": "eslint **/*.js" 
  } 
 
-And then run ESlint checks like so:
+And then run ESlint like so:
 ::
 
  $ npm run lint
+
 
 Testing
 ====

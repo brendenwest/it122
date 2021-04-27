@@ -101,9 +101,9 @@ Web software testing encompasses a broad range of tasks, but developers typicall
 - unit tests - verify that single components (functions) work properly
 - integration tests - verify that multiple system components (modules, services, databases, etc.) work properly together
 
-`Mocha <https://mocha.org>`_ is a JavaScript testing library commonly used for unit and integration testing.
+`Mocha <https://mochajs.org>`_ is a JavaScript testing library commonly used for unit and integration testing.
 
-Mocha is often used in conjunction with `Chai<https://chaijs.com>`_, a library that assists with test assertions. You can install both packages for development purposes like so:
+Mocha is often used in conjunction with `Chai <https://chaijs.com>`_, a library that assists with test assertions. You can install both packages for development purposes like so:
 ::
 
  $ npm install mocha --save-dev

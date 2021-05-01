@@ -1,25 +1,18 @@
 'use strict'
 
-var express = require("express");
-var app = express();
-var Book = require("../models/book"); // use database model
+import express from 'express';
+import handlebars from "express-handlebars"
+import * as Book from "../models/book.js";
 
-var book = require("./book");
+const app = express();
 
-// configure Express app
-app.set('port', process.env.PORT || 3000);
-app.use(express.static(__dirname + '/../public'));
-app.use(require("body-parser").urlencoded({extended: true}));
-app.use('/api', require("cors")());
-app.use((err, req, res, next) => {
-  console.log(err)
-})
+app.set("port", process.env.PORT || 3000);
+app.use(express.static('./public')); // allows direct navigation to static files
+app.use(express.urlencoded()); //Parse URL-encoded bodies
+app.use(express.json()); //Used to parse JSON bodies
 
-// set template engine
-let handlebars =  require("express-handlebars");
-app.engine(".html", handlebars({extname: '.html', defaultLayout: 'main' }));
-app.set("view engine", ".html");
-
+app.engine('hbs', handlebars({defaultLayout: "main.hbs"}));
+app.set("view engine", "hbs");
 
 app.get('/', (req,res) => {
     Book.find({}).lean()
@@ -42,7 +35,7 @@ app.get('/detail', (req,res,next) => {
         .catch(err => next(err));
 });
 
-app.post('/get', (req,res, next) => {
+app.post('/detail', (req,res, next) => {
     Book.findOne({ title:req.body.title }).lean()
         .then((book) => {
             res.render('details', {result: book} );
@@ -58,41 +51,6 @@ app.get('/delete', (req,res) => {
             res.type('text/html');
             res.render('delete', {title: req.query.title, deleted: result.result.n !== 0, total: total } );    
         });
-    });
-});
-
-// api's
-app.get('/api/v1/book/:title', (req, res, next) => {
-    let title = req.params.title;
-    console.log(title);
-    Book.findOne({title: title}, (err, result) => {
-        if (err || !result) return next(err);
-        res.json( result );    
-    });
-});
-
-app.get('/api/v1/books', (req,res, next) => {
-    Book.find((err,results) => {
-        if (err || !results) return next(err);
-        res.json(results);
-    });
-});
-
-app.get('/api/v1/delete/:title', (req,res, next) => {
-    Book.remove({"title":req.params.title }, (err, result) => {
-        if (err) return next(err);
-        // return # of items deleted
-        res.json({"deleted": result.result.n});
-    });
-});
-
-app.get('/api/v1/add/:title/:author/:pubdate', (req,res, next) => {
-    // find & update existing item, or add new 
-    let title = req.params.title;
-    Book.update({ title: title}, {title:title, author: req.params.author, pubdate: req.params.pubdate }, {upsert: true }, (err, result) => {
-        if (err) return next(err);
-        // nModified = 0 for new item, = 1+ for updated item 
-        res.json({updated: result.nModified});
     });
 });
 

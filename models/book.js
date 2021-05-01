@@ -1,21 +1,29 @@
-const credentials = require("../lib/credentials");
-const mongoose = require("mongoose");
+'use strict'
 
-mongoose.connect(credentials.connectionString, { dbName: 'sccprojects', useNewUrlParser: true});
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+import { connectionString } from "../lib/credentials.js";
 
-// local db settings 
-// var ip = process.env.IP || '127.0.0.1';
-// mongoose.connect('mongodb://' +ip+ '/itc230');
+// remote db connection settings. For security, connectionString should be in a separate file not committed to git
+
+mongoose.connect(connectionString, {
+    dbName: 'sccprojects',
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 mongoose.connection.on('open', () => {
-    console.log('Mongoose connected.');
+  console.log('Mongoose connected.');
 });
 
-const bookSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    amount: Number,
-    pubdate: Date,
+// define Book model in JSON key/value pairs
+// values indicate the data type of each key
+const bookSchema = new Schema({
+ title: { type: String, required: true },
+ author: String,
+ count: Number,
+ pubdate: Date,
+ inStore: Boolean
 });
 
-module.exports = mongoose.model('Book', bookSchema);
+export const Book = mongoose.model('Book', bookSchema);

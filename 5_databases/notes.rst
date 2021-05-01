@@ -1,4 +1,4 @@
-Week 6 - Data Storage with MongoDB
+Data Storage with MongoDB
 ####
 
 Reading

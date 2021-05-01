@@ -140,6 +140,7 @@ The Fetch api enables asynchronous operations and a simplified programming synta
 Public API's
 ####
 Many companies and institutions have public API's that developers can access. For example:
+
 - https://www.programmableweb.com/
 - https://data.seattle.gov/
 - https://data.wa.gov/browse

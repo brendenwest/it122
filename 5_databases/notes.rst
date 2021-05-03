@@ -71,35 +71,35 @@ As with other npm modules you need to install mongoose for your application:
 Then define a data-model script file. These scripts are typically stored in a /models folder and named according to the data object they describe (e.g. Person.js). The data-model script describes how to connect to the database and how the data will be structured:
 ::
 
-    const mongoose = require(‘mongoose’);
+    import mongoose from 'mongoose';
+    const { Schema } = mongoose;
 
-    // remote db connection settings. For security, connectionString should be in a separate file not committed to git
+    // For security, connectionString should be in a separate file not committed to git
     //const connectionString = "mongodb+srv://<dbuser>:<dbpassword>@<cluster>.mongodb.net/test?retryWrites=true";
 
-    // local db connection settings
-    // const ip = process.env.ip || '127.0.0.1';
-    // const connectionString = 'mongodb://' +ip+ '/<DB_NAME>';
-
-    mongoose.connect(connectionString, { dbName: <dbname>, useNewUrlParser: true });
-
-    mongoose.connection.on('open', () => {  console.log('Mongoose connected.');});
-
-    // define Book model in JSON key/value pairs
-    // values indicate the data type of each key
-    const mySchema = mongoose.Schema({
-        title: { type: String, required: true },
-        author: String,
-        count: Number,
-        pubdate: Date,
-        inStore: Boolean
+    mongoose.connect(connectionString, {
+        dbName: 'DBNAME',
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     });
 
-    module.exports = mongoose.model('Book', mySchema);
+    mongoose.connection.on('open', () => {
+      console.log('Mongoose connected.');
+    });
 
-- the above example shows both local or remote database configuration, but you should use just one approach,
+    // define data model as JSON key/value pairs
+    // values indicate the data type of each key
+    const bookSchema = new Schema({
+     title: { type: String, required: true },
+     author: String,
+     count: Number,
+     pubdate: Date,
+     inStore: Boolean
+    });
+
+    export const Book = mongoose.model('Book', bookSchema);
+
 - mongoose assumes the collection name is a lower-case, plural version of the model name (e.g. 'books'). If your collection differs from this convention, you need to specify it explicitly,
-- if using a remote database, the credentials (user name & password) should be stored in a **separate file** that's not committed into github, to ensure they remain private,
-- ‘options’ describe connection settings such as how long the connection should remain active.
 
 The data model can include custom methods:
 ::
@@ -109,9 +109,9 @@ The data model can include custom methods:
       return this.name;
     };
 
-Your application scripts can perform database operations via the model, and using built-in mongodb methods like .save(), .find(), etc. Because database operations can be long running, they are invoked with a callback function that handles the results on completion:
+Your application scripts can perform database operations via Mongoose using built-in MongoDB methods like .save(), .find(), etc. Because database operations can be long running, they are invoked with a callback function that handles the results on completion:
 ::
-    const Book = require("../models/book");
+    import * as Book from "../models/book.js";
 
     // return all records
     Book.find({}).lean()

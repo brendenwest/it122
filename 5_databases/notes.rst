@@ -74,8 +74,8 @@ Then define a data-model script file. These scripts are typically stored in a /m
     import mongoose from 'mongoose';
     const { Schema } = mongoose;
 
-    // For security, connectionString should be in a separate file not committed to git
-    //const connectionString = "mongodb+srv://<dbuser>:<dbpassword>@<cluster>.mongodb.net/test?retryWrites=true";
+    // For security, connectionString should be in a separate file and excluded from git
+    const connectionString = "mongodb+srv://<dbuser>:<dbpassword>@<cluster>.mongodb.net/test?retryWrites=true";
 
     mongoose.connect(connectionString, {
         dbName: 'DBNAME',
@@ -99,7 +99,11 @@ Then define a data-model script file. These scripts are typically stored in a /m
 
     export const Book = mongoose.model('Book', bookSchema);
 
-- mongoose assumes the collection name is a lower-case, plural version of the model name (e.g. 'books'). If your collection differs from this convention, you need to specify it explicitly,
+- mongoose assumes the collection name is a lower-case, plural version of the model name (e.g. 'books'). If your collection name differs from this convention, you must specify it explicitly like so:
+
+::
+    export const Book = mongoose.model('Book', bookSchema, 'wackycollectionname');
+
 
 The data model can include custom methods:
 ::
@@ -168,8 +172,18 @@ Your Express application routes can invoke MongoDB data methods directly. For ex
 ::
 
     app.get('/', (req, res, next) => {
-        return Book.find({}).lean()
+        Book.find({}).lean()
           .then((books) => {
+            // respond to browser only after db query completes
             res.render('home', { books });
           .catch(err => next(err))
+    });
+
+    app.get('/detail', (req,res,next) => {
+        // db query can use request parameters
+        Book.findOne({ title:req.query.title }).lean()
+            .then((book) => {
+                res.render('details', {result: book} );
+            })
+            .catch(err => next(err));
     });

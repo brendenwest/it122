@@ -100,8 +100,8 @@ Then define a data-model script file. These scripts are typically stored in a /m
     export const Book = mongoose.model('Book', bookSchema);
 
 - mongoose assumes the collection name is a lower-case, plural version of the model name (e.g. 'books'). If your collection name differs from this convention, you must specify it explicitly like so:
-
 ::
+
     export const Book = mongoose.model('Book', bookSchema, 'wackycollectionname');
 
 

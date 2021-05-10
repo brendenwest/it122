@@ -1,18 +1,18 @@
-Week 5 - REST API's & Scraping
+REST API's & Scraping
 ####
 
 Reading
-####
+----
 - D'Mello - Creating a Restful API
-- https://blog.risingstack.com/10-best-practices-for-writing-node-js-rest-apis/ 
-- Cheerio - https://github.com/cheeriojs/cheerio (optional)
+- https://blog.risingstack.com/10-best-practices-for-writing-node-js-rest-apis/
+- Cheerio - https://github.com/cheeriojs/cheerio (optional)
  
 Watch
-####
-- https://www.youtube.com/watch?v=o3ka5fYysBM
+----
+- `How to build a RESTful API with Node, Express, & MongoDB <https://www.youtube.com/watch?v=o3ka5fYysBM>`_
 
 Topics
-####
+----
 - REST API’s overview
 - Building an API
 - Integrating with 3rd party APIs
@@ -21,8 +21,7 @@ Topics
 
 
 API’s overview
-####
- 
+----
 
 REST - stateless connection between client & server
 
@@ -31,8 +30,8 @@ API’s can return data in any format. Common formats are XML & JSON. JSON easie
     app.get('/api/students', (req,res) => {
         res.json(
             [
-                { “name”: "jim", "age": 32 },
-                { “name”: "sue", "age": 27 },
+                { "name": "jim", "age": 32 },
+                { "name": "sue", "age": 27 },
             ]
         );
     });
@@ -40,12 +39,13 @@ API’s can return data in any format. Common formats are XML & JSON. JSON easie
 
 
 Why bulld an API?
-####
-API's allow wide adoption of application data, including by mobile and single-page apps, and 3rd party users.
+----
+API's allow wide adoption of application data, including by mobile and single-page apps, and 3rd party users.
 
 **Planning your api**
 
 You can use a combination of HTTP method (e.g. POST, PUT, GET) and url to distinguish api calls. For example, both api routes below would accomplish the same goal,. The first requires the specific item identifier in the URL:
+
 ::
 
     DEL /api/book/:title
@@ -54,17 +54,28 @@ You can use a combination of HTTP method (e.g. POST, PUT, GET) and url to distin
 
 Your API should provide appropriate error status and message to the client so it can determine what to do with the error information.
 
-Your API should allow cross-origin resource sharing for appropriate routes, so it can be used by applications not on your web-site domain:
-::
-    app.use('/api', require('cors')()); // set Access-Control-Allow-Origin header for api route
+Your API should allow **cross-origin resource sharing** for appropriate routes, so it can be used by applications not on your web-site domain:
 
-Your application will likely have API's corresponding to routes you set up previously, but simpler and returning only data or an error response.
+First install the 'cors' package:
+::
+
+    npm install --save cors
+
+::
+
+Then update your server to use it:
+::
+
+    import cors from 'cors';
+    app.use('/api', cors()); // set Access-Control-Allow-Origin header for api route
+
+Your application will likely have API's corresponding to routes you set up previously, but simpler and returning only data or an error response.
 
 For example:
 ::
 
     app.get('/api/books', (req,res) => {
-      const books = book.getAll(); // return all books in database
+      const books = book.getAll(); // return all books in data store
       if (books) {
         // res.json sets appropriate status code and response header
         res.json(books);
@@ -98,7 +109,7 @@ Note:
 You may want to filter item data in the API response, to avoid exposing internal information that clients shouldn’t see:
 ::
 
-    res.json(books.map(function(a){
+    res.json(books.map((a) => {
                return {
                    title: a.title,
                    author: a.author,

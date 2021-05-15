@@ -2,7 +2,7 @@
 
 import express from 'express';
 import handlebars from "express-handlebars"
-import * as Book from "../models/book.js";
+import { Book } from "../models/book.js";
 
 const app = express();
 
@@ -10,6 +10,9 @@ app.set("port", process.env.PORT || 3000);
 app.use(express.static('./public')); // allows direct navigation to static files
 app.use(express.urlencoded()); //Parse URL-encoded bodies
 app.use(express.json()); //Used to parse JSON bodies
+
+import cors from 'cors';
+app.use('/api', cors()); // set Access-Control-Allow-Origin header for api route
 
 app.engine('hbs', handlebars({defaultLayout: "main.hbs"}));
 app.set("view engine", "hbs");

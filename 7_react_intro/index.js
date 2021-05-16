@@ -1,31 +1,35 @@
 'use strict'
 
-let express = require("express");
-let bodyParser = require("body-parser");
-let Book = require("../models/book"); // use database model
+import express from 'express';
+import handlebars from "express-handlebars"
+import { Book } from "../models/book.js";
 
-let app = express();
+const app = express();
 
-// configure Express app
-app.set('port', process.env.PORT || 3000);
-app.use(express.static(__dirname + '/../public'));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use('/api', require("cors")());
-app.use((err, req, res, next) => {
-  console.log(err);
-});
+app.set("port", process.env.PORT || 3000);
+app.use(express.static('./public')); // allows direct navigation to static files
+app.use(express.urlencoded()); //Parse URL-encoded bodies
+app.use(express.json()); //Used to parse JSON bodies
 
-// set template engine
-let handlebars =  require("express-handlebars");
-app.engine(".html", handlebars({extname: '.html', defaultLayout: false}));
-app.set("view engine", ".html");
+import cors from 'cors';
+app.use('/api', cors()); // set Access-Control-Allow-Origin header for api route
+
+app.engine('hbs', handlebars({defaultLayout: "main.hbs"}));
+app.set("view engine", "hbs");
 
 app.get('/', (req,res, next) => {
     Book.find((err,books) => {
         if (err) return next(err);
         res.render('home', {books: JSON.stringify(books)});
     });
+});
+
+app.get('/detail', (req,res,next) => {
+    Book.findOne({ title:req.query.title }).lean()
+        .then((book) => {
+            res.render('details', {result: book} );
+        })
+        .catch(err => next(err));
 });
 
 app.get('/about', (req,res) => {

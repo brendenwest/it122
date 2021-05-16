@@ -1,0 +1,78 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>React App Demo</title>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+ 
+ <style type="text/css">
+  .flex-container {
+      display: -webkit-flex;
+      display: flex;
+      width: 600px;
+      background-color: lightgrey;
+  }
+
+  #item-list {
+      background-color: cornflowerblue;
+      width: 30%;
+      padding: 0px 10px 0px 0px;
+  }
+  #item-details {
+      background-color: yellow;
+      width: 75%;
+      padding: 10px;
+  }
+</style>
+</head>
+<body>
+
+  <div><h2>Book Store</h2></div>
+  <div id="root"></div>
+
+<!-- NOTE: text/babel type required to support JSX -->
+<script type="text/babel">
+
+    // UI elements
+
+    const ItemList = ({items, show}) => {
+      // return items that match search entry field, or all items if no entry
+      const listItems = items.map((item) => {
+          return <li id={item._id} key={item._id} onClick={show}>{item.title}</li>
+      });
+      return <span id="item-list"><ul>{listItems}</ul></span>;
+    }
+
+    const showDetails = (event) => {
+        console.log(event.target)
+        const title = event.target.innerText
+        console.log(title)
+        location.href=`/detail?title=${title}`
+    }
+
+    const BookApp = () => {
+        // list of items provided by server-size rendering
+        const items = {{{books}}}
+
+        // render app UI elements
+        return (
+          <div>
+          <div className="flex-container">
+            <ItemList
+                items={items}
+                show={showDetails}
+            />
+            </div>
+          </div>
+          );
+    }
+
+    ReactDOM.render(<BookApp />, document.getElementById('root'));
+
+</script>
+</body>
+</html>

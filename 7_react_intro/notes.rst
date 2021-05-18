@@ -83,9 +83,9 @@ JSX can contain embedded JavaScript, inside curly brackets.
 JSX statements can be assigned to variables, passed as function parameters, and returned from functions:
 ::
 
-  const Greeting = (user) => {
-    if (user) {  
-      return <h1>Hello, {formatName(user)}!</h1>;
+  const Greeting = (props) => {
+    if (props.user) {  
+      return <h1>Hello, {props.user}!</h1>;
     }  
     return <h1>Hello, Stranger.</h1>; 
   }

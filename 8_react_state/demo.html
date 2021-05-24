@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<h2>Demo</h2>
+<div id="root"></div>
+<script type="text/babel">
+
+    const divStyle = {
+      color: 'blue'
+    };
+
+    const greeting_ = <h1 className="greeting">Hello, class!</h1>;
+
+    const Greeting = (props) => {
+      if (props.user) {
+        return <h1 style={divStyle}>Hello, {props.user}!</h1>;
+      }
+      return <h1>Hello, Stranger.</h1>;
+    }
+
+    const Users = (props) => {
+        const names = ["dave", "sue", "keisha", "darrell"];
+        const listItems = names.map((item) =>  <li key={item}>{item}</li>);
+        return <ul>{listItems}</ul>
+    }
+
+      ReactDOM.render(
+        <div>
+            <Greeting user="Sara" />
+            <Users />
+        </div>,
+        document.getElementById('root')
+      );
+
+    </script>
+<!--
+  Note: this page is a great way to try React but it's not suitable for production.
+  It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+  Read this section for a production-ready setup with JSX:
+  https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+  In a larger project, you can use an integrated toolchain that includes JSX instead:
+  https://reactjs.org/docs/create-a-new-react-app.html
+
+  You can also use React without JSX, in which case you can remove Babel:
+  https://reactjs.org/docs/react-without-jsx.html
+-->
+</body>
+</html>

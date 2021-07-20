@@ -115,7 +115,7 @@ The data model can include custom methods:
 
 Your application scripts can perform database operations via Mongoose using built-in MongoDB methods like .save(), .find(), etc. Because database operations can be long running, they are invoked with a callback function that handles the results on completion:
 ::
-    import * as Book from "../models/book.js";
+    import { Book } from "./models/book.js";
 
     // return all records
     Book.find({}).lean()

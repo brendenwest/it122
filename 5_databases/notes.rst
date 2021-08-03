@@ -140,7 +140,7 @@ Your application scripts can perform database operations via Mongoose using buil
 
     // insert or update a single record
     const newBook = {'title':'dune', 'author':'frank herbert', 'pubdate': 1963 }
-    Book.update({'title':'dune'}, newBook, {upsert:true}, (err, result) => {
+    Book.updateOne({'title':'dune'}, newBook, {upsert:true}, (err, result) => {
       if (err) return next(err);
       console.log(result);
       // other code here

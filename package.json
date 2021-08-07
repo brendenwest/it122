@@ -9,20 +9,20 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-handlebars": "^5.3.0",
-    "joi": "^17.4.0",
-    "mongoose": "^5.12.7"
+    "express-handlebars": "^5.3.3",
+    "joi": "^17.4.2",
+    "mongoose": "^5.13.5"
   },
   "devDependencies": {
     "chai": "^4.3.4",
-    "eslint": "^7.25.0",
-    "mocha": "^8.3.2",
-    "nodemon": "^2.0.7"
+    "eslint": "^7.32.0",
+    "mocha": "^8.4.0",
+    "nodemon": "^2.0.12"
   },
   "scripts": {
     "start": "nodemon index.js",

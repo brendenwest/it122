@@ -4,7 +4,7 @@ Intro to Express
 Reading
 ####
 - D'Mello - Introducing Express
-- https://github.com/express-handlebars/express-handlebars
+- https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application
 
 Watch
 ####
@@ -12,11 +12,11 @@ Watch
 
 Reference
 ####
-- https://www.tutorialspoint.com/nodejs/nodejs_express_framework.htm  
-- https://expressjs.com/en/starter/static-files.html 
+- https://www.tutorialspoint.com/nodejs/nodejs_express_framework.htm
+- https://expressjs.com/en/starter/static-files.html
 - https://expressjs.com/en/starter/basic-routing.html 
 - https://expressjs.com/en/guide/routing.html 
-- https://handlebarsjs.com/
+- https://ejs.co/
 
 Summary
 ####
@@ -194,25 +194,28 @@ The **express.urlencoded** method allows you to access form submissions with the
 Templates
 ####
 
-Express can use a 'view' to render dynamic information that differs with each request. 
+Express can use a template engine to render dynamic pages with information that differs with each request.
 
-- Views can be composed of one or more 'layouts'.
-- Express expects the views in a **/views** folder, and layouts in /views/layouts
-- express-handlebars expects views and layouts to have a **.handlebars** file extension but you can override that,
-- Views must be in the location and format required by the view engine you specify for the app. 
+There are several engines to choose from but let's start with EJS.
+
+First install EJS in your project:
 ::
 
-    import exphbs from "express-handlebars"
-    app.engine("handlebars", exphbs({defaultLayout: false}));
-    app.set("view engine", "handlebars");
+    npm install --save ejs
 
-The Express **render** method sends a view to the client as HTML:
+Next, update your server application to use the EJS engine and render an HTML 'view' to the client :
 ::
+    // set the view engine to ejs
+    app.set('view engine', 'ejs');
 
-    // send content of 'home' view
+    // send content of 'home' view to browser
     app.get('/', (req,res) => {
      res.render('home');
     });
+
+- Express expects the views in a **/views** sub-folder
+- Express can use partials for elements to display on multiple pages.
+- EJS expects views and partials files to have a **.ejs** file extension,
 
 Express can render the view with dynamic content passed as a JSON object: 
 ::
@@ -223,58 +226,54 @@ Express can render the view with dynamic content passed as a JSON object:
      res.render('details', {title: req.query.title, result: result });
     });
 
-Handlebars uses {{ }} syntax to identify placeholders in HTML that should be replaced with dynamic information. For example:
+EJS uses <%=  %> syntax to identify placeholders in HTML that should be replaced with dynamic information. For example:
 ::
-    <h2>Book title: {{title}}</h2>
+    <h2>Book title: <%= title %></h2>
 
-Where 'title' is a property of the JSON context object provided to the template by the render() command.
+Where 'title' is provided to the template by the `render()` command.
 
-Handlebars templates can also have comments that won’t appear in the resulting HTML.
+EJS templates can support basic programmatic operations like loops and flow control. Block commands are prefaced with # and end with /.
 ::
-    {{! server-side comment }}
-
-A template **block** can perform basic programmatic operations like loops and flow control. Block commands are prefaced with # and end with /.
-::
-    {{! if..else block }}
-    {{#if title}}
-      <h2>Book title: {{title}}</h2>
-    {{else}}
+    <% if (title) { %>
+      <h2>Book title: <%= title %></h2>
+    <% } else { %>
       <h2>Please enter a title</h2>
-    {{/if}}
+    <% } %>
 
-Handlebars supports loops. For example, if we have 'books' array, where each array item has a 'title' property:
+EJS supports loops. For example, if we have 'books' array, where each array item has a 'title' property:
 ::
-    {{#each books}}
-     <li>{{title}}</li>
-    {{/each}}
+
+      <% books.forEach(function(book) { %>
+        <li> <%= book.title %> </li>
+      <% }); %>
+
 
 If the value for a given property is an object, you can use dot notation to reference its properties:
 ::
-    {{#if result}}
-        <li>Title: {{ result.title }}
-        <li>Author: {{ result.author }}
-        <li>Pubdate: {{ result.pubdate }}
-    {{else}}
+    <% if (result) { %>
+        <li>Title: <%= result.title %>
+        <li>Author: <%= result.author %>
+        <li>Pubdate: <%= result.pubdate %>
+    <% } else { %>
         not found
-    {{/if}}
+    <% } %>
 
 Passing JavaScript Code
 ####
 
-Sometimes it's useful to pass JavaScript data to a Handlebars template, so it can be used by scripts in the HTML. For example, the server might render data like so:
+Sometimes it's useful to pass JavaScript data to a EJS template, so it can be used by scripts in the HTML. For example, the server might render data like so:
 ::
     let names = ['david','sue','aisha'];
     app.get('/', (req,res) => {
       res.type('text/html');
-      res.locals.names = JSON.stringify(names);
-      res.render('home');
+      res.render('home', {names: JSON.stringify(names)});
     });
     
-Where the Handlebars template might look like this:
+Where the EJS template might look like this:
 ::
     <script>
-     {{#if json_data}}
-       var names = {{{names}}}
+    <% if (names) { %>
+       var names = <%- names %>
        console.log(names.length())
-     {{/if}}
+    <% } %>
     </script>

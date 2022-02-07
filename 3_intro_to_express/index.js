@@ -2,7 +2,7 @@
 
 import * as book from "../lib/book.js";
 import express from 'express';
-import handlebars from "express-handlebars"
+//import handlebars from "express-handlebars"
 
 const app = express();
 
@@ -11,8 +11,8 @@ app.use(express.static('./public')); // allows direct navigation to static files
 app.use(express.urlencoded()); //Parse URL-encoded bodies
 app.use(express.json()); //Used to parse JSON bodies
 
-app.engine('hbs', handlebars({defaultLayout: "main.hbs"}));
-app.set("view engine", "hbs");
+//app.engine('hbs', handlebars({defaultLayout: "main.hbs"}));
+app.set("view engine", "ejs");
 
 app.get('/', (req,res) => {
     res.render('home', {books: book.getAll()});

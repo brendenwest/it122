@@ -1,0 +1,7 @@
+<h2>Home</h2>
+<hr>
+<h3>Books</h3>
+
+  <% books.forEach(function(book) { %>
+    <li><a href="/detail?title=<%= book.title %>"> <%= book.title %></li>
+  <% }); %>

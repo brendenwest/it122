@@ -5,7 +5,7 @@ IT 122 - Advanced Javascript
 
 - Location: Virtual
 - Time: M 5:00 - 7:00 pm
-- Dates: April 5 - June 18, 2021
+- Dates: April 4 - June 17, 2022
 - Instructor: Brenden West
 - Email: brenden.west@seattlecolleges.edu
 - Credits: 5
@@ -34,15 +34,15 @@ Students will perform extensive hands-on development throughout the course and w
 - A `github.com <https://github.com>`_ account
 - A heroku.com account (free tier)
 
-**Note** - `AWS Cloud9 <https://aws.amazon.com/cloud9/>`_ and https://replit.com/ provide free browser-based development environments.
+**Note** - https://replit.com/ provides free browser-based development environments.
 
 This course will use **Web Development with MongoDB and Node, 3rd Ed.** as a textbook, and also supplementary online materials as needed. 
 
-Students can access this textbook free online through  https://libguides.seattlecentral.edu/az.php?a=o. First-time users should follow these steps:
+Students can access this textbook free online through https://libguides.seattlecentral.edu/az.php?a=o using these steps:
 
 - Select “O’Reilly for Education”
 - In the ‘Select institution’ drop-down menu, select “not listed”
-- Create new account using @seattlecolleges.edu email address.
+- Create new account (first time) using your *@seattlecolleges.edu* email address.
 
 Class Structure and Topics
 ####
@@ -56,7 +56,7 @@ Each week, we'll cover a new topic, building on the previous week's work. We wil
 - Express application structures - routes, views, and static files
 - Advanced JS concepts - ES6, higher-order functions, asynchronous operations
 - Unit testing 
-- Templating with Handlebars 
+- Templating with EJS
 - REST APIs & JSON
 - Data storage & retrieval with MongoDB
 - Single-page-application (SPA) design with React
@@ -66,7 +66,7 @@ Each Monday, you'll be given an assignment to test what you've picked up on that
 
 Most of your grade will come from turning in assignments on time and showing that you tried to solve it using your own original work. Your homework should be completely your own: plagiarism and late submissions may incur a grade penalty.
 
-Homework assignments should be submitted in Canvas as links to your  github.com repository. You should use a single repository and branch throughout the course, with clear a 'commit' message for each assignment completion.
+Homework assignments should be submitted in Canvas as links to your github.com repository. You should use a **single repository and branch** throughout the course, with clear a 'commit' message for each assignment completion.
 
 85% of your grade will come from homework and 15% from quizzes.
 
@@ -91,11 +91,11 @@ Homework assignments should be submitted in Canvas as links to your  github.com 
 **Note** - Seattle Public Library card-holders have free access to the following technical reference:
 
 - Lynda.com tutorial videos
-- Safara Tech Library - https://ezproxy.spl.org/login?url=http://proquestcombo.safaribooksonline.com/?uicode=spl 
+- O'Reilly Online Education - https://ezproxy.spl.org/login?url=https://www.oreilly.com/library/view/temporary-access/
 
 **Development Tools**
 
-- https://aws.amazon.com/cloud9/
+- https://replit.com
 - https://github.com/
 - https://git-scm.com/ 
 - http://stackoverflow.com/ 

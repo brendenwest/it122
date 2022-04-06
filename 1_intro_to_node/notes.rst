@@ -7,6 +7,7 @@ Reading
 - D'Mello - 
     - Introduction to Node.js
     - The basics of Node.js
+- https://nodejs.dev/learn/introduction-to-nodejs
 
 Watch
 ####
@@ -38,12 +39,12 @@ Because the JavaScript ecosystem is huge, we won't have time to cover some impor
 
 If time permits, we will cover based web application hosting.
 
-Client-server architecture terminology
+Client-Server architecture terminology
 ####
 - Client = browser = front-end
-- Server = a remote ‘back-end’ computer 
-- Full-stack = front-end & back-end
-- Clients send ‘requests’ to server and receive ‘responses’ back
+- Server = a remote ‘back-end’ service that responds to requests
+- Full-stack = full spectrum of front-end & back-end applications
+- Clients send ‘requests’ to a server and receive ‘responses’ back
 - Server may run applications in a variety of programming languages (e.g. Node.js, Java, C#, PHP, Python)
 - Server may connect to other specialized back-end computers (e.g. database, file storage, image server, message queue, etc.)
 
@@ -56,6 +57,13 @@ Node.js is a run-time engine that executes JavaScript code outside a browser. Or
 
 - Installation https://nodejs.org/en/ (v14.x)
 - Documentation - https://nodejs.org/en/docs/
+
+A Node.js app runs in a single CPU **process** but uses built-in **asynchronous** operations to avoid **blocking** in-coming requests. Node.js perform long-running I/O operations - like reading from the network, accessing a database, or the filesystem - by handing them off to the OS and resume the operations when a response comes back.
+
+Node.js uses an **event loop** to dispatch operations and handle responses when these complete.
+
+.. image:: ../images/event_loop.png
+  :width: 490
 
 Node.js can be run **interactively** to execute JavaScript commands at the command line (aka REPL). For example:
 
@@ -73,10 +81,10 @@ Node.js can also execute JS files from the command line like so:
 
 Where index.js is a plain text file that contains any valid JavaScript commands and can include Node.js modules.
 
-What is Node.js?
+Node.js Web Server
 ####
 
-Below is a sample script for a basic web server that you can save to a .js file and execute with Node.js:
+This Node.js script defines a basic web server:
 
 ::
 
@@ -86,8 +94,8 @@ Below is a sample script for a basic web server that you can save to a .js file 
         res.end('Aloha world');
     }).listen(process.env.PORT || 3000);
 
-- includes Node’s core ‘http’ module for handling requests & responses
-- starts a server application and listens for requests on a specific port.
+- includes Node’s core **http** module for handling HTTP requests & responses
+- starts a server **process** and listens for requests on a specific port.
 - Uses whatever port is assigned by the operating system or ‘3000’ if none provided
 - when the application receives a request, it sends a response with a ‘success’ status header and basic test
 
@@ -95,9 +103,9 @@ When you run this script at the command prompt, Node.js will start a server **pr
 
 Basic Routes
 ####
-Your web server can return different responses for different types of requests. Requests are usually handled by a dedicated url (aka **route**).
+Your web server can return different responses for different types of requests, using dedicated urls (aka **route**).
 
-For example, this script sends different responses based on the url property of the request object:
+For example, this script returns different responses to the client based on the request's **url** property:
 
 ::
 
@@ -123,7 +131,7 @@ For example, this script sends different responses based on the url property of 
 Serving files
 ####
 
-Your Node.js application can read files from the filesystem and send file contents in the http response.
+Your Node.js application can read files from the filesystem and return file contents in the http response.
 
 ::
 
@@ -160,9 +168,9 @@ Node.js includes the **npm** utility, which streamlines application dependency m
 Node.js applications can use npm to install 3rd-party JS modules and easily extend functionality.
 
 - Docs at https://docs.npmjs.com/
-- Some key npm modules: 
+- Some widely used npm modules:
     - express - framework to handle web requests
-    - express-handlebars - template handler
+    - nodemon - a utility that can restart a node process when underlying files change
     - cheerio - server side JQuery for parsing html files
     - lodash - functional javascript utilities
 
@@ -185,13 +193,11 @@ Installing npm packages
 ####
 
 Node modules are installed locally (in a **node_modules** sub-directory of the current folder) with this command:
-
 ::
 
     $ npm install <MODULE_NAME>
 
 - modules can be installed locally and **package.json** updated at the same time:
-
 ::
 
     $ npm install --save <MODULE_NAME>
@@ -210,6 +216,4 @@ Other useful npm commands:
 - npm search <module> - search for modules by name
 - npm install <options> <module>@<version>
 - npm install --save-dev <module> - install module as a **dev** dependency
-- npm install -g <module>
 - npm update <module> - update a module already installed. <module> must be listed as a dependency in package.json
-

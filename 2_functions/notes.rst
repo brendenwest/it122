@@ -315,7 +315,12 @@ Unfortunately, that syntax differs from syntax used in client applications. Curr
     import * as 'data' from 'data'; // use 'data' as namespace
     import {myFunction, myVariable} from 'data'; // import only certain exports from data
 
-Note - import names need to match the names exported by a given module.
+Note
+    - import names need to match the names exported by a given module
+    - Your project must use a single approach for export/import syntax. If using the newer ES6 Module syntax, be sure to add this line in your package.json file:
+    ::
+    "type": "module",
+
 
 Modules in a Node.js application typically have a main JS file, named according to its purpose or the data it defines - e.g. ‘movie’, 'person', 'login', etc.
 

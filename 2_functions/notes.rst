@@ -47,8 +47,8 @@ This example highlights several key ES6 features:
 	}
 	
 	// ES6 syntax
-	const fullName = (title='Honorable, first, last) => {
-	  return \`${title} ${first} ${last}\`}
+	const fullName = (title='Honorable', first, last) => {
+	  return `${title} ${first} ${last}`
 	}
 	
 - **const** variable definition (more on this below)
@@ -99,22 +99,23 @@ Closures
 JavaScript **closures** allow functions to access variables in scope when the function was defined. For example:
 ::
 
-	const myCounter = (() => {
+	const myCounter = () => {
 		let counter = 0;
 		return {
-			increment: (inc) => {
+			increment: (inc=1) => {
 				counter += inc;
 			},
 			getValue: () => {
 				return counter;
 			}
 		};
-	});
+	};
 
 Invoking **myCounter** returns an object with 2 methods that can access the local variable **counter** after the myCounter method has executed.
 
-- myCounter.increment(n); // increments the local variable ‘counter,
-- myCounter.getValue(); // returns the current value of ‘counter’
+- const counter = myCounter();
+- counter.increment(n); // increments the local variable ‘counter,
+- counter.getValue(); // returns the current value of ‘counter’
 
 Closures allow for JavaScript objects with **private** variables and methods. Learn more at - https://community.risingstack.com/explaining-javascript-closure-scope-chain-examples/ 
 
@@ -273,25 +274,36 @@ JS applications can use **modules** to present a public **interface** for extern
 
 Exports
 ++++
-Modules can make methods and variables public, either as **named** exports (Zero or more exports per module):
+Modules can export methods and variables (make them available to other modules)  as **named** exports (zero or more exports per module), using a single **export** command:
 
 ::
 
-    // export named function or variable
-    export { myFunction, myVariable };
+    let myVariable = 123;
 
-    // export individual features
-    export let myVariable = Math.sqrt(2);
-	export const myFunction = (title) => {
-	    // search the books array
-		return books.find((book) => {
-		  return book.title === title;
-		});
+    const myFunction = (title) => {
+		return title.toUpperCase();
 	}
 
-Or as **default** exports (one per module):
+    // use a single export statement
+    export { myFunction, myVariable };
+
+Or with by exporting each object explicitly:
+::
+    // export a variable
+    export let myVariable = 123;
+
+    export const myFunction = (title) => {
+	    // search the books array
+		return title.toUpperCase();
+	}
+
+Or with a single **default** export (one per module):
 
 ::
+
+    const myFunction = (title) => {
+		return title.toUpperCase();
+	}
 
     // Default exports
     export default myFunction;

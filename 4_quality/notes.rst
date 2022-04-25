@@ -17,13 +17,16 @@ Practice
 Reference
 ====
 - https://codeutopia.net/docs/eslint/
+- https://www.cypress.io/
 - https://joi.dev/
+- https://testingjavascript.com/
 
 Learning Outcomes
 ====
 
 - Understand static analysis & JavaScript linting
 - Understand basic unit testing in JavaScript
+- Understand integration and UI testing
 - Understand schema validation
 
 Overview
@@ -158,6 +161,27 @@ and executing with npm:
 ::
 
  $ npm run test
+
+UI Testing
+====
+UI testing - aka end-to-end (E2E) - tests anything that runs in a browser. A typical E2E test visits the application in a browser and performs actions via the UI just like a real user would.
+
+Cypress and Selenium are commonly used tools for UI testing. We'll focus here on Cypress.
+
+First, you'll need to install Cypress:
+
+::
+
+    npm install cypress --save-dev
+
+And then open the test runner:
+
+::
+    npx cypress open
+
+The Cypress Test Runner locates compatible browsers on your machine and lets you choose which to use for testing.
+
+Cypress expects tests in files with this name convention - *something_spec.js*.
 
 
 Data Validation

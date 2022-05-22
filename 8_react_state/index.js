@@ -1,7 +1,6 @@
 'use strict'
 
 import express from 'express';
-import handlebars from "express-handlebars"
 import { Book } from "../models/book.js";
 
 const app = express();
@@ -14,15 +13,12 @@ app.use(express.json()); //Used to parse JSON bodies
 import cors from 'cors';
 app.use('/api', cors()); // set Access-Control-Allow-Origin header for api route
 
-app.engine('hbs', handlebars({defaultLayout: "main.hbs"}));
-app.set("view engine", "hbs");
+app.set("view engine", "ejs");
 
 app.get('/', (req,res, next) => {
     Book.find({}).lean()
     .then((books) => {
-//        res.render('home', { books });
-
-        res.render('home', {books: JSON.stringify(books)});
+        res.render('home', { books: JSON.stringify(books) });
     });
 });
 

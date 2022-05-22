@@ -1,0 +1,146 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>React App Demo</title>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<h2>React Demo</h2>
+<form method="POST" action="/detail">
+    <input type="text" name="title" placeholder="title" required maxlength="100">
+    <button>Search</button>
+</form>
+<hr>
+<h3>Books</h3>
+
+<div id="root"></div>
+<script type="text/babel">
+
+    // return a list of books
+    const Books = (props) => {
+        // props is an array
+        const listItems = props.data.map((item) =>
+        <li key={item._id} id={item._id} onClick={props.clickHandler}>
+            {item.title}
+        </li>);
+        return <ul>{listItems}</ul>
+    }
+
+    const ItemDetail = (props) => {
+        return <div>
+        <hr />
+            <h3>Book Details</h3>
+            <form>
+                title: <input type="text" name="title" value={props.item.title || ""} onChange={props.handleChange} /><br/>
+                author: <input type="text" name="author" value={props.item.author || ""} onChange={props.handleChange}/><br/>
+                pub. date: <input type="text" name="pubdate" value={props.item.pubdate || ""} onChange={props.handleChange} /><br/>
+            </form>
+            <button name="clear" onClick={props.clearForm}>Clear</button>&nbsp;
+            <button name="save" onClick={props.saveItem}>Save</button>&nbsp;
+            <button name="delete" onClick={props.deleteItem}>Delete</button>
+        </div>
+    }
+
+
+    class BookApp extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+            items: <%- books %>,
+            currentItem: {}
+        };
+        this.selectItem = this.selectItem.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.clearForm = this.clearForm.bind(this);
+        this.saveItem = this.saveItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
+      }
+
+        // click event handler
+        selectItem = (event) => {
+            const found = this.state.items.find((item) => {
+                return item.title === event.target.innerText;
+            });
+            this.setState({currentItem: found})
+        }
+
+        handleChange = (event) => {
+          let newItem = this.state.currentItem;
+          newItem[event.target.name] = event.target.value;
+          this.setState({currentItem: newItem})
+        }
+
+        clearForm = () => {
+            this.setState({currentItem: {}})
+        }
+
+        saveItem = () => {
+            // save edits to backend DB
+            if (this.state.currentItem == {}) return
+
+            let newItem = this.state.currentItem;
+
+            fetch("/api/v1/add/", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newItem)
+            })
+                .then(res => res.json())
+                .then((json) => {
+                    console.log(json)
+                    // if this new item, add to list of items
+                    if (json.updated === 0) {
+                        newItem._id = json._id
+                        let newList = this.state.items;
+                        newList.push(newItem);
+                        this.setState({items: newList});
+                    }
+
+                });
+        }
+
+        deleteItem = () => {
+            console.log(this.state.currentItem)
+            if (this.state.currentItem == {}) return
+
+            let deleteId = this.state.currentItem._id
+
+            let url = "/api/v1/delete/"+deleteId;
+
+            fetch(url)
+            .then(res => res.json())
+            .then((json) => {
+                // if delete succeeded, update master list
+                if (json.deleted.deletedCount > 0) {
+                    let newList = this.state.items.filter(item => {
+                        return item._id != deleteId;
+                    })
+                    this.setState({items: newList, currentItem: {}})
+                }
+             })
+        }
+
+      render() {
+        return (
+        <div> <h2>Inventory</h2>
+            <Books data={this.state.items} clickHandler={this.selectItem} />
+            <ItemDetail
+              item={this.state.currentItem}
+              handleChange={this.handleChange}
+              clearForm={this.clearForm}
+              saveItem={this.saveItem}
+              deleteItem={this.deleteItem}
+              />
+        </div> );
+      }
+    }
+    ReactDOM.render(  <BookApp />,  document.getElementById('root') );
+
+</script>
+</body>
+</html>

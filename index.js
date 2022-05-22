@@ -1,7 +1,6 @@
 'use strict'
 
 import express from 'express';
-import handlebars from "express-handlebars"
 import { Book } from "./models/book.js";
 
 const app = express();
@@ -13,20 +12,16 @@ app.use(express.json()); //Used to parse JSON bodies
 
 import cors from 'cors';
 app.use('/api', cors());
-app.use((err, req, res, next) => {
-  console.log(err);
-});
 
 // set template engine
-app.engine('hbs', handlebars({defaultLayout: "main.hbs"}));
-app.set("view engine", "hbs");
+app.set("view engine", "ejs");
 
 app.get('/', (req,res, next) => {
-    Book.find((err,books) => {
-        console.log(books)
-        if (err) return next(err);
-        res.render('home', {books: JSON.stringify(books)});
-    });
+    Book.find({}).lean()
+    .then((books) => {
+        res.render('home', { books: JSON.stringify(books) });
+    })
+    .catch(err => next(err));
 });
 
 app.get('/about', (req,res) => {

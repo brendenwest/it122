@@ -1,0 +1,100 @@
+<html>
+<head>
+    <title>React App Demo</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+
+<div id="root"></div>
+<script type="text/babel">
+
+    const ItemList = (props) => {
+        const bullets = props.items.map((item) => {
+            return <li onClick={props.handleClick} key={item._id}>{item.title}</li>
+        });
+        return <ul>{bullets}</ul>
+    }
+
+    const ItemDetail = (props) => {
+        return <div>
+            <h3>Details</h3>
+            <form>
+                title: <input onChange={props.handleEdit} type="text" name="title" value={props.item.title || ""} /><br/>
+                author: <input onChange={props.handleEdit} type="text" name="author" value={props.item.author || ""} /><br/>
+                pubdate: <input onChange={props.handleEdit} type="text" name="pubdate" value={props.item.pubdate || ""} />
+            </form>
+            <button onClick={props.handleClear}>Clear</button>
+            <button onClick={props.handleDelete}>Delete</button>
+        </div>
+    }
+
+    class App extends React.Component{
+      constructor(props){
+          super(props);
+          // Set initial state using data from server application
+          this.state = {
+            items: {{{ books }}},
+            currentItem: { } // current selected item
+          };
+          this.selectItem = this.selectItem.bind(this);
+          this.handleClear = this.handleClear.bind(this);
+          this.handleEdit = this.handleEdit.bind(this);
+          this.handleDelete = this.handleDelete.bind(this);
+       }
+
+      handleDelete () {
+        console.log('delete me')
+        fetch(`/api/v1/delete/${this.state.currentItem._id}`)
+         .then((response) => {
+            return response.json();
+          })
+          .then((result) => {
+            console.log(result)
+            // on success, remove deleted item from this.state.items
+          })
+          .catch(err => console.log(err))
+      }
+
+      handleEdit (e) {
+        let newItem = this.state.currentItem;
+        newItem[e.target.name] = e.target.value;
+        this.setState({currentItem: newItem});
+      }
+
+      handleClear () {
+        this.setState({currentItem: {}})
+      }
+
+      selectItem (e) {
+        const found = this.state.items.find((item) => {
+            return item.title === e.target.innerText;
+        });
+        this.setState({currentItem: found})
+      }
+
+      render() {
+        // render app UI elements
+        return (
+          <div>
+          <h2>Book List</h2>
+          <ItemList items={this.state.items} handleClick={this.selectItem}/>
+          <hr />
+          <ItemDetail
+            item={this.state.currentItem}
+            handleClear={this.handleClear}
+            handleEdit={this.handleEdit}
+            handleDelete={this.handleDelete}
+          />
+          </div>
+          );
+      }
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>

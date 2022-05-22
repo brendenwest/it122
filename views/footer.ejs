@@ -1,0 +1,8 @@
+    <hr>
+    <div class="nav">
+    <%# only show home link if on detail page %>
+    <% if (!locals.books) { %>
+        <a href="/">Home</a> |
+    <% } %>
+    <a href="/about">About</a></div>
+    <footer>&copy; Brisk Software LLC</footer

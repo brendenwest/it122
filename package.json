@@ -14,16 +14,15 @@
   "dependencies": {
     "cors": "^2.8.5",
     "ejs": "^3.1.6",
-    "express": "^4.17.1",
-    "express-handlebars": "^5.3.3",
+    "express": "^4.17.3",
     "joi": "^17.4.2",
     "mongoose": "^5.13.5"
   },
   "devDependencies": {
-    "chai": "^4.3.4",
-    "eslint": "^7.32.0",
-    "mocha": "^8.4.0",
-    "nodemon": "^2.0.12"
+    "chai": "^4.3.6",
+    "eslint": "^8.14.0",
+    "mocha": "^9.2.2",
+    "nodemon": "^2.0.15"
   },
   "scripts": {
     "start": "nodemon index.js",
@@ -38,5 +37,8 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/brendenwest/it122/issues"
-  }
+  },
+  "eslintIgnore": [
+    "node_modules/**/*.js"
+  ]
 }

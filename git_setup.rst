@@ -32,7 +32,7 @@ Git has a great variety of options, but the most basic steps for committing your
 
 5. Push local changes to the remote repo
 ::
-    git push origin master
+    git push origin main
 
 (by default, remote repo is called 'origin' and local repo branch is 'master')
 

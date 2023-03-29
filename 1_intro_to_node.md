@@ -1,35 +1,30 @@
-Week 1 - Introduction to Node.js
-****
+## Week 1 - Introduction to Node.js
 
-Reading
-####
+
+### Reading
+
 - https://www.tutorialspoint.com/nodejs/index.htm (Intro thru Callbacks)
-- D'Mello - 
-    - Introduction to Node.js
-    - The basics of Node.js
-- https://nodejs.dev/learn/introduction-to-nodejs
+- https://nodejs.dev/en/learn/
 
-Watch
-####
+### Watch
+
 - https://www.linkedin.com/learning/node-js-essential-training/how-node-js-works?u=2359778
 
-Practice
-####
+### Practice
+
 - https://learn.freecodecamp.org/apis-and-microservices/managing-packages-with-npm
 
-Topics
-####
+### Topics
+
 - Class overview
 - Client/server architecture
-- Node.js intro
-- Basic web server with Node.js
-- Handling routes 
-- Serving static files
+- Node.js intro & basic web server
+- Handling routes & static files
 - Node Package Manager (npm)
 - Source control with git & github.com
 
-Class Overview
-----
+### Class Overview
+
 This class covers client-server (full-stack) web development with JavaScript (JS) technologies. It assumes prior knowledge of basic web development (JS, HTML, CSS, DOM, & HTTP)
 
 Because the JavaScript ecosystem is huge, we won't have time to cover some important topics:
@@ -39,8 +34,8 @@ Because the JavaScript ecosystem is huge, we won't have time to cover some impor
 
 If time permits, we will cover based web application hosting.
 
-Client-Server architecture terminology
-####
+### Client-Server architecture terminology
+
 - Client = browser = front-end
 - Server = a remote ‘back-end’ service that responds to requests
 - Full-stack = full spectrum of front-end & back-end applications
@@ -48,25 +43,22 @@ Client-Server architecture terminology
 - Server may run applications in a variety of programming languages (e.g. Node.js, Java, C#, PHP, Python)
 - Server may connect to other specialized back-end computers (e.g. database, file storage, image server, message queue, etc.)
 
-.. image:: ../images/client_server.png
-  :width: 490
+![](images/client_server.png)
 
-What is Node.js?
-####
+### What is Node.js?
+
 Node.js is a run-time engine that executes JavaScript code outside a browser. Originally intended as a web server, but also commonly used for web development tools and automation.
 
-- Installation https://nodejs.org/en/ (v14.x)
+- Installation https://nodejs.org/en/ (v18.x)
 - Documentation - https://nodejs.org/en/docs/
 
 A Node.js app runs in a single CPU **process** but uses built-in **asynchronous** operations to avoid **blocking** in-coming requests. Node.js perform long-running I/O operations - like reading from the network, accessing a database, or the filesystem - by handing them off to the OS and resume the operations when a response comes back.
 
 Node.js uses an **event loop** to dispatch operations and handle responses when these complete.
 
-.. image:: ../images/event_loop.png
-  :width: 490
+![](images/event_loop.png)
 
 Node.js can be run **interactively** to execute JavaScript commands at the command line (aka REPL). For example:
-
 ::
 
 	$ node
@@ -74,18 +66,15 @@ Node.js can be run **interactively** to execute JavaScript commands at the comma
 	> console.log(x)
 
 Node.js can also execute JS files from the command line like so:
-
 ::
 
     $ node index.js
 
 Where index.js is a plain text file that contains any valid JavaScript commands and can include Node.js modules.
 
-Node.js Web Server
-####
+### Node.js Web Server
 
 This Node.js script defines a basic web server:
-
 ::
 
     const http = require("http"); 
@@ -101,12 +90,11 @@ This Node.js script defines a basic web server:
 
 When you run this script at the command prompt, Node.js will start a server **process** and wait for requests. You can make requests to the server via a web browser at http://localhost:3000 or http://127.0.0.1:3000
 
-Basic Routes
-####
+### Web Server Routes
+
 Your web server can return different responses for different types of requests, using dedicated urls (aka **route**).
 
 For example, this script returns different responses to the client based on the request's **url** property:
-
 ::
 
     const http = require("http"); 
@@ -128,17 +116,15 @@ For example, this script returns different responses to the client based on the 
         }    
     }).listen(process.env.PORT || 3000);
 
-Serving files
-####
+### Static Files
 
 Your Node.js application can read files from the filesystem and return file contents in the http response.
-
 ::
 
     const http = require("http");
     const fs = require("fs");
     http.createServer((req,res) => {
-        var path = req.url.toLowerCase();
+        let path = req.url.toLowerCase();
         switch(path) {
             case '/':
                 fs.readFile("home.html", (err, data) => {
@@ -160,8 +146,7 @@ Your Node.js application can read files from the filesystem and return file cont
 
 **Note** - be sure your file references match the actual file locations.
 
-Node Package Manager (NPM)
-####
+### Node Package Manager (NPM)
 
 Node.js includes the **npm** utility, which streamlines application dependency management and build processes.
 
@@ -174,40 +159,37 @@ Node.js applications can use npm to install 3rd-party JS modules and easily exte
     - cheerio - server side JQuery for parsing html files
     - lodash - functional javascript utilities
 
-package.json
-####
+#### package.json
 
 All npm modules have a **package.json** file that describes the module. 
 
 Rules for package.json are at https://docs.npmjs.com/cli/v7/configuring-npm/package-json
 
 The package.json file can be created manually, or with this command:
-
 ::
 
     $ npm init
 
 Most fields in package.json are optional, but may be required if publishing your application.
 
-Installing npm packages
-####
+**Installing npm packages**
 
 Node modules are installed locally (in a **node_modules** sub-directory of the current folder) with this command:
 ::
 
     $ npm install <MODULE_NAME>
 
-- modules can be installed locally and **package.json** updated at the same time:
+Modules can be installed locally and **package.json** updated at the same time:
 ::
 
     $ npm install --save <MODULE_NAME>
 
-- modules can be installed globally for all node applications on the computer.
+Modules can be installed globally for all node applications on the computer.
 ::
 
     $ npm install -g <MODULE_NAME>
 
-- Be sure to update the **.gitignore** file to exclude node-modules directories
+Be sure to update the **.gitignore** file to exclude node-modules directories
 
 Other useful npm commands:
 ****

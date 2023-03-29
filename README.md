@@ -5,40 +5,39 @@ IT 122 - Advanced Javascript
 
 - Location: Virtual
 - Time: M 5:00 - 7:00 pm
-- Dates: April 4 - June 17, 2022
+- Dates: April 3 - June 16, 2023
 - Instructor: Brenden West
 - Email: brenden.west@seattlecolleges.edu
 - Credits: 5
 - ITC Tutoring Slack - https://tinyurl.com/saea74l
 
-Summary
-####
-JavaScript is now widely used for full-stack web development, with Node.js allowing use of the same language for client & server applications. Front-end frameworks like React, Angular, and D3 are enabling new and exciting applications in the browser. 
+**Summary**
+
+JavaScript is now widely used for full-stack web development, with Node.js enabling JavaScript server applications and front-end frameworks like React and D3 enabling new and exciting client applications. 
   
-This course will cover modern JavaScript technologies, including server-side scripting, automated testing, single-page web applications with MVC structure, package management, and JSON data storage. By quarter's end, students have built a fully-functional client-server application they can showcase for job applications.
+This course will cover modern JavaScript technologies, including server-side scripting, automated testing, single-page web applications with MVC structure, package management, and JSON data storage. By quarter's end, students have built a fully-functional client-server application they can showcase.
 
 **Requirements**
 
-Students should have experience with basic web development skills, via IT 121 or comparable experience, including:
+Students should have experience with basic web development skills via IT 121 or comparable experience, including:
 
-- HTML and CSS
+- HTML & CSS
 - JavaScript language syntax
 - HTTP request/response methods
 - JQuery selectors & methods
 
-Students will perform extensive hands-on development throughout the course and will require;
+Students will perform extensive hands-on development throughout this course and will require;
 
 - A computer onto which they can install software,
 - A working internet connection
 - A syntax-highlighting text editor
-- A `github.com <https://github.com>`_ account
-- A heroku.com account (free tier)
+- A https://github.com account
 
 **Note** - https://replit.com/ provides free browser-based development environments.
 
-This course will use **Web Development with MongoDB and Node, 3rd Ed.** as a textbook, and also supplementary online materials as needed. 
+This course will use a range of online materials as needed, including textbooks available free online through https://libguides.seattlecentral.edu/az.php?a=o 
 
-Students can access this textbook free online through https://libguides.seattlecentral.edu/az.php?a=o using these steps:
+Students can access O'Reilly for Education using these steps:
 
 - Select “O’Reilly for Education”
 - In the ‘Select institution’ drop-down menu, select “not listed”
@@ -46,23 +45,23 @@ Students can access this textbook free online through https://libguides.seattlec
 
 Class Structure and Topics
 ####
-Course instruction will be fully online with Zoom conference at scheduled class times to review new material, answer questions, and resolve any issues with completing the homework.
+Course instruction will be virtual hybrid with a Zoom session at scheduled class times to review new material, answer questions, and resolve any issues with completing the homework.
 
 Throughout the week, students can reach out to me directly in the SCC tutoring Slack team with questions.
 
 Each week, we'll cover a new topic, building on the previous week's work. We will cover the following topics, although the order and precise list is subject to revision:
 
 - Node.js overview - core modules, http requests, callbacks, package management
-- Express application structures - routes, views, and static files
 - Advanced JS concepts - ES6, higher-order functions, asynchronous operations
-- Unit testing 
+- Express web applications - routes, views, and static files
 - Templating with EJS
 - REST APIs & JSON
 - Data storage & retrieval with MongoDB
-- Single-page-application (SPA) design with React
-- Deploying to a public web server
+- React single-page-application (SPA) development
+- Unit testing
+- TypeScript & package bundling
 
-Each Monday, you'll be given an assignment to test what you've picked up on that week's topic. Assignments are due by the end-of-day Sunday of that week. Assignments will build on each other toward a completed final project.
+Each Monday, you'll be given an assignment to exercise that week's topic. Assignments are due by the end-of-day Sunday of that week. Eact assignment will build on previous ones toward a completed final project.
 
 Most of your grade will come from turning in assignments on time and showing that you tried to solve it using your own original work. Your homework should be completely your own: plagiarism and late submissions may incur a grade penalty.
 
@@ -79,26 +78,15 @@ Homework assignments should be submitted in Canvas as links to your github.com r
 - http://www.tutorialspoint.com/nodejs/ 
 - https://docs.npmjs.com/
 - https://www.tutorialspoint.com/javascript/
-- http://www.nodebeginner.org/ 
-- https://facebook.github.io/react/
-- https://developer.mozilla.org/en-US/docs/Web/JavaScript 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript
+- https://react.dev 
 
-**Reading** (optional)
-
-- `JavaScript: The Good Parts <http://bdcampbell.net/javascript/book/javascript_the_good_parts.pdf/>`_ (Douglass Crockford)
-- http://eloquentjavascript.net/
 
 **Note** - Seattle Public Library card-holders have free access to the following technical reference:
 
 - Lynda.com tutorial videos
 - O'Reilly Online Education - https://ezproxy.spl.org/login?url=https://www.oreilly.com/library/view/temporary-access/
 
-**Development Tools**
-
-- https://replit.com
-- https://github.com/
-- https://git-scm.com/ 
-- http://stackoverflow.com/ 
 
 **ADA Accessibility**
 

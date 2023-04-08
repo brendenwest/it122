@@ -35,7 +35,9 @@ Students will perform extensive hands-on development throughout this course and 
 
 **Note** - https://replit.com/ provides free browser-based development environments.
 
-This course will use a range of online materials as needed, including textbooks available free online through https://libguides.seattlecentral.edu/az.php?a=o 
+This course will use a range of online materials as needed, including textbooks available free online through https://libguides.seattlecentral.edu/az.php?a=o such as:
+
+- [Web Development with Node and Express, 2nd Edition](https://learning-oreilly-com.ezproxy.spl.org/library/view/web-development-with/9781492053507/), Ethan Brown
 
 Students can access O'Reilly for Education using these steps:
 

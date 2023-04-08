@@ -3,7 +3,8 @@ Intro to Express
 
 Reading
 ####
-- D'Mello - Introducing Express
+- Brown - Chapter 1
+- https://expressjs.com/en/starter/installing.html (through static files)
 - https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application
 
 Watch
@@ -13,18 +14,8 @@ Watch
 Reference
 ####
 - https://www.tutorialspoint.com/nodejs/nodejs_express_framework.htm
-- https://expressjs.com/en/starter/static-files.html
-- https://expressjs.com/en/starter/basic-routing.html 
 - https://expressjs.com/en/guide/routing.html 
 - https://ejs.co/
-
-Summary
-####
-- Installing Express & dependencies
-- Configuring Express app (port, static folder)
-- Working with routes
-- Basic templating
-- Processing forms
 
 Practice
 ####
@@ -32,12 +23,10 @@ Practice
 
 Learning Outcomes
 ####
-- Installing Express
-- configuring app (port, static folder)
-- routes - get, post, use
-- routes - ordering and wildcards
+- Installing & configuring Express
+- Working with routes
 - Views & templating
-- Processing forms
+- Processing form submissions
 
 Express
 ####
@@ -46,7 +35,7 @@ Express provides 'scaffolding' to handle routine web server tasks, so you can fo
 First be sure to install current version of Express & update your package.json file:
 ::
 
-    npm install --save express
+    npm install express
 
 Also make sure to exclude any node modules from your git repository, by adding this to your **.gitignore** file:
 ::
@@ -70,8 +59,8 @@ Route handlers are specified with app.get() or app.post(), & error handlers w/ a
 
     // send static file as response
     app.get('/', (req,res) => {
-     res.type('text/html');
-     res.sendFile('./public/home.html');
+      res.type('text/html');
+      res.sendFile('./public/home.html');
     });
     
     // send plain text response
@@ -93,16 +82,16 @@ Once defined, the web server can be started like so:
 ::
 
     app.listen(app.get('port'), () => {
-     console.log('Express started'); 
+      console.log('Express started'); 
     });
 
 
-Routes overview
+Routes Overview
 ####
 
-Routes are ‘virtual’ handlers for URLs that might receive a user’s request. Routes don’t necessary correspond to a physical page on the web site.
+Routes are `virtual` urls - functions that receive a request & return a response. Routes don’t necessarily correspond to a physical page on the web site.
 
-Routes can be exclusive, or can use the ‘next’ method to pass control to the next applicable route in sequence. For example:
+Routes can be exclusive, or can use the `next` method to pass control to the next applicable route in sequence. For example:
 ::
 
     app.get('/foo', (req,res,next) => {
@@ -114,8 +103,9 @@ Routes can be exclusive, or can use the ‘next’ method to pass control to the
     });
 
 
-Or
+or
 ::
+
     app.get('/foo',
            (req,res, next) => {
                    if(Math.random() < 0.5) return next();
@@ -128,13 +118,14 @@ Or
     )
 
 
-Route paths can contain regular expressions, to match variations. For example, the below route would match /user or /username:
+Route paths can contain regular expressions to match variations. For example, the below route would match /user or /username:
 ::
+
     app.get('/user(name)?', (req,res) => {
            res.render('user');
     });
 
-Express route paths support a subset of regular expression metacharacters: +, ?, *, (, and )
+Express routes support a subset of regular expression metacharacters: +, ?, *, (, and )
 
 Routes can include parameters that are automatically added to the request.parameters collection:
 ::
@@ -162,8 +153,9 @@ In the main Express application file:
     const app_routes = routes(app); // passes ‘app’ instance to the routes module
 
 
-In your routes.js file:
+In your `routes.js` file:
 ::
+
     export default = (app) => {
            app.get('/', (req,res) => {
                    app.render('home');
@@ -172,10 +164,10 @@ In your routes.js file:
     };
 
 
-Query & Forms handling
+Query Strings & Form submissions
 ####
 
-Express simplifies the work of getting querystring data and form submissions.
+Express simplifies the work of handling querystring data and form submissions.
 
 You can access querystring values with the req.query object like so:
 ::
@@ -184,7 +176,7 @@ You can access querystring values with the req.query object like so:
       console.log(req.query); // display parsed querystring object
     });
 
-The **express.urlencoded** method allows you to access form submissions with the req.body object like so:
+The `express.urlencoded` method allows you to access form submissions with the `req.body` object like so:
 ::
 
     app.post('/get', (req,res) => {
@@ -201,10 +193,11 @@ There are several engines to choose from but let's start with EJS.
 First install EJS in your project:
 ::
 
-    npm install --save ejs
+    npm install ejs
 
 Next, update your server application to use the EJS engine and render an HTML 'view' to the client :
 ::
+
     // set the view engine to ejs
     app.set('view engine', 'ejs');
 
@@ -213,7 +206,7 @@ Next, update your server application to use the EJS engine and render an HTML 'v
      res.render('home');
     });
 
-- Express expects the views in a **/views** sub-folder
+- Express expects the views in a `/views` sub-folder
 - Express can use partials for elements to display on multiple pages.
 - EJS expects views and partials files to have a **.ejs** file extension,
 
@@ -234,6 +227,7 @@ Where 'title' is provided to the template by the `render()` command.
 
 EJS templates can support basic programmatic operations like loops and flow control. Block commands are prefaced with # and end with /.
 ::
+
     <% if (title) { %>
       <h2>Book title: <%= title %></h2>
     <% } else { %>
@@ -250,6 +244,7 @@ EJS supports loops. For example, if we have 'books' array, where each array item
 
 If the value for a given property is an object, you can use dot notation to reference its properties:
 ::
+
     <% if (result) { %>
         <li>Title: <%= result.title %>
         <li>Author: <%= result.author %>
@@ -263,6 +258,7 @@ Passing JavaScript Code
 
 Sometimes it's useful to pass JavaScript data to a EJS template, so it can be used by scripts in the HTML. For example, the server might render data like so:
 ::
+
     let names = ['david','sue','aisha'];
     app.get('/', (req,res) => {
       res.type('text/html');
@@ -271,6 +267,7 @@ Sometimes it's useful to pass JavaScript data to a EJS template, so it can be us
     
 Where the EJS template might look like this:
 ::
+
     <script>
     <% if (names) { %>
        var names = <%- names %>

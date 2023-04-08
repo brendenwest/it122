@@ -25,12 +25,10 @@ Topics
 This week, we'll recap core Javascript functionality that's central to Node.js programming - functions & objects. We'll use this knowledge to encapsulate and extend features you implemented the previous week.
 
 - ES6 syntax
-- Scope & closure
-- Callbacks & asynch operations
+- Callbacks & async operations
 - JavaScript objects
 - Collections & higher-order functions
 - Node modules
-- Chaining
 
 ES6
 ####
@@ -160,6 +158,7 @@ The basic structure of a JavaScript object is:
 - String values are enclosed in double quotes,
 - Whitespace is ignored,
 - key-value pairs are separated by commas
+
 ::
 
 	{
@@ -185,13 +184,15 @@ JavaScript provides a variety of native Array methods for adding, removing and m
 - .pop() -  removes the last element from an array and returns that element
 - .shift() - removes the first element from an array and returns that element
 - .splice() - removes existing array elements and/or adds new elements. Returns the removed items.
+
 ::
 
 	array.splice(start, deleteCount[, item1[, item2[, ...]]]
 	students.splice(1, 1); // removes 2nd item in the students array
 	students.splice(1, 1, { name : "jeff", age : 21, classes : ["web120"] } ); // replaces 2nd item in the students array
 
-Some array methods are **higher-order functions**, which take a function as parameter. The calling function executes the callback function for each item in the collection. Higher-order functions can use a named callback::
+Some array methods are **higher-order functions**, which take a function as parameter. The calling function executes the callback function for each item in the collection. Higher-order functions can use a named callback
+
 ::
 
 	array.method(callback);

@@ -3,7 +3,7 @@ Intro to Express
 
 Reading
 ####
-- Brown - Chapter 1
+- Brown - Chapter 3
 - https://expressjs.com/en/starter/installing.html (through static files)
 - https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application
 

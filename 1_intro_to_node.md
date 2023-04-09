@@ -3,11 +3,13 @@
 
 ### Reading
 
+- Brown, Chapter 2
 - https://www.tutorialspoint.com/nodejs/index.htm (Intro thru Callbacks)
 - https://nodejs.dev/en/learn/
 
 ### Watch
 
+- JS Event Loop - https://www.youtube.com/watch?v=8aGhZQkoFbQ&t=69
 - https://www.linkedin.com/learning/node-js-essential-training/how-node-js-works?u=2359778
 
 ### Practice

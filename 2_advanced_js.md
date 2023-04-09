@@ -1,37 +1,29 @@
-JavaScript Functions, Arrays & Modules
-####
+## JavaScript Recap - ES6, Arrays, Objects, & Modules
 
-Reading
-####
-- D'Mello - A JavaScript primer
-- https://www.w3schools.com/js/js_- functions, closures, modules 
+Let's recap some code JavaScript functionality that will be essential in subsequent weeks.
+
+### Reference
+
+- https://www.w3schools.com/js - functions, objects, closures, modules 
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array  [Array iteration methods]
 - https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
 
-Watch
-####
-- JS Event Loop - https://www.youtube.com/watch?v=8aGhZQkoFbQ&t=69
 
-Practice
-####
+### Learning Outcomes
+
+- Key JS changes in ES6
+- Arrays, objects, & higher-order functions
+- Callbacks & async operations
+- JS module exports & imports
+
+### Practice
+
 - https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/es6 
 - https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/functional-programming 
  
 
-Topics
-####
-
-This week, we'll recap core Javascript functionality that's central to Node.js programming - functions & objects. We'll use this knowledge to encapsulate and extend features you implemented the previous week.
-
-- ES6 syntax
-- Callbacks & async operations
-- JavaScript objects
-- Collections & higher-order functions
-- Node modules
-
-ES6
-####
+### ES6
 
 ES6 (ECMAScript 2015) is a significant update to JavaScript that introduces a number of features found in other modern languages. It's not required that you use these features, but you should be familiar with several that can be useful.
 
@@ -91,10 +83,9 @@ This can sometimes cause problems, so in ES6 **let** and **const** are block-sco
 	}
 
 
-Closures
-####
+### Closures
 
-JavaScript **closures** allow functions to access variables in scope when the function was defined. For example:
+JavaScript **closures** allow functions to access variables that are in scope when the function was defined. For example:
 ::
 
 	const myCounter = () => {
@@ -118,8 +109,8 @@ Invoking **myCounter** returns an object with 2 methods that can access the loca
 Closures allow for JavaScript objects with **private** variables and methods. Learn more at - https://community.risingstack.com/explaining-javascript-closure-scope-chain-examples/ 
 
 
-Callbacks
-####
+### Callbacks
+
 Node.js is designed around the concept of **non-blocking input-output (I/O)** and event-driven programming.
 
 Node.js mostly performs I/O operations - such as reading a file, querying a database or making a web request - asynchronously. This means you can initiate an operation and specify the code (aka callback) Node should execute when the operation completes. While the operation executes in the background, Node will proceed with executing other code. The Node runtime executes an event loop that periodically checks for callbacks ready for attention.
@@ -143,8 +134,8 @@ An asynchronous function returns immediately, so the client isn’t blocked:
 This example passes an anonymous function as a parameter to the *send_request_async* function, to be called when the response is available.
 
 
-Objects, Collections & Higher-order Functions
-####
+### Objects, Collections & Higher-order Functions
+
 The basic structure of a JavaScript object is:
 ::
 
@@ -205,8 +196,7 @@ or an anonymous callback:
 	});
 
 
-Array Methods
-++++
+#### Array Methods
 
 **.forEach()** - executes a provided function once per array element.
 ::
@@ -268,16 +258,25 @@ Array Methods
 	  return previousValue + currentStudent.classes.length;
 	});
 
-JavaScript Modules
-####
+### JavaScript Modules
 
-JS applications can use **modules** to present a public **interface** for external users, but maintain a private state and implementation.
+JS applications can use **modules** to organize code for re-use and readability.
 
-Exports
-++++
-Modules can export methods and variables (make them available to other modules)  as **named** exports (zero or more exports per module), using a single **export** command:
+Modules are files with a .js extension that contain logically related functions and data.
 
-::
+Modules are typically named according to their purpose or the data object they define - e.g. `movie.js`, `person.js`, `login.js`, etc.
+
+Modules in a complex Node.js application are often organized in the **/lib** folder for consistency.
+
+Your JS project **must** use a single approach for export/import syntax. If using the ES6 Modules syntax, be sure to add this line in your package.json file:
+
+    "type": "module",
+
+#### Exports 
+
+Modules can **export** methods and data for use by other modules. This allows a module to present a public **interface** while keeping state and implementation private.
+
+Exports can be **named** (zero or more exports per module) or use a single **export** command;
 
     let myVariable = 123;
 
@@ -288,8 +287,8 @@ Modules can export methods and variables (make them available to other modules) 
     // use a single export statement
     export { myFunction, myVariable };
 
-Or with by exporting each object explicitly:
-::
+Or by exporting each object explicitly;
+
     // export a variable
     export let myVariable = 123;
 
@@ -298,9 +297,7 @@ Or with by exporting each object explicitly:
 		return title.toUpperCase();
 	}
 
-Or with a single **default** export (one per module):
-
-::
+Or with a single **default** export (one per module);
 
     const myFunction = (title) => {
 		return title.toUpperCase();
@@ -309,62 +306,24 @@ Or with a single **default** export (one per module):
     // Default exports
     export default myFunction;
 
-Imports
-++++
+#### Imports
 
-JavaScript modules can import other modules to quickly extend their functionality.
+JS modules can import other modules to leverage their functionality.
 
 Prior to Node.js 12, modules could be imported with **commonJS** syntax, as in this example:
 
-::
+    const data = require("data"); // .js file extension assumed
 
-    const http = require("data"); // no need to specify .js file extension
+Because that syntax differs from syntax used in browser applications Node.js adopted **ES6 modules** import syntax:
 
-Unfortunately, that syntax differs from syntax used in client applications. Current versions of Node.js support **ES6 modules** that can be imported like so:
+    import * from 'data'; // import all exports from data 
+    myfunction('title');  // execute function imported from data module
 
-::
 
-    import * from 'data'; // import all exports from data into current scope
-    import * as 'data' from 'data'; // use 'data' as namespace
+    import * as 'data' from 'data'; // use 'data' as namespace for imports
+    data.myfunction('title');  // execute function imported from data module
+
     import {myFunction, myVariable} from 'data'; // import only certain exports from data
+    myfunction('title');  // execute function imported from data module
 
-Note
-    - import names need to match the names exported by a given module
-    - Your project must use a single approach for export/import syntax. If using the newer ES6 Module syntax, be sure to add this line in your package.json file:
-::
-
-    "type": "module",
-
-Modules in a Node.js application typically have a main JS file, named according to its purpose or the data it defines - e.g. ‘movie’, 'person', 'login', etc.
-
-Modules internal to a Node application are usually stored in the **/lib** folder for consistency.
-
-Chaining
-####
-Method chaining is a way to return an object from a method call for use in a subsequent operation. 
-
-For example, you might have a sequence of operations like these:
-::
-
-	let $div = $('#my-div'); // assign to variable 
-	$div.css('background', 'blue'); // set BG 
-	$div.height(100); // set height 
-	$div.fadeIn(200); // show element
-
-These JQuery operations can be chained like so:
-::
-
-	$('#my-div').css('background', 'blue').height(100).fadeIn(200);
-
-The chained code can be broken to multiple lines for readability:
-::
-
-	$('#my-div')
-	  .css('background', 'blue')
-	  .height(100) 
-	  .fadeIn(200);
-
-In order for chaining to work, each method in the chain must return an object. For example, custom method for use in the above chain, would need to return an object like so:
-::
-
-	$('div').prototype.setCategory = function(category) { this.category = category; return this; };
+Import names need to match the names exported by the module

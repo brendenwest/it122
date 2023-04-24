@@ -4,6 +4,7 @@ Let's recap some code JavaScript functionality that will be essential in subsequ
 
 ### Reference
 
+- https://www-freecodecamp-org.cdn.ampproject.org/c/s/www.freecodecamp.org/news/javascript-concepts-to-know-before-learning-react/amp/ 
 - https://www.w3schools.com/js - functions, objects, closures, modules 
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array  [Array iteration methods]
 - https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export

@@ -122,7 +122,7 @@ You can make requests from the browser client using `XMLHttpRequest` (AKA AJAX) 
 
 - uses promises for asynchronous operations
 - built-in processing of JSON results
-- supports request configuration
+- supports request configuration:
 
 
     let book = {title:'europe',author:'frommers',pubdate:1980}

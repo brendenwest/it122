@@ -1,28 +1,26 @@
-React & SPA's
+## React & SPA's
 
-Reading
-----
+### Reading
+
+- Brown, Ch. 16 - Single-page Applications
+- https://react.dev/learn - Quick Start
 - https://reactjs.org/docs/getting-started.html (concepts 1 - 4, 7, 8)
-- https://reactjs.org/docs/dom-elements.html
-- https://reactjs.org/docs/thinking-in-react.html
-- https://www.tutorialspoint.com/reactjs/index.htm
- 
-Practice
-----
+- https://react.dev/learn/thinking-in-react
+
+### Practice
+
 - https://www.freecodecamp.org/news/learn-react-course/
 
-Watch
-----
+### Watch
+
 - https://www.linkedin.com/learning/learning-react-js-4?u=2359778 (
 
-Learning Outcomes
-----
+### Learning Outcomes
+
 - Single-page applications
-- JavaScript promises
 - React virtual dom
 - React components
 - CSS styles in React
-- State management
 
 **Single-page Applications (SPA)**
 
@@ -42,10 +40,9 @@ React uses a *virtual DOM* to update only those elements that have changed, rath
 
 **Installation**
 
-In a professional setting, you might use a *build* process (e.g. webpack or gulp) to compile React application dependencies.
+In a professional setting, you might use a *build* process (e.g. webpack) to bundle React  dependencies into your app.
 
-But for the purposes of this class, your app can enable React with these hosted libraries:
-::
+But for this class your app can enable React with these hosted libraries:
 
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
@@ -56,20 +53,18 @@ But for the purposes of this class, your app can enable React with these hosted 
 JSX
 ----
 React uses an XML-like syntax called **JSX** to describe UI components.
-::
 
-  const greeting = <h1 className="greeting">Hello, world!</h1>;
+    const greeting = <h1 className="greeting">Hello, world!</h1>;
 
 JSX is optional and compiles to regular JavaScript, like so:
-::
 
-  const greeting = {
+    const greeting = {
     type: 'h1', 
     props: { 
       className: 'greeting', 
       children: 'Hello, world' 
     }
-  };
+    };
 
 **NOTE** - CSS classes on DOM elements are specified using a `className` attribute.
 
@@ -81,21 +76,19 @@ Some benefits of JSX are:
 JSX can contain embedded JavaScript, inside curly brackets.
 
 JSX statements can be assigned to variables, passed as function parameters, and returned from functions:
-::
 
-  const Greeting = (props) => {
+    const Greeting = (props) => {
     if (props.user) {  
       return <h1>Hello, {props.user}!</h1>;
     }  
     return <h1>Hello, Stranger.</h1>; 
-  }
+    }
 
 **NOTE** - Components defined as a function must begin with a capital letter.
 
-Rendering JSX
-----
+### Rendering JSX
+
 You render a React element into the HTML DOM by specifying it's 'root' DOM node:
-::
 
     <div id="root"/>
     <script type="text/babel">
@@ -107,10 +100,9 @@ Elements inside the root node will be managed by React. Pure React applications 
 
 **Note** - React is unaware of DOM elements outside of defined root nodes. So you would need to use other methods such as jQuery to manipulate those.
 
-CSS Styles
-----
+### CSS Styles
+
 As noted above, React elements can reference CSS classes from a stylesheet using a `className` or ID attribute. They can also use inline style objects:
-::
 
     const divStyle = {
       color: 'blue',
@@ -125,19 +117,17 @@ As noted above, React elements can reference CSS classes from a stylesheet using
 
 See https://reactjs.org/docs/dom-elements.html for other nuances of using inline styles in React.
 
-Components
-----
+### Components
+
 React applications compose a UI of reusable components. Components are JavaScript functions or classes that accept parameters (called "props") and return React elements.
 
 Components can be defined as a function:
-::
 
     const Welcome = (props) => {
       return <h1>Hello, {props.name}</h1>;
     }
 
 Or in a class declaration:
-::
 
     class Welcome extends React.Component {
       render() {
@@ -150,22 +140,20 @@ Either approach may be appropriate, but classes support richer features such as 
 React can recognize an element that represents a user-defined component and render it to the DOM with supplied 'props':
 
 React can recognize an element that represents a user-defined component, and render it to the DOM with supplied 'props':
-::
 
-  const greeting = <Welcome name="Sara" />;
-  ReactDOM.render( 
-    greeting,
-    document.getElementById('root') 
-  );
+    const greeting = <Welcome name="Sara" />;
+    ReactDOM.render( 
+        greeting,
+        document.getElementById('root') 
+    );
 
 React components are **pure functions** that do not modify their inputs (props).
 
 React classes can use **state** to change their output over time in response to user actions, network responses, and other events.
 
-Lists & Keys
-----
+### Lists & Keys
+
 React supports collections of elements in JSX (Links to an external site.) using curly braces {}. For example:
-::
 
     const names = ["dave", "sue", "keisha", "darrell"];
     const listItems = names.map((item) =>  <li key={item}>{item}</li>);
@@ -175,10 +163,9 @@ React supports collections of elements in JSX (Links to an external site.) using
 
 **Note** that React expects list items to have a **unique key** that helps identify items when the DOM changes. Ideally, keys are not the array index value, since that can change when an array is modified.
 
-Conditional Rendering
-----
+### Conditional Rendering
+
 Because JavaScript expressions can embedded in JSX, conditional rendering can be accomplished with the logical **&& operator**.
-::
 
     const Greeting = (props) => {
       const isLoggedIn = props.isLoggedIn;

@@ -4,7 +4,6 @@
 
 - Brown, Ch. 16 - Single-page Applications
 - https://react.dev/learn - Quick Start
-- https://reactjs.org/docs/getting-started.html (concepts 1 - 4, 7, 8)
 - https://react.dev/learn/thinking-in-react
 
 ### Practice

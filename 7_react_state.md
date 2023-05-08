@@ -1,85 +1,70 @@
-React State Management
+## React Events & State
 
-Reading
-----
-- https://reactjs.org/docs/state-and-lifecycle.html
-- https://reactjs.org/docs/handling-events.html
-- https://reactjs.org/docs/lifting-state-up.html
-- https://www.tutorialspoint.com/reactjs/reactjs_state.htm
-- https://www.tutorialspoint.com/reactjs/reactjs_component_life_cycle.htm
-- https://reactjs.org/docs/forms.html
+### Reading
+- https://react.dev/learn/adding-interactivity
+- https://react.dev/learn/synchronizing-with-effects
+- https://react.dev/learn/sharing-state-between-components
+- https://react.dev/reference/react
 
-Practice
-----
+### Practice
 - https://www.freecodecamp.org/news/learn-react-course/
 
-Learning Outcomes
-----
-- What is 'state'?
-- React class components & lifecycle methods
+### Learning Outcomes
+- What is `state`?
+- What are `hooks`?
 - Setting & using component state
-- 'Lifting' state from child to parent components
+- Lifting state from child to parent components
 - HTML forms in React
 
-State & Class Components
-----
-Sometimes it's useful for a component to maintain an internal `state` that can change as users interact with the component. For example, to track of which item a user selected from a list.
+### What is `state`?
+Sometimes a component needs to remember information (maintain an internal `state`) that can change as users interact with the component. 
 
-React has `class` components to enable state management (also Hooks but that's a later topic).
+For example to track which item a user selected from a list, or how a data variable was changed.
 
-A React class can define initial state in a 'constructor' method that initializes the class. This is the only place where state is directly assigned to a value. The constructor is automatically invoked when the component is created on the page.
+Early versions of React prescribed `class components` to handle `state`. Now it's more common to use a `hook` within a functional component, so we'll focus on that approach.
 
-Component state can be referenced in other class methods such as render().
-::
+### What are `Hooks`?
+React hooks are JS functions that respond to lifecycle events and can be stateful (retain values between executions). 
 
-    class Clock extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = {date: new Date()};
-      }
-      render() {
-        return ( <div> <h1>Hello, world!</h1>  <h2>It is {this.state.date.toLocaleTimeString()}.</h2>  </div> );
-      }
+React has a set of built-in hooks for common scenarios. You can also develop custom hooks for use in your application
+
+
+    const MyApp = (props) => {
+        const [items, setItems] = React.useState([]]);
+
+        setItems([{"one": "First item"}, {"two": "Second item"},])
+
+        return (
+            <div> 
+                <h2>Items List</h2>
+                <Items data={items} />
+            </div>
+        );
     }
 
-    ReactDOM.render(  <Clock />,  document.getElementById('root') );
 
-React class components can specify code that should execute when certain **lifecycle** events occur, such as when page loads or unloads:
-::
+What's happening here?
+- we define a state variable `items` and a method `setItems` to update that variable.
+- initially items has an empty array value
+- items is populated with new value using `setItems`. 
+- Updating `items` will cause any element that depends on it to re-render
 
-    componentDidMount() {
-     // code to execute when component first rendered to DOM
-    }
+NOTE - state variables must be updated only through the set-state methods and not directly.
 
-    componentWillUnmount() {
-      // code to execute when component is removed from DOM
-    }
+### Lifting state
 
-Component state can be modified outside the constructor method **only** through the setState() method:
-::
+Component state is accessible only to the component that owns and sets it. Components don't automatically know the state of other components.
 
-    this.setState({date: new Date()});
+Instead, React uses a "top-down" or "unidirectional" data flow, where a component can pass its state to child components as `props`.
 
-Because React may perform state updates asynchronously, setState() commands should not rely on a component's state or props values for calculating the next state. Instead, those values can be passed as function parameters:
-::
+![](images/react_data_flow.jpeg)
 
-    this.setState((prevState, props) => ({
-     counter: prevState.counter + props.increment
-    }));
 
-Component state is accessible only to the component that owns and sets it. Component's don't automatically know the state of other components.
+### HTML Forms in React
 
-Instead, React uses a "top-down" or "unidirectional" data flow, where a component can pass its state to child components as 'props'.
+HTML form elements differ from other DOM elements in React, because they naturally keep an internal state. Input fields keep track of what a user enters.
 
-.. image:: ../images/react_data_flow.jpeg
-  :width: 490
-
-HTML Forms in React
-----
-
-HTML form elements work differently from other DOM elements in React, because they naturally keep an internal state. Input fields keep track of what a user enters.
-
-To address this, React has a technique called **controlled components**, where the React component state is this “single source of truth”. The React component that renders a form receives updates as the user input values, adds those to component state, and propagates state back to the form.
+To address this, React has a technique called `controlled components`, where the React component state is the “single source of truth”. The React component that renders a form receives updates as the user input values, adds those to component state, and propagates state back to the form.
 
 Key aspects of the controlled component are:
 - component state has a value corresponding to the form field

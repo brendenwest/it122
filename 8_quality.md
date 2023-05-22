@@ -3,6 +3,8 @@
 ### Reading
 
 - Brown - Ch. 5 - Quality Assurance
+- https://jestjs.io/docs/getting-started
+- https://jestjs.io/docs/tutorial-react
 - https://eslint.org/docs/user-guide/getting-started 
 - https://blog.risingstack.com/node-hero-node-js-unit-testing-tutorial/
 - https://semaphoreci.com/community/tutorials/getting-started-with-node-js-and-mocha
@@ -12,7 +14,6 @@
 - https://www.freecodecamp.org/learn/quality-assurance/
 
 ### Reference
-
 - https://codeutopia.net/docs/eslint/
 - https://www.cypress.io/
 - https://joi.dev/
@@ -21,7 +22,7 @@
 ### Learning Outcomes
 
 - Understand static analysis & JavaScript linting
-- Understand basic unit testing in JavaScript
+- Understand unit testing in JavaScript
 - Understand integration and UI testing
 - Understand schema validation
 
@@ -38,7 +39,7 @@ Linters find problematic code patterns or code that doesn’t adhere to certain 
 - Enforcing style standards can simplify code handoff between developers on the same team,
 - Common JavaScript Linters include JSHint, JSLint, ESLint
 
-For this class, we'll use `ESLint <http://eslint.org/>`_, which you can install as part of your development environment for your current project:
+For this class, we'll use [ESLint](http://eslint.org/>), which you can install as part of your development environment for your current project:
 
     $ npm i eslint --save-dev
 
@@ -97,53 +98,41 @@ And then run ESlint like so:
 
 Web software testing encompasses a broad range of tasks, but developers typically need to at least know basics of the following:
 
-- unit tests - verify that single components (functions) work properly
-- integration tests - verify that multiple system components (modules, services, databases, etc.) work properly together
+- **unit tests** - verify that single a component (function) works properly. Minimal dependencies.
+- **integration tests* - verify that multiple system components (modules, services, databases, etc.) work properly together. Integration testing can include `UI automation`, that simulates user interaction with an application.
 
-`Mocha <https://mochajs.org>`_ is a JavaScript testing library commonly used for unit and integration testing.
+#### Unit Testing
 
-Mocha is often used in conjunction with `Chai <https://chaijs.com>`_, a library that assists with test assertions. You can install both packages for development purposes like so:
+There are a number of fine JavaScript unit-testing frameworks including `Jest` & [Mocha](https://mochajs.org/). For this class we'll focus on Jest.
 
-     $ npm install mocha --save-dev
-     $ npm install chai --save-dev
+To get started, install Jest:
 
-Node application test scripts are typically stored as .js files in a /test directory in the root of your project.
+    npm install --save-dev jest
 
-A test script 'requires' any supporting libraries as well as modules being tested. The script then describes one or more test cases, where each case corresponds to a module being tested. The case can have one more tests of expected unit behavior. Tests should account for both success & failure conditions:
+This installs Jest in your project directory and in your package.json file as a `dev` dependency.
 
-     import { expect } from 'chai';
-     import * as book from "../lib/book.js";
+Tests are typically stored in script files named <module>.test.js, with files stored in the same directory as the related components or in a `tests` subdirectory.
 
-     describe("Book module", () => {
-      it("returns requested book", function() {
-        var result = book.get("dune");
-        expect(result).to.deep.equal({title: "dune", author:"frank herbert", pubdate:1969});
-      });
-      
-      it("fails w/ invalid book", () => {
-        var result = book.get("fake");
-        expect(result).to.be.undefined;
-      });
-     });
+A test script `imports` the module being tested and compares the result of a module function against the expected value. For example, if you had a module with this function:
 
-See http://chaijs.com/api/bdd/ for a full listing of 'expectation' options.
+    const sum = (a, b) => {
+        return a + b;
+    }
+    module.exports = sum;
 
-Once you've defined test scripts, you can execute them directly:
+Your test script would look like this:
 
-     $ mocha test/**
+    const sum = require('./sum');
+    
+    test('adds 1 + 2 to equal 3', () => {
+        expect(sum(1, 2)).toBe(3);
+    });
 
-Or by adding a command to the package.json file:
+- it imports the module being tested
+- each test is a function that takes 2 parameters - a description and a callback function
+- `expect` runs the function being tested and compares the result to a `matcher`
 
-     "scripts": {
-         "lint": "eslint **/*.js",
-         "test": "mocha test/**"
-     } 
-
-and executing with npm:
-
-     $ npm run test
-
-### UI Testing
+#### UI Testing
 
 UI testing - aka end-to-end (E2E) - tests anything that runs in a browser. A typical E2E test visits the application in a browser and performs actions via the UI just like a real user would.
 

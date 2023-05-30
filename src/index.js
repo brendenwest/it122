@@ -42,6 +42,16 @@ app.get('/api/v1/book/:title', (req, res, next) => {
     });
 });
 
+app.get('/api/v1/book/id/:id', (req, res, next) => {
+    Book.findOne({_id: req.params.id}, (err, result) => {
+        if (err || !result) {
+            res.status(404).json({"message":"not found"});
+        } else {
+            res.json( result );
+         }
+    });
+});
+
 app.get('/api/v1/books', (req,res, next) => {
     Book.find((err,results) => {
         if (err || !results) return next(err);

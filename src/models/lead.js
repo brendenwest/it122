@@ -9,6 +9,8 @@ var mongoose = require("mongoose");
 // var ip = process.env.ip || '127.0.0.1';
 // mongoose.connect('mongodb://' +ip+ '/projects');
 
+
+
 var conn = mongoose.connection; 
 conn.on('error', console.error.bind(console, 'connection error:'));  
 

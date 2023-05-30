@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 import { connectionString } from "../lib/credentials.js";
 
 // remote db connection settings. For security, connectionString should be in a separate file not committed to git
+//const connectionString = "mongodb+srv://dbuser:dbpassword@cluster0.7rsr0.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose.connect(connectionString, {
     dbName: 'sccprojects',

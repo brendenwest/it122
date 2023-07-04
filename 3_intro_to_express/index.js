@@ -2,7 +2,6 @@
 
 import * as book from "../lib/book.js";
 import express from 'express';
-//import handlebars from "express-handlebars"
 
 const app = express();
 

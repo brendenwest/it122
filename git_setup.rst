@@ -20,7 +20,7 @@ Git has a great variety of options, but the most basic steps for committing your
     
 2. Pull any changes from the remote repo;
 ::
-    git pull origin master
+    git pull origin main
 
 3. Add all your changes to the local repo
 ::

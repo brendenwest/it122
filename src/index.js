@@ -53,38 +53,26 @@ app.get('/api/v1/book/id/:id', (req, res, next) => {
 });
 
 app.get('/api/v1/books', (req,res, next) => {
-    Book.find((err,results) => {
-        if (err || !results) return next(err);
-        res.json(results);
-    });
+    Book.find({}).lean()
+    .then((books) => {
+        res.json(books);
+    })
+    .catch(err => res.json({"error": err}));
 });
 
 app.get('/api/v1/delete/:id', (req,res, next) => {
-    Book.deleteOne({"_id":req.params.id }, (err, result) => {
-        if (err) return next(err);
-        // return # of items deleted
-        console.log(result)
+    Book.deleteOne({"_id":req.params.id })
+    .then(result => {
         res.json({"deleted": result});
-    });
+    })
+    .catch(err => res.json({"error": err}));
 });
 
 app.post('/api/v1/add/', (req,res, next) => {
     // find & update existing item, or add new
-    console.log(req.body)
-    if (!req.body._id) { // insert new document
-
-        let book = new Book({title:req.body.title,author:req.body.author,pubdate:req.body.pubdate});
-        book.save((err,newBook) => {
-            if (err) return next(err);
-            console.log(newBook)
-            res.json({updated: 0, _id: newBook._id});
-        });
-    } else { // update existing document
-        Book.updateOne({ _id: req.body._id}, {title:req.body.title, author: req.body.author, pubdate: req.body.pubdate }, (err, result) => {
-            if (err) return next(err);
-            res.json({updated: result.nModified, _id: req.body._id});
-        });
-    }
+    Book.updateOne({ _id: req.body._id}, req.body, {upsert:true})
+    .then(result => res.json(result))
+    .catch(err => res.json({"error": err}));
 });
 
 app.get('/api/v1/add/:title/:author/:pubdate', (req,res, next) => {

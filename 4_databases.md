@@ -99,15 +99,7 @@ Then define a data-model script file. These scripts are typically stored in a /m
     export const Book = mongoose.model('Book', bookSchema, 'wackycollectionname');
 
 
-The data model can include custom methods:
-
-    mySchema.methods.prefix = function() {
-      // add some stuff to the users name
-      this.name = ‘Mr. ‘ + this.name;
-      return this.name;
-    };
-
-Your application scripts can perform database operations via Mongoose using built-in MongoDB methods like .save(), .find(), etc. Because database operations can be long running, they are invoked with a callback function that handles the results on completion:
+Your Express application can perform database operations via Mongoose using built-in MongoDB methods like .save(), .find(), etc. Because database operations are long running, they are invoked with a callback function that handles the results on completion:
 
     import { Book } from "./models/book.js";
 
@@ -116,29 +108,34 @@ Your application scripts can perform database operations via Mongoose using buil
       .then((books) => {
         console.log(books);
       })
-      .catch(err => next(err));
+      .catch(err => console.log(err));
 
     // return all records that match a condition
     Book.find({"author": "Smith" }).lean()
       .then((books) => {
         console.log(book);
       })
-      .catch(err => next(err));
+      .catch(err => console.log(err));
 
     // return a single record
     Book.findOne({"title": "Dune" }).lean()
       .then((book) => {
           console.log(book);;
       })
-      .catch(err => next(err));
+      .catch(err => console.log(err));
+
+    // delete a single record
+    Book.deleteOne({"title": "Dune" })
+      .then((result) => {
+          console.log(result);;
+      })
+      .catch(err => console.log(err));
 
     // insert or update a single record
     const newBook = {'title':'dune', 'author':'frank herbert', 'pubdate': 1963 }
-    Book.updateOne({'title':'dune'}, newBook, {upsert:true}, (err, result) => {
-      if (err) return next(err);
-      console.log(result);
-      // other code here
-    });
+    Book.updateOne({ title: newBook.title}, newBook, {upsert:true})
+    .then(result => console.log(result))
+    .catch(err => console.log(err));
 
 MongoDb queries can use regular expressions to perform more nuanced pattern matching (e.g. name like 'brown' or 'Brown').  The regular expression can be hardcoded or defined with a variable as below:
 

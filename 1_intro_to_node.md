@@ -6,6 +6,7 @@
 - Brown, Chapter 2
 - https://www.tutorialspoint.com/nodejs/index.htm (Intro thru Callbacks)
 - https://nodejs.dev/en/learn/
+- https://www.freecodecamp.org/news/what-exactly-is-node-guide-for-beginners/
 
 ### Watch
 

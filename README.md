@@ -5,7 +5,7 @@ IT 122 - Advanced Javascript
 
 - Location: Virtual
 - Time: M 5:00 - 7:00 pm
-- Dates: April 3 - June 16, 2023
+- Dates: April 1 - June 14, 2024
 - Instructor: Brenden West
 - Email: brenden.west@seattlecolleges.edu
 - Credits: 5
@@ -47,21 +47,22 @@ Students can access O'Reilly for Education using these steps:
 
 Class Structure and Topics
 ####
-Course instruction will be virtual hybrid with a Zoom session at scheduled class times to review new material, answer questions, and resolve any issues with completing the homework.
+**Course instruction will be virtual hybrid with a Zoom session at scheduled class times to review new material, answer questions, and resolve any issues with completing the homework.
 
-Throughout the week, students can reach out to me directly in the SCC tutoring Slack team with questions.
+Throughout the week students can reach out to me directly in the SCC tutoring Slack team with questions.
 
-Each week, we'll cover a new topic, building on the previous week's work. We will cover the following topics, although the order and precise list is subject to revision:
+Each week, we'll cover a new topic, building on the previous week's work. We will cover the following topics, although the order and precise list is subject to revision:**
 
-- Node.js overview - core modules, http requests, callbacks, package management
-- Advanced JS concepts - ES6, higher-order functions, asynchronous operations
-- Express web applications - routes, views, and static files
+- Node.js overview 
+- Advanced JS concepts 
+- Express web applications 
 - Templating with EJS
 - REST APIs & JSON
 - Data storage & retrieval with MongoDB
 - React single-page-application (SPA) development
 - Unit testing
-- TypeScript & package bundling
+- Application packaging
+- TypeScript
 
 Each Monday, you'll be given an assignment to exercise that week's topic. Assignments are due by the end-of-day Sunday of that week. Eact assignment will build on previous ones toward a completed final project.
 
@@ -78,16 +79,9 @@ Homework assignments should be submitted in Canvas as links to your github.com r
 - http://www.w3schools.com/js 
 - https://www.w3schools.com/nodejs/default.asp
 - http://www.tutorialspoint.com/nodejs/ 
-- https://docs.npmjs.com/
 - https://www.tutorialspoint.com/javascript/
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript
 - https://react.dev 
-
-
-**Note** - Seattle Public Library card-holders have free access to the following technical reference:
-
-- Lynda.com tutorial videos
-- O'Reilly Online Education - https://ezproxy.spl.org/login?url=https://www.oreilly.com/library/view/temporary-access/
 
 
 **ADA Accessibility**

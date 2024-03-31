@@ -68,7 +68,7 @@ Each Monday, you'll be given an assignment to exercise that week's topic. Assign
 
 Most of your grade will come from turning in assignments on time and showing that you tried to solve it using your own original work. Your homework should be completely your own: plagiarism and late submissions may incur a grade penalty.
 
-Homework assignments should be submitted in Canvas as links to your github.com repository. You should use a **single repository and branch** throughout the course, with clear a 'commit' message for each assignment completion.
+Homework assignments should be submitted in Canvas as links to your github.com repository. You should use a **single repository and branch** throughout the course, with clear a 'commit' message for each assignment completion. Use of multiple repositories or branches may result in a grade penalty.
 
 85% of your grade will come from homework and 15% from quizzes.
 

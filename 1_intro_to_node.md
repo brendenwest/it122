@@ -78,9 +78,8 @@ Where index.js is a plain text file that contains any valid JavaScript commands 
 ### Node.js Web Server
 
 This Node.js script defines a basic web server:
-::
 
-    const http = require("http"); 
+    import http from 'http';
     http.createServer((req,res) => {
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.end('Aloha world');
@@ -100,7 +99,7 @@ Your web server can return different responses for different types of requests, 
 For example, this script returns different responses to the client based on the request's **url** property:
 ::
 
-    const http = require("http"); 
+    import http from 'http';
     http.createServer((req,res) => {
         var path = req.url.toLowerCase();    
         switch(path) {
@@ -124,8 +123,8 @@ For example, this script returns different responses to the client based on the 
 Your Node.js application can read files from the filesystem and return file contents in the http response.
 ::
 
-    const http = require("http");
-    const fs = require("fs");
+    import http from 'http';
+    import fs from 'fs';
     http.createServer((req,res) => {
         let path = req.url.toLowerCase();
         switch(path) {
@@ -169,26 +168,41 @@ All npm modules have a **package.json** file that describes the module.
 Rules for package.json are at https://docs.npmjs.com/cli/v7/configuring-npm/package-json
 
 The package.json file can be created manually, or with this command:
-::
 
     $ npm init
 
 Most fields in package.json are optional, but may be required if publishing your application.
 
+**NOTE**
+
+Node.js supports two approaches for importing modules into a script:
+
+CommonJS syntax
+```commandline
+  const http = require('http');
+```
+
+ECMAScript syntax (same as browsers)
+```commandline
+ import http from 'http';
+```
+
+Node will default to the `CommonJS` syntax unless you add this attribute to your package.json file:
+
+```commandline
+  "type": "module",
+```
+
+
 **Installing npm packages**
 
 Node modules are installed locally (in a **node_modules** sub-directory of the current folder) with this command:
-::
 
     $ npm install <MODULE_NAME>
 
-Modules can be installed locally and **package.json** updated at the same time:
-::
-
-    $ npm install --save <MODULE_NAME>
+This command will also update your package.json with a reference to that module.
 
 Modules can be installed globally for all node applications on the computer.
-::
 
     $ npm install -g <MODULE_NAME>
 

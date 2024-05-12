@@ -16,7 +16,7 @@
 <script type="text/babel">
 
     // return a list of books
-    const Books = (props) => {
+    const ItemList = (props) => {
         // props is an array
         const listItems = props.data.map((item) =>
         <li key={item._id} id={item._id} onClick={props.clickHandler}>
@@ -39,8 +39,8 @@
     }
 
 
-    const BookApp = (props) => {
-        const [items, setItems] = React.useState(<%- books %>);
+    const App = (props) => {
+        const [items, setItems] = React.useState(<%- items %>);
         const [currentItem, setCurrentItem] = React.useState({});
 
         // list click event handler
@@ -72,7 +72,7 @@
 
         return (
             <div> <h2>Books Inventory</h2>
-                <Books data={items} clickHandler={selectItem} />
+                <ItemList data={items} clickHandler={selectItem} />
                 <ItemDetail
                   item={currentItem}
                   handleChange={handleChange}

@@ -25,15 +25,11 @@
     // click event handler
     const showDetail = (event) => {
         // <a href={"/detail?title="+item.title}>
-        console.log(event.target)
-        console.log(event.target.innerText)
-        console.log(event.target.id)
         window.location.href = "/detail?title=" + event.target.innerText;
     }
 
     const Books = (props) => {
         // props is an array
-        console.log(props)
         const listItems = props.data.map((item) =>
         <li key={item._id} id={item._id} onClick={props.clickHandler}>
             {item.title}

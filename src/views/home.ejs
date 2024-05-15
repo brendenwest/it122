@@ -29,9 +29,9 @@
 </style>
 </head>
 <body>
+<h2>React Demo</h2>
 
-  <div id="root"></div>
-
+<div id="root"></div>
 <!-- NOTE: text/babel type required to support JSX -->
 <script type="text/babel">
   
@@ -63,6 +63,7 @@
 
       // show item details when list item clicked
       showDetails(event){
+      console.log(event.target)
         // event.target is item clicked. Assumes each item has an id attribute
         let editItem = this.state.items.find((item) => {
           return item._id == event.target.id;
@@ -77,6 +78,7 @@
 
       // handle detail changes
       onChange(event) {
+      console.log(event.target)
         var newItem = this.state.curItem;
         newItem[event.target.name] = event.target.value
         this.setState({curItem: newItem});

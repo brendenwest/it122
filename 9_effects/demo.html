@@ -1,0 +1,110 @@
+<html>
+<head>
+    <title>React App Demo</title>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<style type="text/css">
+    #title {
+        text-align: center;
+        color: red;
+      }
+</style>
+
+<body>
+
+<div id="root"></div>
+<script type="text/babel">
+
+//    const items = <%- items %>;
+//    console.log(items)
+
+//    const names = ["dave", "sue", "keisha", "darrell"];
+//    const names = []
+
+
+    // define other components
+    const Greeting = (props) => {
+        if (props.name) {
+          return <h3>Hello, {props.name}!</h3>;
+        }
+        return <h3>Hello, Stranger.</h3>;
+    }
+
+    const Students = (props) => {
+        const listItems = props.students.map((item) =>  <li onClick={props.onClick} key={item['name']}>{item['name']}</li>);
+        return <ul>{listItems}</ul>
+    }
+
+    const StudentDetail = (props) => {
+        return (
+            <div>
+                <h3>Student Details</h3>
+                <form>
+                    <b>name:</b> <input type="text" name="name" value={props.student.name || ""} onChange={props.onChange} /><br/>
+                    <b>major:</b> <input type="text" name="major" value={props.student.major || ""} onChange={props.onChange} />
+                </form>
+            </div>
+         )
+    }
+
+    const App = (props) => {
+       const [items, setItems] = React.useState(
+       [
+        {"name": "dave", "major": "art"},
+        {"name": "sue", "major": "communications"},
+        {"name": "keisha", "major": "science"},
+        {"name": "darrell", "major": "engineering"}]
+       );
+       const [currentItem, setCurrentItem] = React.useState({});
+
+        // list click event handler
+        const selectItem = (event) => {
+            console.log(event.target);
+            const found = items.find((item) => {
+                return item.name === event.target.innerText;
+            });
+            setCurrentItem(found);
+        }
+
+        // update list state
+        const handleChange = (event) => {
+          let newItem = { ...currentItem } ;
+          newItem[event.target.name] = event.target.value;
+          console.log(newItem)
+
+          // update currentItem state
+          setCurrentItem(newItem);
+
+          // update list state
+          items.find((item, index) => {
+            if (item.name == newItem.name) {
+                items[index] = newItem;
+                setItems(items);
+            }
+          })
+        }
+
+
+      return (
+          <div>
+              <h1 id="title">React Demo</h1>
+              <Greeting name={props.name} />
+              <Students students={items} onClick={selectItem} />
+              <StudentDetail student={currentItem} onChange={handleChange}/>
+          </div>
+      );
+    }
+
+      const container = document.getElementById('root');
+      const root = ReactDOM.createRoot(container);
+      root.render(<App name='IT 122' />);
+
+</script>
+</body>
+</html>

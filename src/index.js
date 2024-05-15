@@ -17,11 +17,15 @@ app.use('/api', cors());
 app.set("view engine", "ejs");
 
 app.get('/', (req,res, next) => {
-    Book.find({}).lean()
-    .then((books) => {
-        res.render('home', { books: JSON.stringify(books) });
-    })
-    .catch(err => next(err));
+    res.render('home');
+});
+
+app.get('/detail', (req,res,next) => {
+    Book.findOne({ title:req.query.title }).lean()
+        .then((book) => {
+            res.render('details', {result: book} );
+        })
+        .catch(err => next(err));
 });
 
 app.get('/about', (req,res) => {
@@ -32,7 +36,6 @@ app.get('/about', (req,res) => {
 // api's
 app.get('/api/v1/book/:title', (req, res, next) => {
     let title = req.params.title;
-    console.log(title);
     Book.findOne({title: title}, (err, result) => {
         if (err || !result) {
             res.status(404).json({"message":"not found"});
@@ -42,7 +45,7 @@ app.get('/api/v1/book/:title', (req, res, next) => {
     });
 });
 
-app.get('/api/v1/book/id/:id', (req, res, next) => {
+app.get('/api/v1/book/:id', (req, res, next) => {
     Book.findOne({_id: req.params.id}, (err, result) => {
         if (err || !result) {
             res.status(404).json({"message":"not found"});
@@ -70,11 +73,17 @@ app.get('/api/v1/delete/:id', (req,res, next) => {
 
 app.post('/api/v1/add/', (req,res, next) => {
     // find & update existing item, or add new
-    Book.updateOne({ _id: req.body._id}, req.body, {upsert:true})
-    .then(result => res.json(result))
-    .catch(err => res.json({"error": err}));
+    if (!req.body._id) { // insert new document
+        Book.create(req.body).then(result => res.json(result))
+        .catch(err => res.json({"error": err}));
+    } else { // update existing document
+        Book.updateOne({ _id: req.body._id}, req.body, {upsert:true})
+        .then(result => res.json(result))
+        .catch(err => res.json({"error": err}));
+    }
 });
 
+// less reliable method
 app.get('/api/v1/add/:title/:author/:pubdate', (req,res, next) => {
     // find & update existing item, or add new 
     let title = req.params.title;

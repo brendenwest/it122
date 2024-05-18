@@ -7,7 +7,7 @@
 - https://jestjs.io/docs/tutorial-react
 - https://eslint.org/docs/user-guide/getting-started 
 - https://blog.risingstack.com/node-hero-node-js-unit-testing-tutorial/
-- https://semaphoreci.com/community/tutorials/getting-started-with-node-js-and-mocha
+- https://www.freecodecamp.org/news/how-to-write-unit-tests-in-react/
 
 ### Practice
 
@@ -122,7 +122,7 @@ A test script `imports` the module being tested and compares the result of a mod
 
 Your test script would look like this:
 
-    const sum = require('./sum');
+    import * from './sum.js';
     
     test('adds 1 + 2 to equal 3', () => {
         expect(sum(1, 2)).toBe(3);

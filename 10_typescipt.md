@@ -8,7 +8,7 @@
 ### Learning Outcomes
 
 - `Types` in programming
-- Pros & Cons strict types
+- Pros & Cons of strict types
 - `TypeScript` concepts & basic syntax
 - Using TypeScript in a JavaScript application
 
@@ -37,10 +37,20 @@ Computer programming languages can be distinguished between `strongly typed` and
 - Catches potential data errors at `compile` time before a program reaches real users
 - Enforces code consistency
 - Removes ambiguity about objects imported into other applications
-- Enables hints in IDE
+- Enables static type checking and hints in IDE
 
 **Cons**
 
-- Requires a compiler for a scripting language (e.g. JavaScript) 
-- Adds significant program structure & execution overhead to JavaScript projects
-- Can add signifcant overhead to JavaScript variable definition
+- Adds significant program structure & execution overhead to JavaScript projects. 
+- JavaScript programs that use TypeScript cannot be run in a web browser without explicit compilation
+- Can add significant overhead to JavaScript object definition
+
+### TypeScript Concepts
+
+TypeScript is a Microsoft project that implements strict types in JavaScript projects through an external layer (compiler), rather than through direct support in the JavaScript language. 
+
+Projects using TypeScript must define `types` (objects) in files with a special `.ts` or `.tsx` extension and compile them to JavaScript with a build system such as https://webpack.js.org/
+
+- TypeScript code compiles to native JavaScript.
+- TypeScript includes rules about how different kinds of values can be used (e.g. in math operations)
+- 

@@ -52,7 +52,7 @@ If time permits, we will cover based web application hosting.
 
 Node.js is a run-time engine that executes JavaScript code outside a browser. Node.js is commonly used for web servers, development tools and process automation.
 
-- Installation https://nodejs.org/en/ (v12.x)
+- Installation https://nodejs.org/en/ (v22.x)
 - Documentation - https://nodejs.org/en/docs/
 
 A Node.js app runs in a single CPU **process** but uses built-in **asynchronous** operations to avoid **blocking** in-coming requests. Node.js perform long-running I/O operations - like reading from the network, accessing a database, or the filesystem - by handing them off to the OS and resume the operations when a response comes back.

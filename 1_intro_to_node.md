@@ -1,6 +1,5 @@
 ## Week 1 - Introduction to Node.js
 
-
 ### Reading
 
 - Brown, Chapter 2
@@ -21,7 +20,8 @@
 
 - Class overview
 - Client/server architecture
-- Node.js intro & basic web server
+- What is Node.js
+- Basic Node.js web server
 - Handling routes & static files
 - Node Package Manager (npm)
 - Source control with git & github.com
@@ -50,9 +50,9 @@ If time permits, we will cover based web application hosting.
 
 ### What is Node.js?
 
-Node.js is a run-time engine that executes JavaScript code outside a browser. Originally intended as a web server, but also commonly used for web development tools and automation.
+Node.js is a run-time engine that executes JavaScript code outside a browser. Node.js is commonly used for web servers, development tools and process automation.
 
-- Installation https://nodejs.org/en/ (v18.x)
+- Installation https://nodejs.org/en/ (v12.x)
 - Documentation - https://nodejs.org/en/docs/
 
 A Node.js app runs in a single CPU **process** but uses built-in **asynchronous** operations to avoid **blocking** in-coming requests. Node.js perform long-running I/O operations - like reading from the network, accessing a database, or the filesystem - by handing them off to the OS and resume the operations when a response comes back.
@@ -74,6 +74,17 @@ Node.js can also execute JS files from the command line like so:
     $ node index.js
 
 Where index.js is a plain text file that contains any valid JavaScript commands and can include Node.js modules.
+
+### Why use Node.js?
+
+Developers of backend applications can typically choose from a variety of languages (e.g. Java, JavaScript, C#, Python, Go). Choice of language depends on a number of considerations:
+
+- **Performance** - how fast are basic operations? how quickly can apps start? how much memory does an app require?
+- **Company standards** - does your company standardize on particular languages? does your company use vendor products (e.g. Oracle, SalesForce, Azure) or specialized libraries that have a preference for certain languages?
+- **Ecosystem support** - how mature is the ecosystem of supporting frameworks and libraries for common application functionality (e.g. web frameworks, DB & cloud-services integration)?
+- **Developer talent pool** - how many engineers skilled in this languagee ecosystem are available within your company or in the job market?
+
+There are no easy answers to these considerations. Node.js is generally considered less performant than compiled languages like Java or Go, but has broad & mature ecosystem support. Many companies also benefit from using the same language for front-end and back-end applications.
 
 ### Node.js Web Server
 

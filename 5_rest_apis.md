@@ -78,6 +78,7 @@ Might return all books when invoked at http://localhost:3000/api/books
 
 API routes can be designed to accept query-string parameters or url parameters as in this example:
 
+    // e.g. http://localhost:3000/api/books/dune
     app.get('/api/books/:title', (req,res) => {
         Book.findOne({ title:req.params.title }).lean()
             .then((book) => {
@@ -88,7 +89,17 @@ API routes can be designed to accept query-string parameters or url parameters a
             });
     });
 
-might be invoked like so - http://localhost:3000/api/books/dune
+    // e.g. http://localhost:3000/api/books?title=dune
+    app.get('/api/books/', (req,res) => {
+        Book.findOne({ title:req.query.title }).lean()
+            .then((book) => {
+               res.json(book);
+            })
+            .catch(err => {
+                res.status(500).send('Database Error occurred');
+            });
+    });
+    
 
 #### Note:
 

@@ -84,7 +84,9 @@ Developers of backend applications can typically choose from a variety of langua
 - **Ecosystem support** - how mature is the ecosystem of supporting frameworks and libraries for common application functionality (e.g. web frameworks, DB & cloud-services integration)?
 - **Developer talent pool** - how many engineers skilled in this languagee ecosystem are available within your company or in the job market?
 
-There are no easy answers to these considerations. Node.js is generally considered less performant than compiled languages like Java or Go, but has broad & mature ecosystem support. Many companies also benefit from using the same language for front-end and back-end applications.
+There are no easy answers to these considerations. Node.js is generally considered less performant than compiled languages like Java or Go for computationally-intensive operations, but can be more performant for applications iinvolving lots of light-weight requests (common in web applications).
+
+Node.js also has broad & mature ecosystem support. and any companies benefit from using the same language for front-end and back-end applications.
 
 ### Node.js Web Server
 

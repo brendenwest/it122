@@ -12,7 +12,7 @@
 
 ### Watch
 
-- https://www.linkedin.com/learning/learning-react-js-4?u=2359778 (
+- https://www.linkedin.com/learning/learning-react-js-4?u=2359778 
 
 ### Learning Outcomes
 
@@ -27,13 +27,13 @@ An SPA performs all UI on a single web page to provide a more responsive user ex
 
 Necessary resources are retrieved with a single page load, or dynamically loaded from a web server and added to the page as necessary.
 
-A variety of JavaScript frameworks enable SPA functionality, including  `Angular <https://angular.io>`_, `jQuery <https://jquery.com/>`_, `Vue.js <https://vuejs.org/>`_ and `ReactJS <https://reactjs.org>`_.
+A variety of JavaScript frameworks enable SPA functionality, including  https://angular.io, https://jquery.com/, https://vuejs.org/ and https://react.dev.
 
 This class will focus on ReactJS, which has become very popular recently for it's performance and simplicity. Other frameworks adopt similar concepts, with an understanding of React you can learn other frameworks quickly.
 
 **React Intro**
 
-React is a *declarative UI* framework that lets you define UI as components that can efficiently rende & update as page-data changes.
+React is a *declarative UI* framework that lets you define UI as components that can efficiently render & update as page-data changes.
 
 React uses a *virtual DOM* to update only those elements that have changed, rather than updating the whole page DOM as changes occur.
 
@@ -43,8 +43,8 @@ In a professional setting, you might use a *build* process (e.g. webpack) to bun
 
 But for this class your app can enable React with these hosted libraries:
 
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
     <!-- Don't use this in production: -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>

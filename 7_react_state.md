@@ -67,7 +67,50 @@ HTML form elements differ from other DOM elements in React, because they natural
 
 To address this, React has a technique called `controlled components`, where the React component state is the “single source of truth”. The React component that renders a form receives updates as the user input values, adds those to component state, and propagates state back to the form.
 
-Key aspects of the controlled component are:
+Key aspects of a controlled component are:
 - component state has a value corresponding to the form field
 - component has a change-handler method to receive form-field updates
 - state value & change-handler are attached to the field
+
+In this example, the `ItemDetail` component renders an HTML form with form values manged by a parent component:
+
+```
+  const ItemDetail = (props) => {
+    return <div>
+    <hr />
+    <h3>Details</h3>
+    <form>
+      User: <input type="text" name="user" value={props.item.user || ""} onChange={props.handleChange} /><br/>
+    </form>
+    </div>
+    }
+```
+
+### What are `effects`?
+Side effects are actions that should happen when a component renders. For example, you might want to load data from an api once your home page renders.
+
+React executes effects each time a component renders, but code can choose when to execute in response to these. Most Effects should only re-run when needed rather than after every render.
+
+React provides the `useEffect` hook to execute code in response to an effect.
+
+    import { useState, useEffect } from 'react';
+
+    export default function App() {
+      const [items, setItems] = useState([]);
+
+      useEffect(() => {
+        // fetch data
+        const fetchData = async()=> {
+            const data = await getData();
+            setItems(data) 
+        }
+        fetchData()
+      }, []);
+    }
+
+What's happening here?
+- we import the `useState` and `useEffect` hooks
+- we define a state variable `items` and a function `setIems` to update that variable
+- useEffect includes an async function `fetchData` to retrieve data and store in app state
+- useEffect executes the `fetchData` only if effect dependencies are empty
+- when `fetchData` completes, the result is saved into component state using `setItems`

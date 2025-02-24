@@ -7,24 +7,22 @@
 - https://jestjs.io/docs/tutorial-react
 - https://eslint.org/docs/user-guide/getting-started 
 - https://blog.risingstack.com/node-hero-node-js-unit-testing-tutorial/
+- https://medium.com/@natnael.awel/react-js-unit-testing-best-practices-and-tools-5454a01326ea
 - https://www.freecodecamp.org/news/how-to-write-unit-tests-in-react/
-
-### Practice
-
-- https://www.freecodecamp.org/learn/quality-assurance/
 
 ### Reference
 - https://codeutopia.net/docs/eslint/
 - https://www.cypress.io/
-- https://joi.dev/
+- https://www.freecodecamp.org/learn/quality-assurance/
 - https://testingjavascript.com/
 
 ### Learning Outcomes
 
-- Understand static analysis & JavaScript linting
-- Understand unit testing in JavaScript
-- Understand integration and UI testing
-- Understand schema validation
+- Static analysis & JavaScript linting
+- Different types of software testing
+- Unit testing in JavaScript
+- Integration and UI testing
+- Schema validation
 
 ### Overview
 
@@ -103,7 +101,7 @@ Web software testing encompasses a broad range of tasks, but developers typicall
 
 #### Unit Testing
 
-There are a number of fine JavaScript unit-testing frameworks including `Jest` & [Mocha](https://mochajs.org/). For this class we'll focus on Jest.
+There are a number of fine JavaScript unit-testing frameworks including [Jest](https://jestjs.io/docs/getting-started) & [Mocha](https://mochajs.org/). For this class we'll focus on Jest.
 
 To get started, install Jest:
 
@@ -136,7 +134,7 @@ Your test script would look like this:
 
 UI testing - aka end-to-end (E2E) - tests anything that runs in a browser. A typical E2E test visits the application in a browser and performs actions via the UI just like a real user would.
 
-Cypress and Selenium are commonly used tools for UI testing. We'll focus here on Cypress.
+`Cypress` and `Selenium` are commonly used to automate UI testing. We'll focus here on Cypress.
 
 First, you'll need to install Cypress:
 

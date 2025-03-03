@@ -55,9 +55,39 @@ Webpack is perhaps the oldest & most mature of these, but involves some complexi
 - [Rollup](https://rollupjs.org/)
 - [Vite](https://vite.dev/guide/) (uses rollup)
 
-### Getting Started with Vite
+### Getting Started with Rollup
 
+```commandline
+npm install -D rollup
+npm install -D @rollup/plugin-json
+npm install -D @rollup/plugin-node-resolve
+npm install -D @rollup/plugin-commonjs
+```
 
+Sample config for a node.js app:
+```commandline
+// rollup.config.js
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+
+export default {
+  input: 'src/index.js',
+  output: {
+    file: 'dist/bundle.js',
+    format: 'esm',
+  },
+  plugins: [
+    nodeResolve(),
+    commonjs(),
+    json()
+  ],
+};
+```
+
+```commandline
+npx rollup --config
+```
 
 ### Getting Started with Webpack
 Webpack is a relatively modern and mature bundler that efficiently performs these tasks with minimal configuration, by identifying all the files in a project (the `dependency graph`) and using `loaders` (plugins) to handle specific types of dependencies.

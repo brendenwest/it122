@@ -2,10 +2,13 @@
 
 ### Reading
 
-- https://webpack.js.org/concepts/
+- https://wpshout.com/best-javascript-build-tools-bundlers/#gref
+- https://vite.dev/guide/
 - https://webpack.js.org/guides/getting-started/
-- https://blog.risingstack.com/using-react-with-webpack-tutorial/ 
 - https://www.sitepoint.com/webpack-beginner-guide/
+
+### Watch
+- https://www.youtube.com/watch?v=NgedfCAVBAY
 
 ### Practice
 
@@ -14,26 +17,56 @@
 
 ### Learning Outcomes
 
-- What is app bundling?
+- What is JavaScript app bundling?
+- JavaScript bundlers
 - Bundling app dependencies
 - Hot reloading during development
 
 ### What is Bundling?
 
-In the early days of web development, all `static` assets (JS, CSS, images, etc.) making up an application would be deployed and downloaded to the browser as separate files. 
+In the early days of web development, `static` assets (JS, CSS, images, etc.) making up a front-end application would be deployed and downloaded to the browser as separate files. 
 
-Some project dependencies (e.g. web frameworks) would need to load from external web sites at run-time.
+The browser would also need to load some project dependencies (e.g. web frameworks) from 3rd party websites at run-time.
 
-This presents various performance and workflow problems, so `bundlers` arose to address these. Bundlers can transpile code to support older browsers, concatenate multiple files into a single file, remove duplicated or unused code logic, and minify files by removing white space.
+This has performance and workflow problems that `bundlers` arose to address.
 
+Common bundler functionality includes:
+
+- **concatenate** multiple files into a single fil
+- **minify** code by removing white space from files
+- **transpile** code to support older browsers
+- **tree-shaking** to remove unused or redundant code from bundle
+- **code-splitting** - output bundle in chunks to support different entrypoints & minimize initial code download
+- **plugin support** for specialized bundling
+
+Some bundlers also support:
+
+- running a local development server
+- Hot reloading code modules without a full page refresh
+- Watching files and generating builds automatically when detecting changes
+
+Several mature bundlers are available and differ mostly in ease of use and feature complexity.
+
+Webpack is perhaps the oldest & most mature of these, but involves some complexity to configure. Newer bundlers have focused on speed and simplified configuration.
+
+- [Webpack](https://webpack.js.org/)
+- [ESBuild](https://esbuild.github.io/getting-started/)
+- [Parcel](https://parceljs.org/)
+- [Rollup](https://rollupjs.org/)
+- [Vite](https://vite.dev/guide/) (uses rollup)
+
+### Getting Started with Vite
+
+
+
+### Getting Started with Webpack
 Webpack is a relatively modern and mature bundler that efficiently performs these tasks with minimal configuration, by identifying all the files in a project (the `dependency graph`) and using `loaders` (plugins) to handle specific types of dependencies.
 
-### Getting Started
 
-First, install webpack node modules:
+First, install webpack & related node modules:
 
 ```
-npm install webpack webpack-cli --save-dev
+npm install webpack webpack-cli style-loader --save-dev
 ```
 
 Next, let's restructure your project a bit. Webpack expects project source code in a `/src` sub-directory, like this:

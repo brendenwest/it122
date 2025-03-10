@@ -2,7 +2,8 @@
 
 ### Reading
 
-- https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html
+https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
+- https://www.typescriptlang.org/docs/handbook/intro.html
 - https://www.freecodecamp.org/news/learn-typescript-beginners-guide/
 
 ### Learning Outcomes
@@ -14,10 +15,10 @@
 
 ### Types in Programming
 
-Computer programming languages can be distinguished between `strongly typed` and loosely typed.
+Computer programming languages can be distinguished between `strongly typed` and `loosely typed`.
 
 **Strongly Typed**
-- Variables must be defined with specific data types. 
+- Variables must be defined with a specific data type. 
 - Language makes a distinction between numeric data types (e.g. int, float, double precision).
 - Arrays can only contain items of the same data type
 - Program code is checked at `compile` time for mismatch between variable definition and subsequent updates. Mismatches generate an error and prevent program compilation. 
@@ -35,22 +36,44 @@ Computer programming languages can be distinguished between `strongly typed` and
 **Pros**
 
 - Catches potential data errors at `compile` time before a program reaches real users
+- Enables static type checking and hints in IDE
 - Enforces code consistency
 - Removes ambiguity about objects imported into other applications
-- Enables static type checking and hints in IDE
 
 **Cons**
 
-- Adds significant program structure & execution overhead to JavaScript projects. 
-- JavaScript programs that use TypeScript cannot be run in a web browser without explicit compilation
+- Adds significant program structure & overhead to JavaScript projects. 
+- JavaScript programs using TypeScript must be compiled to run in a browser
 - Can add significant overhead to JavaScript object definition
 
 ### TypeScript Concepts
 
-TypeScript is a Microsoft project that implements strict types in JavaScript projects through an external layer (compiler), rather than through direct support in the JavaScript language. 
+TypeScript is a Microsoft framework that layers on top of JavaScript, similar to `React`, and implements `type` suppport in JavaScript code.
 
-Projects using TypeScript must define `types` (objects) in files with a special `.ts` or `.tsx` extension and compile them to JavaScript with a build system such as https://webpack.js.org/
+JavaScript projects using TypeScript define `types` in code files with a special `.ts` or `.tsx` extension and must `compile` the files to plain JavaScript code before the program can run.
 
-- TypeScript code compiles to native JavaScript.
 - TypeScript includes rules about how different kinds of values can be used (e.g. in math operations)
-- 
+
+### Type Definition 
+
+TypeStript supports three `primitive` data types -  `string`, `number`, and `boolean`
+
+The TypeScript compiler can `infer` a variable's type from its initial value:
+
+```commandline
+let helloWorld = "Hello World"; // TypeScript infers 'string' type
+```
+
+Or the variable's type can be defined explicitly:
+
+```commandline
+let helloWorld: string = "Hello World"; // explicit type definition
+```
+
+TypeScript supports specifying the types of both input parameters and output values of functions.
+
+```commandline
+const greet = (name: string): string => {
+  return `Hello, ${name.toUpperCase()}!!`);
+}
+```

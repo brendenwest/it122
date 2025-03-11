@@ -54,7 +54,7 @@ JavaScript projects using TypeScript define `types` in code files with a special
 
 - TypeScript includes rules about how different kinds of values can be used (e.g. in math operations)
 
-### Type Definition 
+### Type Definitions
 
 TypeStript supports three `primitive` data types -  `string`, `number`, and `boolean`
 
@@ -70,10 +70,50 @@ Or the variable's type can be defined explicitly:
 let helloWorld: string = "Hello World"; // explicit type definition
 ```
 
+**Arrays** can be defined as a certain type:
+
+```commandline
+let names: string[] = ["jim", "bob"];
+let ages: number[] = [12, 32];
+```
+
 TypeScript supports specifying the types of both input parameters and output values of functions.
 
 ```commandline
 const greet = (name: string): string => {
   return `Hello, ${name.toUpperCase()}!!`);
 }
+```
+
+### Object Types
+
+JavaScript objects can be defined with types for each property. **Optional** types can be identified with a question-mark.
+
+```commandline
+type Person = {
+  name: string;
+  prefix?: string;
+  age: number;
+};
+
+const greet = (person: Person) => {
+  if (person.prefix) {
+    return `Hello ${person.prefix} ${person.name}`;
+  }
+  return `Hello ${person.name}`;
+}
+
+console.log(greet({name:"Jim", age:32}));
+console.log(greet({prefix: "Mr.", name:"Bill", age:22}));
+```
+
+
+### Getting Started
+
+The TypeScript compiler can be installed & executed as a node module, to compile .ts files into .js files:
+
+```commandline
+npm install typescript
+
+npx tsc <FILENAME>.ts
 ```

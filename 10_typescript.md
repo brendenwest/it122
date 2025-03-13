@@ -110,10 +110,38 @@ console.log(greet({prefix: "Mr.", name:"Bill", age:22}));
 
 ### Getting Started
 
-The TypeScript compiler can be installed & executed as a node module, to compile .ts files into .js files:
+The TypeScript compiler can be installed & executed as a node module:
 
 ```commandline
 npm install typescript
+```
 
+The compiler can be run via command line .ts files into pure JavaScript:
+
+```commandline
 npx tsc <FILENAME>.ts
 ```
+or as an npm script defined in package.json:
+
+```commandline
+  "scripts": {
+    "compile": "tsc -p ."
+  },
+```
+
+The above script example tells TypeScript compiler to use a configuration file (**tsconfig.json**) for detailed compilation options. 
+
+For example, this configuration tells the compiler to output JavaScript using ES6 syntax and to compile all .ts files in the **src** directory.
+
+```commandline
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+For more options, see https://www.typescriptlang.org/docs/handbook/tsconfig-json.html 
+
